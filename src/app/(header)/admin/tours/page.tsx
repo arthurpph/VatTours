@@ -42,7 +42,7 @@ export default function TourManagePage() {
             const data = await res.json();
             setTours(data);
          } else {
-            alert('Erro ao carregar tours');
+            alert('Erro ao carregar tours. ' + (await res.json()).message);
          }
       } catch {
          alert('Erro na requisição');
@@ -90,7 +90,7 @@ export default function TourManagePage() {
          setImage('');
          setLegs([{ description: '', departureIcao: '', arrivalIcao: '' }]);
       } else {
-         alert('Erro ao criar tour.');
+         alert('Erro ao criar tour. ' + (await res.json()).message);
       }
    };
 
@@ -105,7 +105,7 @@ export default function TourManagePage() {
          alert('Tour excluído com sucesso!');
          fetchTours();
       } else {
-         alert('Erro ao excluir tour.');
+         alert('Erro ao excluir tour. ' + (await res.json()).message);
       }
    };
 

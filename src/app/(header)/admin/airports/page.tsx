@@ -35,10 +35,10 @@ export default function CreateAirportPage() {
             const data = await res.json();
             setAirports(data);
          } else {
-            alert('Erro ao carregar aeroportos');
+            alert('Erro ao carregar aeroportos. ' + (await res.json()).message);
          }
       } catch {
-         alert('Erro na requisição');
+         alert('Erro na requisição.');
       } finally {
          setLoading(false);
       }
@@ -61,7 +61,7 @@ export default function CreateAirportPage() {
          setName('');
          setCountry('');
       } else {
-         alert('Erro ao criar aeroporto. ' + (await res.json()).error);
+         alert('Erro ao criar aeroporto. ' + (await res.json()).message);
       }
    };
 
@@ -76,7 +76,7 @@ export default function CreateAirportPage() {
          alert('Aeroporto excluído com sucesso!');
          fetchAirports();
       } else {
-         alert('Erro ao excluir aeroporto. ' + (await res.json()).error);
+         alert('Erro ao excluir aeroporto. ' + (await res.json()).message);
       }
    };
 

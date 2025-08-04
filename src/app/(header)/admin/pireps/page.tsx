@@ -35,7 +35,7 @@ export default function TourLegApprovalPage() {
 
       try {
          const res = await fetch(`${PUBLIC_API_ROUTES.pireps}?status=pending`);
-         if (!res.ok) throw new Error('Falha ao carregar dados');
+         if (!res.ok) throw new Error((await res.json()).message);
          const data = await res.json();
          setPireps(data);
       } catch (err: unknown) {
@@ -66,7 +66,7 @@ export default function TourLegApprovalPage() {
             }),
          });
 
-         if (!res.ok) throw new Error('Falha ao atualizar status');
+         if (!res.ok) throw new Error((await res.json()).message);
          setPireps((prev) => prev.filter((p) => p.id !== pirepId));
       } catch (err: unknown) {
          if (err instanceof Error) {
