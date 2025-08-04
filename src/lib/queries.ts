@@ -11,11 +11,11 @@ import { and, asc, eq, notExists, notInArray, or, inArray } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
 export async function getTours() {
-   return await db.select().from(toursTable).execute();
+   return await db.select().from(toursTable);
 }
 
 export async function getAirports() {
-   return await db.select().from(airportsTable).execute();
+   return await db.select().from(airportsTable);
 }
 
 export async function getLegsByTourIds(tourIds: number[]) {
@@ -26,8 +26,7 @@ export async function getLegsByTourIds(tourIds: number[]) {
    const legs = await db
       .select()
       .from(legsTable)
-      .where(inArray(legsTable.tourId, tourIds))
-      .execute();
+      .where(inArray(legsTable.tourId, tourIds));
 
    return legs;
 }
@@ -160,8 +159,7 @@ export async function getNextLegForUser(
          ),
       )
       .orderBy(asc(legsTable.order))
-      .limit(1)
-      .execute();
+      .limit(1);
 
    return result[0] as NextLegForUserResult | undefined;
 }
@@ -170,8 +168,7 @@ export async function getUserById(userId: string) {
    const user = await db
       .select()
       .from(usersTable)
-      .where(eq(usersTable.id, userId))
-      .execute();
+      .where(eq(usersTable.id, userId));
 
    return user[0];
 }

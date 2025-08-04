@@ -1,7 +1,5 @@
 import { getPirepsByTour } from '@/lib/queries';
 import { PirepStatus } from '@/models/types';
-import { eq } from 'drizzle-orm';
-import { alias } from 'drizzle-orm/sqlite-core';
 import { CheckCircle, Clock, XCircle } from 'lucide-react';
 
 type PirepWithUserAndLeg = {

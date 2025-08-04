@@ -1,5 +1,3 @@
-import { db } from '@/db';
-import { usersTable } from '@/db/schema';
 import { AuthOptions, Session, User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import { redirect } from 'next/navigation';

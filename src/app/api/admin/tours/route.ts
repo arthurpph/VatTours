@@ -1,5 +1,5 @@
 import { db } from '@/db';
-import { airportsTable, legsTable, toursTable } from '@/db/schema';
+import { airportsTable } from '@/db/schema';
 import { insertLegs, insertTour } from '@/lib/queries';
 import { LegSchema, TourSchema } from '@/lib/validation';
 import { inArray } from 'drizzle-orm';
