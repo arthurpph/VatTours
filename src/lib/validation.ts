@@ -2,6 +2,11 @@ import { z } from 'zod';
 import { countryCodes, pirepStatus } from '@/models/types';
 import { roleNames } from '@/models/types';
 
+export const IcaoSchema = z
+   .string()
+   .length(4)
+   .regex(/^[A-Z0-9]+$/);
+
 export const UserSchema = z.object({
    id: z.string(),
    name: z.string().min(1),
@@ -28,10 +33,7 @@ export const LegSchema = z.object({
 });
 
 export const AirportSchema = z.object({
-   icao: z
-      .string()
-      .length(4)
-      .regex(/^[A-Z0-9]+$/),
+   icao: IcaoSchema,
    name: z.string().min(1),
    country: z.enum(countryCodes),
 });
