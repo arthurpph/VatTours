@@ -10,6 +10,7 @@ import { PirepSchema } from '@/lib/validation';
 import { PirepStatus, pirepStatus } from '@/models/types';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
 export async function GET(req: Request) {
    const { searchParams } = new URL(req.url);
@@ -50,7 +51,17 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
    try {
-      const { userId, tourId, callsign, comment } = await req.json();
+      const { tourId, callsign, comment } = await req.json();
+      const session = await getServerSession();
+
+      if (!session) {
+         return NextResponse.json(
+            { message: 'Usuário não autenticado' },
+            { status: 401 },
+         );
+      }
+
+      const userId = session.id;
 
       const nextLegPirepResult = await getNextLegForUser(
          userId,

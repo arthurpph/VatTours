@@ -43,7 +43,6 @@ export default function TourPirepClientSide({ userId, leg }: Props) {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({
-            userId,
             tourId: leg.tourId,
             callsign,
             comment,
