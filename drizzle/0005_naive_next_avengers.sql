@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `pireps_user_id_leg_id_unique` ON `pireps` (`user_id`,`leg_id`);

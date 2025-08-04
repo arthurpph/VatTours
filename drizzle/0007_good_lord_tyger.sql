@@ -1,0 +1,1 @@
+CREATE INDEX `idx_pireps_legId` ON `pireps` (`leg_id`);

@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1754139008544,
+      "tag": "0000_yellow_praxagora",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1754141541607,
+      "tag": "0001_famous_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1754158722956,
+      "tag": "0002_organic_invisible_woman",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1754185133718,
+      "tag": "0003_plain_tigra",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1754185621217,
+      "tag": "0004_red_scarecrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1754190692783,
+      "tag": "0005_naive_next_avengers",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1754257582547,
+      "tag": "0006_material_the_phantom",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1754257872998,
+      "tag": "0007_good_lord_tyger",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1754269367395,
+      "tag": "0008_fluffy_mandrill",
+      "breakpoints": true
+    }
+  ]
+}
