@@ -1,26 +1,15 @@
-import { db } from '@/db';
-import { legsTable, toursTable } from '@/db/schema';
-import { eq } from 'drizzle-orm';
+import { getLegsByTourIds, getTours } from '@/lib/queries';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
    try {
-      const tours = await db.select().from(toursTable);
+      const tours = await getTours();
 
       const tourIds = tours.map((t) => t.id);
-      const legs = await db
-         .select()
-         .from(legsTable)
-         .where(
-            tourIds.length > 0 ? eq(legsTable.tourId, tourIds[0]) : undefined,
-         );
+      const legs = await getLegsByTourIds(tourIds);
 
       if (tourIds.length > 1) {
-         const { inArray } = await import('drizzle-orm');
-         const allLegs = await db
-            .select()
-            .from(legsTable)
-            .where(inArray(legsTable.tourId, tourIds));
+         const allLegs = await getLegsByTourIds(tourIds);
          legs.splice(0, legs.length, ...allLegs);
       }
 

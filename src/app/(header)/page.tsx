@@ -1,10 +1,9 @@
 import { getServerSession } from 'next-auth';
-import { db } from '@/db';
-import { toursTable } from '@/db/schema';
 import Link from 'next/link';
 import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { authOptions } from '../api/auth/[...nextauth]/auth';
+import { getTours } from '@/lib/queries';
 
 export default async function Home() {
    const session = await getServerSession(authOptions);
@@ -13,7 +12,7 @@ export default async function Home() {
       return <></>;
    }
 
-   const tours = await db.select().from(toursTable);
+   const tours = await getTours();
 
    return (
       <div className="bg-gray-900 min-h-screen text-white px-6 py-10 space-y-16">
