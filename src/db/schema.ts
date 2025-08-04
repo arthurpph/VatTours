@@ -1,17 +1,19 @@
 import { sql } from 'drizzle-orm';
 import {
-   sqliteTable,
+   pgTable,
    text,
    integer,
    primaryKey,
    unique,
    check,
    index,
-} from 'drizzle-orm/sqlite-core';
+   serial,
+   timestamp,
+} from 'drizzle-orm/pg-core';
 import { countryCodes, pirepStatus } from '@/models/types';
 import { roleNames } from '@/models/types';
 
-export const usersTable = sqliteTable('users', {
+export const usersTable = pgTable('users', {
    id: text('id').primaryKey(),
    name: text('name').notNull(),
    email: text('email').notNull().unique(),
@@ -19,20 +21,18 @@ export const usersTable = sqliteTable('users', {
    role: text('role', { enum: roleNames }).notNull().default('user'),
 });
 
-export const toursTable = sqliteTable('tours', {
-   id: integer('id').primaryKey({ autoIncrement: true }),
+export const toursTable = pgTable('tours', {
+   id: serial('id').primaryKey(),
    title: text('title').notNull(),
    description: text('description'),
    image: text('image').notNull(),
-   createdAt: integer('created_at', { mode: 'timestamp' }).default(
-      sql`CURRENT_TIMESTAMP`,
-   ),
+   createdAt: timestamp('created_at', { withTimezone: false }).defaultNow(),
 });
 
-export const legsTable = sqliteTable(
+export const legsTable = pgTable(
    'legs',
    {
-      id: integer('id').primaryKey({ autoIncrement: true }),
+      id: serial('id').primaryKey(),
       tourId: integer('tour_id')
          .notNull()
          .references(() => toursTable.id, { onDelete: 'cascade' }),
@@ -48,13 +48,13 @@ export const legsTable = sqliteTable(
    (t) => [unique().on(t.tourId, t.order)],
 );
 
-export const airportsTable = sqliteTable('airports', {
+export const airportsTable = pgTable('airports', {
    icao: text('icao').primaryKey(),
    name: text('name').notNull(),
    country: text('country', { enum: countryCodes }).notNull(),
 });
 
-export const userToursTable = sqliteTable(
+export const userToursTable = pgTable(
    'user_tours',
    {
       userId: text('user_id')
@@ -63,21 +63,21 @@ export const userToursTable = sqliteTable(
       tourId: integer('tour_id')
          .notNull()
          .references(() => toursTable.id, { onDelete: 'cascade' }),
-      completedAt: integer('completed_at', { mode: 'timestamp' }).default(
-         sql`CURRENT_TIMESTAMP`,
-      ),
+      completedAt: timestamp('completed_at', {
+         withTimezone: false,
+      }).defaultNow(),
    },
    (t) => [primaryKey({ columns: [t.userId, t.tourId] })],
 );
 
-export const badgesTable = sqliteTable('badges', {
-   id: integer('id').primaryKey({ autoIncrement: true }),
+export const badgesTable = pgTable('badges', {
+   id: serial('id').primaryKey(),
    name: text('name').notNull(),
    description: text('description'),
    icon: text('icon'),
 });
 
-export const userBadgesTable = sqliteTable(
+export const userBadgesTable = pgTable(
    'user_badges',
    {
       userId: text('user_id')
@@ -86,26 +86,24 @@ export const userBadgesTable = sqliteTable(
       badgeId: integer('badge_id')
          .notNull()
          .references(() => badgesTable.id, { onDelete: 'cascade' }),
-      earnedAt: integer('earned_at', { mode: 'timestamp' }).default(
-         sql`CURRENT_TIMESTAMP`,
-      ),
+      earnedAt: timestamp('earned_at', { withTimezone: false }).defaultNow(),
    },
    (t) => [primaryKey({ columns: [t.userId, t.badgeId] })],
 );
 
-export const pirepsTable = sqliteTable(
+export const pirepsTable = pgTable(
    'pireps',
    {
-      id: integer('id').primaryKey({ autoIncrement: true }),
+      id: serial('id').primaryKey(),
       userId: text('user_id')
          .notNull()
          .references(() => usersTable.id),
       legId: integer('leg_id')
          .notNull()
          .references(() => legsTable.id, { onDelete: 'cascade' }),
-      submittedAt: integer('submitted_at', { mode: 'timestamp' })
+      submittedAt: timestamp('submitted_at', { withTimezone: false })
          .notNull()
-         .default(sql`CURRENT_TIMESTAMP`),
+         .defaultNow(),
       status: text('status', {
          enum: pirepStatus,
       })
@@ -116,7 +114,7 @@ export const pirepsTable = sqliteTable(
       reviewerId: text('reviewer_id').references(() => usersTable.id, {
          onDelete: 'set null',
       }),
-      reviewedAt: integer('reviewed_at', { mode: 'timestamp' }),
+      reviewedAt: timestamp('reviewed_at', { withTimezone: false }),
       reviewNote: text('review_note'),
       logbookUrl: text('logbook_url'),
    },
