@@ -63,7 +63,7 @@ export const PirepSchema = z.object({
    legId: z.number().int(),
    submittedAt: z.date().optional(),
    status: z.enum(pirepStatus).optional(),
-   callsign: z.string().min(1),
+   callsign: z.string().min(1).max(12),
    comment: z.string().optional().nullable(),
    reviewerId: z.string().optional(),
    reviewedAt: z.date().optional(),

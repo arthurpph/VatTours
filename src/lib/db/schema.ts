@@ -124,7 +124,7 @@ export const pirepsTable = pgTable(
       index('idx_pireps_userId_status').on(t.userId, t.status),
       check(
          'callsign_length_and_format',
-         sql`length(${t.callsign}) <= 7 AND ${t.callsign} ~ '^[A-Za-z0-9]*$'`,
+         sql`length(${t.callsign}) <= 12 AND ${t.callsign} ~ '^[A-Za-z0-9]*$'`,
       ),
       check('comment_length', sql`length(coalesce(${t.comment}, '')) <= 100`),
       check(
