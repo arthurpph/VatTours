@@ -6,6 +6,7 @@ import {
    toursTable,
    usersTable,
 } from '@/db/schema';
+import { CountryCode } from '@/models/types';
 import { and, asc, eq, notExists, notInArray, or, inArray } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
@@ -173,4 +174,59 @@ export async function getUserById(userId: string) {
       .execute();
 
    return user[0];
+}
+
+export async function insertLegs(
+   legsToInsert: Array<typeof legsTable.$inferInsert>,
+) {
+   await db.insert(legsTable).values(legsToInsert);
+}
+
+export async function insertUser(user: typeof usersTable.$inferInsert) {
+   await db.insert(usersTable).values(user);
+}
+
+export async function insertPirep(data: {
+   userId: string;
+   legId: number;
+   callsign: string;
+   comment?: string | null;
+}) {
+   await db.insert(pirepsTable).values({
+      userId: data.userId,
+      legId: data.legId,
+      callsign: data.callsign,
+      comment: data.comment ?? null,
+   });
+}
+
+export async function insertAirport(data: {
+   icao: string;
+   name: string;
+   country: CountryCode;
+}) {
+   await db.insert(airportsTable).values({
+      icao: data.icao.toUpperCase(),
+      name: data.name,
+      country: data.country,
+   });
+}
+
+export async function insertTour(data: {
+   title: string;
+   description?: string | null;
+   image: string;
+   createdAt?: Date;
+}) {
+   const [insertedTour] = await db
+      .insert(toursTable)
+      .values({
+         title: data.title,
+         description: data.description ?? null,
+         image: data.image,
+         createdAt: data.createdAt ?? new Date(),
+      })
+      .returning();
+
+   return insertedTour;
 }

@@ -1,6 +1,6 @@
 import { db } from '@/db';
 import { pirepsTable, usersTable, legsTable, toursTable } from '@/db/schema';
-import { getNextLegForUser } from '@/lib/queries';
+import { getNextLegForUser, insertPirep } from '@/lib/queries';
 import { PirepSchema } from '@/lib/validation';
 import { PirepStatus, pirepStatus } from '@/models/types';
 import { eq } from 'drizzle-orm';
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
          );
       }
 
-      await db.insert(pirepsTable).values({
+      await insertPirep({
          userId,
          legId,
          callsign,

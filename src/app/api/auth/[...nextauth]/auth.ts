@@ -3,7 +3,7 @@ import { usersTable } from '@/db/schema';
 import { AuthOptions, Session, User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import { redirect } from 'next/navigation';
-import { getUserById } from '@/lib/queries';
+import { getUserById, insertUser } from '@/lib/queries';
 
 export const authOptions: AuthOptions = {
    providers: [
@@ -41,7 +41,7 @@ export const authOptions: AuthOptions = {
          const existingUser = await getUserById(user.id);
 
          if (!existingUser) {
-            await db.insert(usersTable).values({
+            await insertUser({
                id: user.id,
                name: user.name,
                email: user.email,

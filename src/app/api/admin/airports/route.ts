@@ -1,6 +1,7 @@
 // app/api/airports/route.ts
 import { db } from '@/db';
 import { airportsTable } from '@/db/schema';
+import { insertAirport } from '@/lib/queries';
 import { IcaoSchema } from '@/lib/validation';
 import { NextResponse } from 'next/server';
 
@@ -22,9 +23,7 @@ export async function POST(req: Request) {
    }
 
    try {
-      await db
-         .insert(airportsTable)
-         .values({ icao: icao.toUpperCase(), name, country });
+      await insertAirport({ icao: icao.toUpperCase(), name, country });
       return NextResponse.json({ success: true });
    } catch {
       return NextResponse.json(

@@ -1,5 +1,6 @@
 import { db } from '@/db';
 import { airportsTable, legsTable, toursTable } from '@/db/schema';
+import { insertLegs, insertTour } from '@/lib/queries';
 import { LegSchema, TourSchema } from '@/lib/validation';
 import { inArray } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
@@ -46,17 +47,21 @@ export async function POST(req: Request) {
          validatedLegs.push(result.data);
       }
 
-      const insertedTour = await db
-         .insert(toursTable)
-         .values({
-            title,
-            description,
-            image,
-            createdAt: new Date(),
-         })
-         .returning();
+      const insertedTour = await insertTour({
+         title,
+         description,
+         image,
+         createdAt: new Date(),
+      });
 
-      const tourId = insertedTour[0]?.id;
+      if (!insertedTour) {
+         return NextResponse.json(
+            { message: 'Falha ao criar tour.' },
+            { status: 500 },
+         );
+      }
+
+      const tourId = insertedTour?.id;
       if (!tourId) {
          return NextResponse.json(
             { message: 'Falha ao criar tour.' },
@@ -105,7 +110,7 @@ export async function POST(req: Request) {
          }),
       );
 
-      await db.insert(legsTable).values(legsToInsert);
+      await insertLegs(legsToInsert);
 
       return NextResponse.json({ success: true, tourId }, { status: 201 });
    } catch (err) {
