@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { airportsTable, legsTable } from '@/lib/db/schema';
-import { IcaoSchema } from '@/lib/validation';
+import { AirportSchema } from '@/lib/validation';
 import { eq, or } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 
@@ -9,7 +9,7 @@ export async function DELETE(req: Request) {
       const url = new URL(req.url);
       const icaoParam = url.pathname.split('/').pop();
 
-      const parsed = IcaoSchema.safeParse(icaoParam);
+      const parsed = AirportSchema.safeParse(icaoParam);
 
       if (!parsed.success) {
          return NextResponse.json(
@@ -18,7 +18,7 @@ export async function DELETE(req: Request) {
          );
       }
 
-      const icao = parsed.data.toUpperCase();
+      const icao = parsed.data.icao.toUpperCase();
 
       const airportExists = await db
          .select()

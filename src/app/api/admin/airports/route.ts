@@ -1,5 +1,5 @@
 import { insertAirport } from '@/lib/db/queries';
-import { IcaoSchema } from '@/lib/validation';
+import { AirportSchema } from '@/lib/validation';
 import { NextResponse } from 'next/server';
 
 export async function POST(req: Request) {
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       );
    }
 
-   const parsed = IcaoSchema.safeParse(icao);
+   const parsed = AirportSchema.safeParse(icao);
 
    if (!parsed.success) {
       return NextResponse.json({ message: 'ICAO inválido' }, { status: 400 });
