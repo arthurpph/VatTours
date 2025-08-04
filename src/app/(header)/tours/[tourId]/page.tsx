@@ -4,20 +4,14 @@ import TourMenu from '@/components/Tour/tour-menu';
 import TourPirep from '@/components/Tour/tour-pirep-ssr';
 import TourStatus from '@/components/Tour/tour-status';
 
-type Params = {
-   params: {
-      tourId: string;
-   };
-   searchParams: {
-      [key: string]: string | string[] | undefined;
-   };
+type Props = {
+   params: Promise<{ tourId: string }>;
+   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default async function TourPage({ params, searchParams }: Params) {
-   const resolvedParams = await params;
-   const resolvedSearchParams = await searchParams;
-   const tourId = resolvedParams.tourId;
-   const action = resolvedSearchParams.action;
+export default async function TourPage({ params, searchParams }: Props) {
+   const { tourId } = await params;
+   const { action } = await searchParams;
 
    if (action !== undefined && !(typeof action === 'string')) {
       return <></>;
