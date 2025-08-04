@@ -26,7 +26,7 @@ export async function POST(req: Request) {
          .insert(airportsTable)
          .values({ icao: icao.toUpperCase(), name, country });
       return NextResponse.json({ success: true });
-   } catch (ignored) {
+   } catch {
       return NextResponse.json(
          { message: 'Erro ao criar aeroporto' },
          { status: 500 },

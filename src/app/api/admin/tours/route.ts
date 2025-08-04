@@ -65,7 +65,7 @@ export async function POST(req: Request) {
       }
 
       const allIcaos = legs
-         .flatMap((leg: any) => [
+         .flatMap((leg: { departureIcao: string; arrivalIcao: string }) => [
             leg.departureIcao.toUpperCase(),
             leg.arrivalIcao.toUpperCase(),
          ])
@@ -88,13 +88,22 @@ export async function POST(req: Request) {
          );
       }
 
-      const legsToInsert = legs.map((leg: any, index: number) => ({
-         description: leg.description ?? null,
-         departureIcao: leg.departureIcao.toUpperCase(),
-         arrivalIcao: leg.arrivalIcao.toUpperCase(),
-         order: index + 1,
-         tourId,
-      }));
+      const legsToInsert = legs.map(
+         (
+            leg: {
+               description: string | null;
+               departureIcao: string;
+               arrivalIcao: string;
+            },
+            index: number,
+         ) => ({
+            description: leg.description ?? null,
+            departureIcao: leg.departureIcao.toUpperCase(),
+            arrivalIcao: leg.arrivalIcao.toUpperCase(),
+            order: index + 1,
+            tourId,
+         }),
+      );
 
       await db.insert(legsTable).values(legsToInsert);
 

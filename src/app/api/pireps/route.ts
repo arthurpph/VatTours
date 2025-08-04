@@ -35,7 +35,7 @@ export async function GET(req: Request) {
 
       const result = await query.execute();
       return NextResponse.json(result);
-   } catch (err) {
+   } catch {
       return NextResponse.json(
          { message: 'Erro ao buscar PIREPs' },
          { status: 500 },

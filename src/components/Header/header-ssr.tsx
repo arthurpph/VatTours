@@ -4,7 +4,9 @@ import HeaderClient from './header-csr';
 
 export default async function HeaderServer() {
    const session = await getServerSession(authOptions);
-   if (!session) return null;
+   if (!session) {
+      return <></>;
+   }
 
    return <HeaderClient session={session} />;
 }

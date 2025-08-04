@@ -157,7 +157,7 @@ export default async function TourStatus({ tourId }: Props) {
 
                                     {pirep.comment && (
                                        <p className="text-gray-400 mt-1 italic">
-                                          "{pirep.comment}"
+                                          {pirep.comment}
                                        </p>
                                     )}
 
@@ -167,7 +167,7 @@ export default async function TourStatus({ tourId }: Props) {
                                              Comentário do revisor:
                                           </p>
                                           <p className="italic">
-                                             "{pirep.reviewerNote}"
+                                             {pirep.reviewerNote}
                                           </p>
                                        </div>
                                     )}

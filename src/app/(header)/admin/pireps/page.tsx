@@ -38,8 +38,12 @@ export default function TourLegApprovalPage() {
          if (!res.ok) throw new Error('Falha ao carregar dados');
          const data = await res.json();
          setPireps(data);
-      } catch (err: any) {
-         setError(err.message || 'Erro inesperado');
+      } catch (err: unknown) {
+         if (err instanceof Error) {
+            setError(err.message);
+         } else {
+            setError('Erro inesperado');
+         }
       } finally {
          setLoading(false);
       }
@@ -64,8 +68,12 @@ export default function TourLegApprovalPage() {
 
          if (!res.ok) throw new Error('Falha ao atualizar status');
          setPireps((prev) => prev.filter((p) => p.id !== pirepId));
-      } catch (err: any) {
-         setError(err.message || 'Erro inesperado');
+      } catch (err: unknown) {
+         if (err instanceof Error) {
+            setError(err.message);
+         } else {
+            setError('Erro inesperado');
+         }
       } finally {
          setUpdatingId(null);
       }

@@ -55,7 +55,7 @@ export async function DELETE(req: Request) {
 
       await db.delete(airportsTable).where(eq(airportsTable.icao, icao));
       return NextResponse.json({ success: true });
-   } catch (err) {
+   } catch {
       return NextResponse.json(
          { message: 'Erro interno do servidor.' },
          { status: 500 },

@@ -1,5 +1,4 @@
 import { PUBLIC_API_ROUTES } from '@/config/api-routes';
-import { countryCodes } from '@/models/types';
 import { useEffect, useState } from 'react';
 
 type Props = {

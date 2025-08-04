@@ -5,9 +5,10 @@ import { signOut } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
 import { Role } from '@/models/role';
 import { Menu, X } from 'lucide-react';
+import { Session } from 'next-auth';
 
 type Props = {
-   session: any;
+   session: Session;
 };
 
 export default function HeaderClient({ session }: Props) {

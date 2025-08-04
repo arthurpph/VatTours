@@ -61,8 +61,7 @@ export async function PATCH(
       }
 
       return NextResponse.json({ success: true, pirep: result[0] });
-   } catch (err) {
-      console.error(err);
+   } catch {
       return NextResponse.json(
          { message: 'Erro interno ao atualizar PIREP' },
          { status: 500 },

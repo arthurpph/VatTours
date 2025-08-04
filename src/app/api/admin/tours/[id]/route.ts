@@ -31,7 +31,7 @@ export async function DELETE(req: Request) {
       await db.delete(toursTable).where(eq(toursTable.id, id));
 
       return NextResponse.json({ success: true });
-   } catch (err) {
+   } catch {
       return NextResponse.json(
          { message: 'Erro interno do servidor.' },
          { status: 500 },
