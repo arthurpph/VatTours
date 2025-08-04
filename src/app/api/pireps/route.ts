@@ -1,47 +1,32 @@
-import { db } from '@/lib/db';
 import {
-   pirepsTable,
-   usersTable,
-   legsTable,
-   toursTable,
-} from '@/lib/db/schema';
-import { getNextLegForUser, insertPirep } from '@/lib/db/queries';
+   getNextLegForUser,
+   getPirepsByUserAndStatus,
+   insertPirep,
+} from '@/lib/db/queries';
 import { PirepSchema } from '@/lib/validation';
-import { PirepStatus, pirepStatus } from '@/models/types';
-import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import z from 'zod';
 
 export async function GET(req: Request) {
+   const session = await getServerSession();
+
+   if (!session) {
+      return NextResponse.json(
+         { message: 'Usuário não autenticado' },
+         { status: 401 },
+      );
+   }
+
    const { searchParams } = new URL(req.url);
    const status = searchParams.get('status');
 
    try {
-      const query = db
-         .select({
-            id: pirepsTable.id,
-            userId: usersTable.id,
-            userName: usersTable.name,
-            legId: legsTable.id,
-            callsign: pirepsTable.callsign,
-            comment: pirepsTable.comment,
-            tourTitle: toursTable.title,
-            departureIcao: legsTable.departureIcao,
-            arrivalIcao: legsTable.arrivalIcao,
-            status: pirepsTable.status,
-         })
-         .from(pirepsTable)
-         .innerJoin(usersTable, eq(usersTable.id, pirepsTable.userId))
-         .innerJoin(legsTable, eq(legsTable.id, pirepsTable.legId))
-         .innerJoin(toursTable, eq(toursTable.id, legsTable.tourId));
-
-      if (status && pirepStatus.includes(status as PirepStatus)) {
-         query.where(eq(pirepsTable.status, status as PirepStatus));
-      }
-
-      const result = await query.execute();
-      return NextResponse.json(result);
+      const pireps = await getPirepsByUserAndStatus(
+         session.id,
+         status ?? undefined,
+      );
+      return NextResponse.json(pireps);
    } catch {
       return NextResponse.json(
          { message: 'Erro ao buscar PIREPs' },
@@ -62,7 +47,9 @@ export async function POST(req: Request) {
          );
       }
 
-      if (!tourId || isNaN(tourId)) {
+      const tourIdParse = z.number().int().nonnegative().safeParse(tourId);
+
+      if (!tourIdParse.success) {
          return NextResponse.json(
             { message: 'Tour ID inválido' },
             { status: 400 },
@@ -101,7 +88,7 @@ export async function POST(req: Request) {
          return NextResponse.json(
             {
                message: 'Dados inválidos',
-               errors: parser.success ? undefined : formattedErrors,
+               errors: formattedErrors,
             },
             { status: 400 },
          );
@@ -114,7 +101,7 @@ export async function POST(req: Request) {
          comment: comment || null,
       });
 
-      return NextResponse.json({ success: true });
+      return NextResponse.json(null, { status: 201 });
    } catch (err) {
       return NextResponse.json(
          { message: 'Erro interno do servidor' },

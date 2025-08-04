@@ -6,7 +6,7 @@ import {
    toursTable,
    usersTable,
 } from '@/lib/db/schema';
-import { CountryCode } from '@/models/types';
+import { CountryCode, PirepStatus, pirepStatus } from '@/models/types';
 import { and, asc, eq, notExists, notInArray, or, inArray } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
@@ -100,6 +100,39 @@ export async function getPirepsByTour(tourId: number) {
       .where(eq(legsTable.tourId, tourId));
 
    return pireps;
+}
+
+export async function getPirepsByUserAndStatus(
+   userId: string,
+   status?: string,
+) {
+   const baseQuery = db
+      .select({
+         id: pirepsTable.id,
+         userId: usersTable.id,
+         userName: usersTable.name,
+         legId: legsTable.id,
+         callsign: pirepsTable.callsign,
+         comment: pirepsTable.comment,
+         tourTitle: toursTable.title,
+         departureIcao: legsTable.departureIcao,
+         arrivalIcao: legsTable.arrivalIcao,
+         status: pirepsTable.status,
+      })
+      .from(pirepsTable)
+      .innerJoin(usersTable, eq(usersTable.id, pirepsTable.userId))
+      .innerJoin(legsTable, eq(legsTable.id, pirepsTable.legId))
+      .innerJoin(toursTable, eq(toursTable.id, legsTable.tourId));
+
+   const filter = [eq(pirepsTable.userId, userId)];
+
+   if (status && pirepStatus.includes(status as PirepStatus)) {
+      filter.push(eq(pirepsTable.status, status as PirepStatus));
+   }
+
+   const finalQuery = baseQuery.where(and(...filter));
+
+   return finalQuery.execute();
 }
 
 type NextLegForUserResult = {
