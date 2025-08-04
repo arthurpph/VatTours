@@ -19,7 +19,8 @@ export async function GET() {
       }));
 
       return NextResponse.json(toursWithLegs);
-   } catch {
+   } catch (err) {
+      console.error(err);
       return NextResponse.json(
          { message: 'Erro interno do servidor.' },
          { status: 500 },

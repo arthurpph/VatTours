@@ -27,7 +27,8 @@ export async function GET(req: Request) {
          status ?? undefined,
       );
       return NextResponse.json(pireps);
-   } catch {
+   } catch (err) {
+      console.error(err);
       return NextResponse.json(
          { message: 'Erro ao buscar PIREPs' },
          { status: 500 },
@@ -103,6 +104,7 @@ export async function POST(req: Request) {
 
       return NextResponse.json(null, { status: 201 });
    } catch (err) {
+      console.error(err);
       return NextResponse.json(
          { message: 'Erro interno do servidor' },
          { status: 500 },
