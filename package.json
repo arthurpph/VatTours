@@ -10,12 +10,12 @@
       "lint:fix": "next lint --fix"
    },
    "dependencies": {
-      "better-sqlite3": "^12.2.0",
       "drizzle-orm": "^0.44.4",
       "flag-icons": "^7.5.0",
       "lucide-react": "^0.536.0",
       "next": "15.4.5",
       "next-auth": "^4.24.11",
+      "postgres": "^3.4.7",
       "react": "19.1.0",
       "react-dom": "19.1.0",
       "zod": "^4.0.14"

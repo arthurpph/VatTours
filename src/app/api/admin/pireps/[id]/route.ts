@@ -1,5 +1,5 @@
-import { db } from '@/db';
-import { pirepsTable } from '@/db/schema';
+import { db } from '@/lib/db';
+import { pirepsTable } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { PirepStatus } from '@/models/types';

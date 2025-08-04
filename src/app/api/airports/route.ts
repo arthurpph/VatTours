@@ -1,8 +1,7 @@
-import { db } from '@/db';
-import { airportsTable } from '@/db/schema';
+import { getAirports } from '@/lib/db/queries';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-   const airports = await db.select().from(airportsTable);
+   const airports = await getAirports();
    return NextResponse.json(airports);
 }

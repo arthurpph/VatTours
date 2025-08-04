@@ -1,10 +1,7 @@
-import { db } from '@/db';
-import { airportsTable, legsTable, pirepsTable } from '@/db/schema';
-import { eq, asc, and, inArray } from 'drizzle-orm';
-import { alias } from 'drizzle-orm/sqlite-core';
 import LegItem from '@/components/Tour/leg-item';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
+import { getLegsWithAirports, getPirepsByUserAndLegs } from '@/lib/db/queries';
 
 type Props = {
    tourId: string;
@@ -12,40 +9,16 @@ type Props = {
 
 export default async function TourLegs({ tourId }: Props) {
    const session = await getServerSession(authOptions);
-   const depAirport = alias(airportsTable, 'depAirport');
-   const arrAirport = alias(airportsTable, 'arrAirport');
 
    if (!session) {
       return <></>;
    }
 
-   const legs = await db
-      .select({
-         id: legsTable.id,
-         departureCountry: depAirport.country,
-         departureIcao: legsTable.departureIcao,
-         arrivalCountry: arrAirport.country,
-         arrivalIcao: legsTable.arrivalIcao,
-         description: legsTable.description,
-         order: legsTable.order,
-      })
-      .from(legsTable)
-      .innerJoin(depAirport, eq(legsTable.departureIcao, depAirport.icao))
-      .innerJoin(arrAirport, eq(legsTable.arrivalIcao, arrAirport.icao))
-      .where(eq(legsTable.tourId, parseInt(tourId)))
-      .orderBy(asc(legsTable.order));
+   const legs = await getLegsWithAirports(parseInt(tourId));
 
    const legIds = legs.map((leg) => leg.id);
 
-   const pireps = await db
-      .select({ legId: pirepsTable.legId, status: pirepsTable.status })
-      .from(pirepsTable)
-      .where(
-         and(
-            eq(pirepsTable.userId, session.id),
-            inArray(pirepsTable.legId, legIds),
-         ),
-      );
+   const pireps = await getPirepsByUserAndLegs(session.id, legIds);
 
    const pirepMap = new Map<number, string>();
    pireps.forEach((p) => {

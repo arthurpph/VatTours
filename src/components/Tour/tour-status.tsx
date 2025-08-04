@@ -1,8 +1,5 @@
-import { db } from '@/db';
-import { airportsTable, legsTable, pirepsTable, usersTable } from '@/db/schema';
+import { getPirepsByTour } from '@/lib/db/queries';
 import { PirepStatus } from '@/models/types';
-import { eq } from 'drizzle-orm';
-import { alias } from 'drizzle-orm/sqlite-core';
 import { CheckCircle, Clock, XCircle } from 'lucide-react';
 
 type PirepWithUserAndLeg = {
@@ -35,34 +32,7 @@ type Props = {
 };
 
 export default async function TourStatus({ tourId }: Props) {
-   const depAirports = alias(airportsTable, 'dep_airport');
-   const arrAirports = alias(airportsTable, 'arr_airport');
-
-   const pireps = await db
-      .select({
-         id: pirepsTable.id,
-         callsign: pirepsTable.callsign,
-         comment: pirepsTable.comment,
-         reviewerNote: pirepsTable.reviewNote,
-         status: pirepsTable.status,
-         submittedAt: pirepsTable.submittedAt,
-         departureCountry: depAirports.country,
-         departureName: depAirports.name,
-         departureIcao: legsTable.departureIcao,
-         arrivalCountry: arrAirports.country,
-         arrivalName: arrAirports.name,
-         arrivalIcao: legsTable.arrivalIcao,
-         userId: usersTable.id,
-         userName: usersTable.name,
-         userEmail: usersTable.email,
-      })
-      .from(pirepsTable)
-      .innerJoin(legsTable, eq(pirepsTable.legId, legsTable.id))
-      .innerJoin(usersTable, eq(pirepsTable.userId, usersTable.id))
-      .innerJoin(depAirports, eq(legsTable.departureIcao, depAirports.icao))
-      .innerJoin(arrAirports, eq(legsTable.arrivalIcao, arrAirports.icao))
-      .where(eq(legsTable.tourId, Number(tourId)));
-
+   const pireps = await getPirepsByTour(Number(tourId));
    const grouped: Record<string, GroupedByUser> = {};
 
    for (const pirep of pireps) {

@@ -1,9 +1,7 @@
-import { db } from '@/db';
-import { usersTable } from '@/db/schema';
 import { AuthOptions, Session, User } from 'next-auth';
-import { eq } from 'drizzle-orm';
 import { JWT } from 'next-auth/jwt';
 import { redirect } from 'next/navigation';
+import { getUserById, insertUser } from '@/lib/db/queries';
 
 export const authOptions: AuthOptions = {
    providers: [
@@ -38,14 +36,10 @@ export const authOptions: AuthOptions = {
             return token;
          }
 
-         const existingUser = await db
-            .select()
-            .from(usersTable)
-            .where(eq(usersTable.id, user.id))
-            .get();
+         const existingUser = await getUserById(user.id);
 
          if (!existingUser) {
-            await db.insert(usersTable).values({
+            await insertUser({
                id: user.id,
                name: user.name,
                email: user.email,
@@ -63,11 +57,7 @@ export const authOptions: AuthOptions = {
          session.country = token.country;
          session.role = token.role;
 
-         const user = await db
-            .select()
-            .from(usersTable)
-            .where(eq(usersTable.id, token.id))
-            .get();
+         const user = await getUserById(token.id);
 
          if (!user) {
             return redirect('/auth/signout');
