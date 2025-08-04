@@ -4,7 +4,7 @@ import { eq, asc, and, inArray } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 import LegItem from '@/components/Tour/leg-item';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 type Props = {
    tourId: string;

@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { NextRequest, NextResponse } from 'next/server';
 import { PirepStatus } from '@/models/types';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 function isValidPirepStatus(
    value: string,
@@ -14,7 +14,7 @@ function isValidPirepStatus(
 
 export async function PATCH(
    req: NextRequest,
-   { params }: { params: { id: string } },
+   { params }: { params: Promise<{ id: string }> },
 ) {
    const session = await getServerSession(authOptions);
    const { id } = await params;

@@ -1,7 +1,7 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import TourPirepClientSide from './tour-pirep-csr';
 import { getNextLegForUser } from '@/lib/queries';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 export default async function TourPirep({ tourId }: { tourId: string }) {
    const session = await getServerSession(authOptions);

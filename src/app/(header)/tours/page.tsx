@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 
 export default async function ToursPage() {
    const session = await getServerSession(authOptions);
