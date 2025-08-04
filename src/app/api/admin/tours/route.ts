@@ -1,6 +1,6 @@
-import { db } from '@/db';
-import { airportsTable } from '@/db/schema';
-import { insertLegs, insertTour } from '@/lib/queries';
+import { db } from '@/lib/db';
+import { airportsTable } from '@/lib/db/schema';
+import { insertLegs, insertTour } from '@/lib/db/queries';
 import { LegSchema, TourSchema } from '@/lib/validation';
 import { inArray } from 'drizzle-orm';
 import { NextResponse } from 'next/server';

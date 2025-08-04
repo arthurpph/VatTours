@@ -1,7 +1,7 @@
 import LegItem from '@/components/Tour/leg-item';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
-import { getLegsWithAirports, getPirepsByUserAndLegs } from '@/lib/queries';
+import { getLegsWithAirports, getPirepsByUserAndLegs } from '@/lib/db/queries';
 
 type Props = {
    tourId: string;

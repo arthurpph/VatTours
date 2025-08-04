@@ -1,5 +1,5 @@
-import { db } from '@/db';
-import { toursTable } from '@/db/schema';
+import { db } from '@/lib/db';
+import { toursTable } from '@/lib/db/schema';
 import { isValidUrl } from '@/lib/utils';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';

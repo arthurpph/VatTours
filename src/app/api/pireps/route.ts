@@ -1,6 +1,11 @@
-import { db } from '@/db';
-import { pirepsTable, usersTable, legsTable, toursTable } from '@/db/schema';
-import { getNextLegForUser, insertPirep } from '@/lib/queries';
+import { db } from '@/lib/db';
+import {
+   pirepsTable,
+   usersTable,
+   legsTable,
+   toursTable,
+} from '@/lib/db/schema';
+import { getNextLegForUser, insertPirep } from '@/lib/db/queries';
 import { PirepSchema } from '@/lib/validation';
 import { PirepStatus, pirepStatus } from '@/models/types';
 import { eq } from 'drizzle-orm';

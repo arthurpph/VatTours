@@ -1,4 +1,4 @@
-import { getPirepsByTour } from '@/lib/queries';
+import { getPirepsByTour } from '@/lib/db/queries';
 import { PirepStatus } from '@/models/types';
 import { CheckCircle, Clock, XCircle } from 'lucide-react';
 

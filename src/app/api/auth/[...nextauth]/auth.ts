@@ -1,7 +1,7 @@
 import { AuthOptions, Session, User } from 'next-auth';
 import { JWT } from 'next-auth/jwt';
 import { redirect } from 'next/navigation';
-import { getUserById, insertUser } from '@/lib/queries';
+import { getUserById, insertUser } from '@/lib/db/queries';
 
 export const authOptions: AuthOptions = {
    providers: [

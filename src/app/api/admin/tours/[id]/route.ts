@@ -1,5 +1,5 @@
-import { db } from '@/db';
-import { legsTable, toursTable } from '@/db/schema';
+import { db } from '@/lib/db';
+import { legsTable, toursTable } from '@/lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 

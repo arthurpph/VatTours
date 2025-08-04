@@ -1,5 +1,5 @@
-import { db } from '@/db';
-import { airportsTable, legsTable } from '@/db/schema';
+import { db } from '@/lib/db';
+import { airportsTable, legsTable } from '@/lib/db/schema';
 import { IcaoSchema } from '@/lib/validation';
 import { eq, or } from 'drizzle-orm';
 import { NextResponse } from 'next/server';

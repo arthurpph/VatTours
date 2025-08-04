@@ -1,4 +1,4 @@
-import { insertAirport } from '@/lib/queries';
+import { insertAirport } from '@/lib/db/queries';
 import { IcaoSchema } from '@/lib/validation';
 import { NextResponse } from 'next/server';
 

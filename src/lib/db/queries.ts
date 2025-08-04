@@ -1,11 +1,11 @@
-import { db } from '@/db';
+import { db } from '@/lib/db';
 import {
    airportsTable,
    legsTable,
    pirepsTable,
    toursTable,
    usersTable,
-} from '@/db/schema';
+} from '@/lib/db/schema';
 import { CountryCode } from '@/models/types';
 import { and, asc, eq, notExists, notInArray, or, inArray } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';

@@ -1,4 +1,4 @@
-import { getAirports } from '@/lib/queries';
+import { getAirports } from '@/lib/db/queries';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
