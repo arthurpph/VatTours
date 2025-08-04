@@ -27,5 +27,5 @@ export default async function TourPirep({ tourId }: { tourId: string }) {
       );
    }
 
-   return <TourPirepClientSide userId={userId} leg={nextLegPirepResult} />;
+   return <TourPirepClientSide leg={nextLegPirepResult} />;
 }

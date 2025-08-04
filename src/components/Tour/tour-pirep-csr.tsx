@@ -6,11 +6,10 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 type Props = {
-   userId: string;
    leg: Leg;
 };
 
-export default function TourPirepClientSide({ userId, leg }: Props) {
+export default function TourPirepClientSide({ leg }: Props) {
    const router = useRouter();
 
    const [callsign, setCallsign] = useState('');
