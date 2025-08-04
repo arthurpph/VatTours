@@ -11,6 +11,7 @@ import { PirepStatus, pirepStatus } from '@/models/types';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import z from 'zod';
 
 export async function GET(req: Request) {
    const { searchParams } = new URL(req.url);
@@ -61,6 +62,13 @@ export async function POST(req: Request) {
          );
       }
 
+      if (!tourId || isNaN(tourId)) {
+         return NextResponse.json(
+            { message: 'Tour ID inválido' },
+            { status: 400 },
+         );
+      }
+
       const userId = session.id;
 
       const nextLegPirepResult = await getNextLegForUser(
@@ -87,9 +95,14 @@ export async function POST(req: Request) {
          comment,
       });
 
-      if (!parser.success || !callsign || !tourId || isNaN(tourId)) {
+      if (!parser.success) {
+         const formattedErrors = z.treeifyError(parser.error);
+
          return NextResponse.json(
-            { message: 'Dados inválidos' },
+            {
+               message: 'Dados inválidos',
+               errors: parser.success ? undefined : formattedErrors,
+            },
             { status: 400 },
          );
       }
@@ -103,7 +116,6 @@ export async function POST(req: Request) {
 
       return NextResponse.json({ success: true });
    } catch (err) {
-      console.error(err);
       return NextResponse.json(
          { message: 'Erro interno do servidor' },
          { status: 500 },
