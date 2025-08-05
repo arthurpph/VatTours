@@ -47,7 +47,7 @@ export default function HeaderClient({ session }: Props) {
       <header className="relative z-10 flex h-[70px] items-center justify-between bg-gray-900 px-6 text-white shadow-lg md:px-12">
          <div className="text-2xl font-extrabold tracking-tight">
             <Link href="/" className="transition-colors hover:text-blue-400">
-               VAT Tours
+               VatTours
             </Link>
          </div>
 

@@ -7,11 +7,17 @@ export default withAuth({
    },
    callbacks: {
       authorized: ({ token, req }) => {
+         const publicPaths = ['/logo.png', '/favicon.svg'];
+         const path = req.nextUrl.pathname;
+
+         if (publicPaths.some((p) => path.startsWith(p))) {
+            return true;
+         }
+
          if (!token) {
             return false;
          }
 
-         const path = req.nextUrl.pathname;
          const adminPaths = ['/admin', '/api/admin'];
 
          if (adminPaths.some((p) => path.startsWith(p))) {
