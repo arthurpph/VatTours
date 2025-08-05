@@ -24,7 +24,7 @@ export default async function TourPage({ params, searchParams }: Props) {
    };
 
    return (
-      <main className="min-h-screen w-full bg-gradient-to-b from-gray-950 to-gray-900 text-white py-8 flex flex-col items-center gap-20">
+      <main className="flex min-h-screen w-full flex-col items-center gap-20 bg-gradient-to-b from-gray-950 to-gray-900 py-8 text-white">
          <TourMenu />
          {actionComponents[action ?? ''] ?? <TourInfo tourId={tourId} />}
       </main>
