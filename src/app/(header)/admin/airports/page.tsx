@@ -81,14 +81,14 @@ export default function CreateAirportPage() {
    };
 
    return (
-      <div className="min-w-screen min-h-screen max-w-4xl mx-auto p-6 bg-gray-900 text-gray-100">
-         <h1 className="text-3xl font-bold mb-6">Criar Novo Aeroporto</h1>
-         <form onSubmit={handleSubmit} className="space-y-6 mb-10">
+      <div className="mx-auto min-h-screen max-w-4xl min-w-screen bg-gray-900 p-6 text-gray-100">
+         <h1 className="mb-6 text-3xl font-bold">Criar Novo Aeroporto</h1>
+         <form onSubmit={handleSubmit} className="mb-10 space-y-6">
             <div>
-               <label className="block font-medium mb-1">ICAO</label>
+               <label className="mb-1 block font-medium">ICAO</label>
                <input
                   type="text"
-                  className="w-full max-w-lg border border-gray-700 bg-gray-800 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full max-w-lg rounded border border-gray-700 bg-gray-800 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   value={icao}
                   onChange={(e) => setIcao(e.target.value)}
                   required
@@ -96,9 +96,9 @@ export default function CreateAirportPage() {
             </div>
 
             <div>
-               <label className="block font-medium mb-1">Name</label>
+               <label className="mb-1 block font-medium">Name</label>
                <textarea
-                  className="w-full max-w-lg border border-gray-700 bg-gray-800 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full max-w-lg rounded border border-gray-700 bg-gray-800 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -107,7 +107,7 @@ export default function CreateAirportPage() {
             </div>
 
             <div>
-               <label className="block font-medium mb-1">País</label>
+               <label className="mb-1 block font-medium">País</label>
                <div className="max-w-lg">
                   <CountrySelector country={country} setCountry={setCountry} />
                </div>
@@ -115,7 +115,7 @@ export default function CreateAirportPage() {
 
             <button
                type="submit"
-               className="bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded mt-4 transition-colors"
+               className="mt-4 rounded bg-green-600 px-8 py-3 text-white transition-colors hover:bg-green-500"
             >
                Criar Aeroporto
             </button>
@@ -130,7 +130,7 @@ export default function CreateAirportPage() {
                {airports.map((airport, index) => (
                   <li
                      key={index}
-                     className="border border-gray-700 p-4 rounded flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-800"
+                     className="flex flex-col gap-4 rounded border border-gray-700 bg-gray-800 p-4 md:flex-row md:items-center md:justify-between"
                   >
                      <div className="flex items-center gap-4">
                         <div>
@@ -141,7 +141,7 @@ export default function CreateAirportPage() {
                      </div>
                      <button
                         onClick={() => handleDelete(airport.icao)}
-                        className="bg-red-600 hover:bg-red-500 text-white px-5 py-2 rounded self-start md:self-auto transition-colors"
+                        className="self-start rounded bg-red-600 px-5 py-2 text-white transition-colors hover:bg-red-500 md:self-auto"
                      >
                         Excluir
                      </button>

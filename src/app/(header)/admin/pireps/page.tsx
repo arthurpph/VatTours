@@ -80,8 +80,8 @@ export default function TourLegApprovalPage() {
    }
 
    return (
-      <div className="min-w-screen min-h-screen max-w-4xl mx-auto p-6 bg-gray-900 text-white">
-         <h2 className="text-3xl font-bold mb-6 text-center">
+      <div className="mx-auto min-h-screen max-w-4xl min-w-screen bg-gray-900 p-6 text-white">
+         <h2 className="mb-6 text-center text-3xl font-bold">
             ✈️ Aprovação de Pernas
          </h2>
 
@@ -102,7 +102,7 @@ export default function TourLegApprovalPage() {
             {pireps.map((pirep) => (
                <li
                   key={pirep.id}
-                  className="border border-gray-700 rounded-xl p-6 bg-gray-800 shadow-lg space-y-4"
+                  className="space-y-4 rounded-xl border border-gray-700 bg-gray-800 p-6 shadow-lg"
                >
                   <div className="space-y-1">
                      <p>
@@ -128,7 +128,7 @@ export default function TourLegApprovalPage() {
                   </div>
 
                   <textarea
-                     className="w-full mt-4 p-2 bg-gray-700 border border-gray-600 rounded text-sm text-white"
+                     className="mt-4 w-full rounded border border-gray-600 bg-gray-700 p-2 text-sm text-white"
                      rows={2}
                      placeholder="Comentário (opcional)"
                      value={reviewComments[pirep.id] || ''}
@@ -140,18 +140,18 @@ export default function TourLegApprovalPage() {
                      }
                   />
 
-                  <div className="flex gap-4 mt-4">
+                  <div className="mt-4 flex gap-4">
                      <button
                         disabled={updatingId === pirep.id}
                         onClick={() => updateStatus(pirep.id, 'approved')}
-                        className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded disabled:opacity-50 transition"
+                        className="flex-1 rounded bg-green-600 py-2 font-semibold text-white transition hover:bg-green-700 disabled:opacity-50"
                      >
                         ✅ Aprovar
                      </button>
                      <button
                         disabled={updatingId === pirep.id}
                         onClick={() => updateStatus(pirep.id, 'rejected')}
-                        className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded disabled:opacity-50 transition"
+                        className="flex-1 rounded bg-red-600 py-2 font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
                      >
                         ❌ Reprovar
                      </button>

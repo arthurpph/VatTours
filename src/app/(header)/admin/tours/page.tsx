@@ -110,14 +110,14 @@ export default function TourManagePage() {
    };
 
    return (
-      <div className="min-w-screen max-w-4xl mx-auto p-6 bg-gray-900 text-gray-100">
-         <h1 className="text-3xl font-bold mb-6">Criar Novo Tour</h1>
-         <form onSubmit={handleSubmit} className="space-y-6 mb-10">
+      <div className="mx-auto max-w-4xl min-w-screen bg-gray-900 p-6 text-gray-100">
+         <h1 className="mb-6 text-3xl font-bold">Criar Novo Tour</h1>
+         <form onSubmit={handleSubmit} className="mb-10 space-y-6">
             <div>
-               <label className="block font-medium mb-1">Título</label>
+               <label className="mb-1 block font-medium">Título</label>
                <input
                   type="text"
-                  className="w-full max-w-lg border border-gray-700 bg-gray-800 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full max-w-lg rounded border border-gray-700 bg-gray-800 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
@@ -125,9 +125,9 @@ export default function TourManagePage() {
             </div>
 
             <div>
-               <label className="block font-medium mb-1">Descrição</label>
+               <label className="mb-1 block font-medium">Descrição</label>
                <textarea
-                  className="w-full max-w-lg border border-gray-700 bg-gray-800 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full max-w-lg rounded border border-gray-700 bg-gray-800 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={4}
@@ -135,10 +135,10 @@ export default function TourManagePage() {
             </div>
 
             <div>
-               <label className="block font-medium mb-1">Imagem (URL)</label>
+               <label className="mb-1 block font-medium">Imagem (URL)</label>
                <input
                   type="text"
-                  className="w-full max-w-lg border border-gray-700 bg-gray-800 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full max-w-lg rounded border border-gray-700 bg-gray-800 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
                   required
@@ -146,18 +146,18 @@ export default function TourManagePage() {
             </div>
 
             <div>
-               <h2 className="text-xl font-semibold mb-4">Legs</h2>
+               <h2 className="mb-4 text-xl font-semibold">Legs</h2>
                {legs.map((leg, index) => (
                   <div
                      key={index}
-                     className="border border-gray-700 p-4 mb-6 rounded space-y-4 bg-gray-800"
+                     className="mb-6 space-y-4 rounded border border-gray-700 bg-gray-800 p-4"
                   >
                      <div>
-                        <label className="block font-medium mb-1">
+                        <label className="mb-1 block font-medium">
                            Descrição
                         </label>
                         <textarea
-                           className="w-full max-w-lg border border-gray-700 bg-gray-700 p-2 rounded text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           className="w-full max-w-lg rounded border border-gray-700 bg-gray-700 p-2 text-gray-100 placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                            value={leg.description}
                            onChange={(e) =>
                               handleLegChange(
@@ -169,9 +169,9 @@ export default function TourManagePage() {
                            rows={3}
                         />
                      </div>
-                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div>
-                           <label className="block font-medium mb-1">
+                           <label className="mb-1 block font-medium">
                               Departure ICAO
                            </label>
                            <AirportSelector
@@ -182,7 +182,7 @@ export default function TourManagePage() {
                            />
                         </div>
                         <div>
-                           <label className="block font-medium mb-1">
+                           <label className="mb-1 block font-medium">
                               Arrival ICAO
                            </label>
                            <AirportSelector
@@ -198,7 +198,7 @@ export default function TourManagePage() {
                         <button
                            type="button"
                            onClick={() => handleRemoveLeg(index)}
-                           className="text-red-500 text-sm mt-2 hover:text-red-400 transition-colors"
+                           className="mt-2 text-sm text-red-500 transition-colors hover:text-red-400"
                         >
                            Remover Leg
                         </button>
@@ -208,7 +208,7 @@ export default function TourManagePage() {
                <button
                   type="button"
                   onClick={handleAddLeg}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded transition-colors"
+                  className="rounded bg-indigo-600 px-5 py-2 text-white transition-colors hover:bg-indigo-500"
                >
                   Adicionar Leg
                </button>
@@ -216,7 +216,7 @@ export default function TourManagePage() {
 
             <button
                type="submit"
-               className="bg-green-600 hover:bg-green-500 text-white px-8 py-3 rounded mt-6 transition-colors"
+               className="mt-6 rounded bg-green-600 px-8 py-3 text-white transition-colors hover:bg-green-500"
             >
                Criar Tour
             </button>
@@ -224,7 +224,7 @@ export default function TourManagePage() {
 
          <hr className="my-8 border-gray-700" />
 
-         <h2 className="text-2xl font-semibold mb-4">Tours Existentes</h2>
+         <h2 className="mb-4 text-2xl font-semibold">Tours Existentes</h2>
 
          {loading ? (
             <p>Carregando...</p>
@@ -235,7 +235,7 @@ export default function TourManagePage() {
                {tours.map((tour) => (
                   <li
                      key={tour.id}
-                     className="border border-gray-700 p-4 rounded flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-800"
+                     className="flex flex-col gap-4 rounded border border-gray-700 bg-gray-800 p-4 md:flex-row md:items-center md:justify-between"
                   >
                      <div className="flex items-center gap-4">
                         {tour.image && (
@@ -244,20 +244,20 @@ export default function TourManagePage() {
                               alt={tour.title}
                               width={1000}
                               height={1000}
-                              className="w-24 h-16 object-cover rounded"
+                              className="h-16 w-24 rounded object-cover"
                            />
                         )}
                         <div>
                            <h3 className="text-xl font-bold">{tour.title}</h3>
                            <p>{tour.description}</p>
-                           <p className="text-sm mt-1">
+                           <p className="mt-1 text-sm">
                               Legs: {tour.legs.length}
                            </p>
                         </div>
                      </div>
                      <button
                         onClick={() => handleDelete(tour.id)}
-                        className="bg-red-600 hover:bg-red-500 text-white px-5 py-2 rounded self-start md:self-auto transition-colors"
+                        className="self-start rounded bg-red-600 px-5 py-2 text-white transition-colors hover:bg-red-500 md:self-auto"
                      >
                         Excluir
                      </button>
