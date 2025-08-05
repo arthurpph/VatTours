@@ -16,8 +16,8 @@ export default async function TourPirep({ tourId }: { tourId: string }) {
 
    if (!nextLegPirepResult) {
       return (
-         <div className="max-w-4xl mx-auto mt-10 p-6 bg-gray-800 text-white rounded-xl shadow-md">
-            <h2 className="text-2xl font-bold mb-6 text-center">PIREP</h2>
+         <div className="mx-auto mt-10 max-w-4xl rounded-xl bg-gray-800 p-6 text-white shadow-md">
+            <h2 className="mb-6 text-center text-2xl font-bold">PIREP</h2>
             <p className="text-center">
                Não é possível reportar um novo PIREP no momento.
             </p>

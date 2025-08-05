@@ -15,15 +15,15 @@ export default async function TourInfo({ tourId }: Props) {
 
    if (!tour) {
       return (
-         <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-            <p className="text-white text-xl">Tour não encontrado.</p>
+         <div className="flex min-h-screen items-center justify-center bg-gray-900">
+            <p className="text-xl text-white">Tour não encontrado.</p>
          </div>
       );
    }
 
    return (
       <section className="flex items-center justify-center">
-         <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+         <div className="grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
             <div className="overflow-hidden rounded-xl shadow-md">
                {isValidUrl(tour.image) ? (
                   <Image
@@ -31,17 +31,17 @@ export default async function TourInfo({ tourId }: Props) {
                      alt={tour.title}
                      width={1000}
                      height={1000}
-                     className="w-full h-full object-cover rounded-xl max-h-[500px]"
+                     className="h-full max-h-[500px] w-full rounded-xl object-cover"
                   />
                ) : (
-                  <div className="w-full h-100 bg-gray-700 flex items-center justify-center">
+                  <div className="flex h-100 w-full items-center justify-center bg-gray-700">
                      <p className="text-gray-400">Imagem inválida</p>
                   </div>
                )}
             </div>
             <div className="space-y-10 text-white">
-               <div className="text-left space-y-4">
-                  <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight">
+               <div className="space-y-4 text-left">
+                  <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
                      {tour.title}
                   </h1>
                </div>

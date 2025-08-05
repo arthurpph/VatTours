@@ -13,8 +13,8 @@ export default function SettingsPage() {
 
    if (status === 'loading') {
       return (
-         <main className="bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 min-h-screen flex items-center justify-center text-white">
-            <p className="text-xl font-semibold animate-pulse">Carregando...</p>
+         <main className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white">
+            <p className="animate-pulse text-xl font-semibold">Carregando...</p>
          </main>
       );
    }
@@ -26,29 +26,29 @@ export default function SettingsPage() {
    return (
       <>
          <main
-            className={`bg-gray-900 min-h-screen px-6 py-12 transition-all duration-300 ${
+            className={`min-h-screen bg-gray-900 px-6 py-12 transition-all duration-300 ${
                showPolicy ? 'pointer-events-none select-none' : ''
             }`}
             aria-hidden={showPolicy}
          >
-            <div className="max-w-5xl mx-auto mb-14 text-center px-4">
-               <h1 className="text-6xl font-extrabold text-white mb-4 tracking-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
+            <div className="mx-auto mb-14 max-w-5xl px-4 text-center">
+               <h1 className="mb-4 text-6xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
                   Configurações
                </h1>
-               <p className="text-gray-400 text-xl max-w-3xl mx-auto mb-12">
+               <p className="mx-auto mb-12 max-w-3xl text-xl text-gray-400">
                   Abaixo você pode acessar nossa política de privacidade.
                </p>
 
-               <div className="flex items-center justify-center gap-6 mb-12">
+               <div className="mb-12 flex items-center justify-center gap-6">
                   <button
                      onClick={() => setShowPolicy(true)}
-                     className="flex items-center gap-3 px-10 py-4 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 rounded-full font-semibold text-white shadow-[0_10px_20px_rgba(99,102,241,0.6)] hover:shadow-[0_12px_28px_rgba(99,102,241,0.8)] transition duration-300 transform active:scale-[0.97]"
+                     className="flex transform items-center gap-3 rounded-full bg-indigo-600 px-10 py-4 font-semibold text-white shadow-[0_10px_20px_rgba(99,102,241,0.6)] transition duration-300 hover:bg-indigo-700 hover:shadow-[0_12px_28px_rgba(99,102,241,0.8)] active:scale-[0.97] active:bg-indigo-800"
                      type="button"
                   >
                      Mostrar Política de Privacidade
-                     <ChevronDownIcon className="w-6 h-6 text-white animate-fadeIn" />
+                     <ChevronDownIcon className="animate-fadeIn h-6 w-6 text-white" />
                   </button>
-                  <span className="text-gray-400 select-none font-mono tracking-wider">
+                  <span className="font-mono tracking-wider text-gray-400 select-none">
                      Versão:{' '}
                      <span className="text-indigo-400">
                         {AGREEMENT_VERSION}
@@ -69,7 +69,7 @@ export default function SettingsPage() {
             leaveTo="opacity-0"
          >
             <div
-               className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4"
+               className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
                role="dialog"
                aria-modal="true"
                aria-labelledby="modal-title"
@@ -84,24 +84,16 @@ export default function SettingsPage() {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                >
-                  <div className="relative max-w-3xl w-full">
+                  <div className="relative w-full max-w-3xl">
                      <button
                         onClick={() => setShowPolicy(false)}
                         aria-label="Fechar política de privacidade"
-                        className="
-          absolute top-4 right-4 
-          w-10 h-10 flex items-center justify-center rounded-full
-          bg-indigo-600 bg-opacity-80 hover:bg-indigo-700 transition 
-          text-white select-none
-          shadow-lg
-          cursor-pointer
-          z-10
-        "
+                        className="bg-opacity-80 absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-indigo-600 text-white shadow-lg transition select-none hover:bg-indigo-700"
                         type="button"
                      >
                         <svg
                            xmlns="http://www.w3.org/2000/svg"
-                           className="w-6 h-6 pointer-events-none"
+                           className="pointer-events-none h-6 w-6"
                            fill="none"
                            viewBox="0 0 24 24"
                            stroke="currentColor"
@@ -116,24 +108,17 @@ export default function SettingsPage() {
                      </button>
 
                      <section
-                        className="
-          bg-gradient-to-tr from-indigo-900/40 via-indigo-800/30 to-indigo-900/40
-          backdrop-blur-xl rounded-4xl shadow-xl p-10 max-h-[80vh]
-          overflow-y-auto scrollbar-thin
-          scrollbar-thumb-indigo-400 scrollbar-thumb-rounded-md
-          scrollbar-track-gray-900 scrollbar-track-rounded-md
-          text-gray-200
-        "
+                        className="scrollbar-thin scrollbar-thumb-indigo-400 scrollbar-thumb-rounded-md scrollbar-track-gray-900 scrollbar-track-rounded-md max-h-[80vh] overflow-y-auto rounded-4xl bg-gradient-to-tr from-indigo-900/40 via-indigo-800/30 to-indigo-900/40 p-10 text-gray-200 shadow-xl backdrop-blur-xl"
                         onClick={(e) => e.stopPropagation()}
                      >
                         <h2
                            id="modal-title"
-                           className="text-4xl font-extrabold drop-shadow-md mb-8"
+                           className="mb-8 text-4xl font-extrabold drop-shadow-md"
                         >
                            Política de Privacidade
                         </h2>
 
-                        <p className="leading-relaxed text-lg max-w-prose mx-auto mb-10">
+                        <p className="mx-auto mb-10 max-w-prose text-lg leading-relaxed">
                            Respeitamos sua privacidade e estamos comprometidos
                            em proteger seus dados pessoais. Todas as informações
                            fornecidas são usadas exclusivamente para fins de
@@ -141,10 +126,10 @@ export default function SettingsPage() {
                            garantir a segurança da plataforma.
                         </p>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Coleta de Dados
                         </h3>
-                        <ul className="list-disc list-inside space-y-3 max-w-prose mx-auto mb-10 text-indigo-200 text-lg">
+                        <ul className="mx-auto mb-10 max-w-prose list-inside list-disc space-y-3 text-lg text-indigo-200">
                            <li>Nome e identificador da conta VATSIM</li>
                            <li>Imagem de perfil (se fornecida pela VATSIM)</li>
                            <li>
@@ -153,10 +138,10 @@ export default function SettingsPage() {
                            </li>
                         </ul>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Uso de Dados
                         </h3>
-                        <ul className="list-disc list-inside space-y-3 max-w-prose mx-auto mb-10 text-indigo-200 text-lg">
+                        <ul className="mx-auto mb-10 max-w-prose list-inside list-disc space-y-3 text-lg text-indigo-200">
                            <li>Melhorar sua experiência como usuário</li>
                            <li>
                               Gerenciar seu progresso e participação nos tours
@@ -166,10 +151,10 @@ export default function SettingsPage() {
                            </li>
                         </ul>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Armazenamento e Segurança
                         </h3>
-                        <p className="max-w-prose mx-auto mb-10 text-indigo-200 text-lg leading-relaxed">
+                        <p className="mx-auto mb-10 max-w-prose text-lg leading-relaxed text-indigo-200">
                            Os dados são armazenados em servidores seguros e
                            acessíveis apenas por administradores autorizados.
                            Implementamos medidas técnicas e organizacionais para
@@ -177,33 +162,33 @@ export default function SettingsPage() {
                            autorizados, perda ou divulgação indevida.
                         </p>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Cookies
                         </h3>
-                        <p className="max-w-prose mx-auto mb-10 text-indigo-200 text-lg leading-relaxed">
+                        <p className="mx-auto mb-10 max-w-prose text-lg leading-relaxed text-indigo-200">
                            Utilizamos cookies essenciais para garantir o
                            funcionamento da plataforma. Não utilizamos cookies
                            para rastreamento ou publicidade de terceiros.
                         </p>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Compartilhamento
                         </h3>
-                        <p className="max-w-prose mx-auto mb-10 text-indigo-200 text-lg leading-relaxed">
+                        <p className="mx-auto mb-10 max-w-prose text-lg leading-relaxed text-indigo-200">
                            Não compartilhamos seus dados com terceiros.
                         </p>
 
-                        <h3 className="text-3xl font-semibold text-indigo-400 mb-6">
+                        <h3 className="mb-6 text-3xl font-semibold text-indigo-400">
                            Seus Direitos
                         </h3>
-                        <p className="max-w-prose mx-auto mb-6 text-indigo-200 text-lg leading-relaxed">
+                        <p className="mx-auto mb-6 max-w-prose text-lg leading-relaxed text-indigo-200">
                            Você pode solicitar a exclusão de seus dados a
                            qualquer momento entrando em contato com a
                            administração da plataforma. Também pode visualizar
                            ou exportar os dados disponíveis no seu perfil.
                         </p>
 
-                        <p className="text-indigo-400 text-sm pt-6 border-t border-indigo-600 max-w-prose mx-auto">
+                        <p className="mx-auto max-w-prose border-t border-indigo-600 pt-6 text-sm text-indigo-400">
                            Última atualização: Agosto de 2025
                         </p>
                      </section>

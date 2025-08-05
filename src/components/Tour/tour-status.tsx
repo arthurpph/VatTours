@@ -53,24 +53,24 @@ export default async function TourStatus({ tourId }: Props) {
       switch (status) {
          case 'approved':
             return (
-               <CheckCircle className="text-green-500 w-4 h-4 inline-block" />
+               <CheckCircle className="inline-block h-4 w-4 text-green-500" />
             );
          case 'pending':
-            return <Clock className="text-yellow-400 w-4 h-4 inline-block" />;
+            return <Clock className="inline-block h-4 w-4 text-yellow-400" />;
          case 'rejected':
-            return <XCircle className="text-red-500 w-4 h-4 inline-block" />;
+            return <XCircle className="inline-block h-4 w-4 text-red-500" />;
       }
    };
 
    return (
-      <section className="w-full px-4 py-8 sm:px-6 lg:px-8 text-gray-100">
-         <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-extrabold text-center mb-10 tracking-tight">
+      <section className="w-full px-4 py-8 text-gray-100 sm:px-6 lg:px-8">
+         <div className="mx-auto max-w-5xl">
+            <h2 className="mb-10 text-center text-4xl font-extrabold tracking-tight">
                Status
             </h2>
 
             {groupedPireps.length === 0 ? (
-               <p className="text-gray-400 text-center text-lg">
+               <p className="text-center text-lg text-gray-400">
                   Nenhum PIREP encontrado.
                </p>
             ) : (
@@ -78,7 +78,7 @@ export default async function TourStatus({ tourId }: Props) {
                   {groupedPireps.map((user, index) => (
                      <li
                         key={index}
-                        className="bg-gradient-to-r from-gray-900 to-gray-800 border border-gray-700 p-6 rounded-xl shadow"
+                        className="rounded-xl border border-gray-700 bg-gradient-to-r from-gray-900 to-gray-800 p-6 shadow"
                      >
                         <div className="mb-4">
                            <h3 className="text-2xl font-semibold text-white">
@@ -90,10 +90,10 @@ export default async function TourStatus({ tourId }: Props) {
                            {user.pireps.map((pirep, index) => (
                               <li
                                  key={index}
-                                 className="bg-gray-900 p-4 rounded-lg flex flex-col gap-3 border border-gray-700"
+                                 className="flex flex-col gap-3 rounded-lg border border-gray-700 bg-gray-900 p-4"
                               >
                                  <div className="text-sm">
-                                    <p className="font-medium text-gray-100 mb-1">
+                                    <p className="mb-1 font-medium text-gray-100">
                                        <span
                                           className={`fi fi-${pirep.departureCountry.toLowerCase()} mr-1`}
                                        ></span>
@@ -108,7 +108,7 @@ export default async function TourStatus({ tourId }: Props) {
                                     </p>
 
                                     <p className="text-gray-300">
-                                       <span className="text-white font-semibold">
+                                       <span className="font-semibold text-white">
                                           {pirep.callsign}
                                        </span>{' '}
                                        - <StatusIcon status={pirep.status} />{' '}
@@ -126,13 +126,13 @@ export default async function TourStatus({ tourId }: Props) {
                                     </p>
 
                                     {pirep.comment && (
-                                       <p className="text-gray-400 mt-1 italic">
+                                       <p className="mt-1 text-gray-400 italic">
                                           {pirep.comment}
                                        </p>
                                     )}
 
                                     {pirep.reviewerNote && (
-                                       <div className="mt-3 border-l-4 border-blue-500 pl-3 text-blue-300 text-sm bg-blue-950/30 rounded-md py-2">
+                                       <div className="mt-3 rounded-md border-l-4 border-blue-500 bg-blue-950/30 py-2 pl-3 text-sm text-blue-300">
                                           <p className="font-medium">
                                              Comentário do revisor:
                                           </p>

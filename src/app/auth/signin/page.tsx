@@ -11,30 +11,21 @@ export default function SignIn() {
    }
 
    return (
-      <div className="bg-gradient-to-tr from-gray-900 via-black to-gray-800 min-h-screen flex justify-center items-center px-4">
-         <div className="bg-gray-900 bg-opacity-80 backdrop-blur-md shadow-lg rounded-xl w-full max-w-md p-10 flex flex-col items-center gap-10">
-            <h1 className="text-4xl font-extrabold text-white tracking-wide drop-shadow-md">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-gray-900 via-black to-gray-800 px-4">
+         <div className="bg-opacity-80 flex w-full max-w-md flex-col items-center gap-10 rounded-xl bg-gray-900 p-10 shadow-lg backdrop-blur-md">
+            <h1 className="text-4xl font-extrabold tracking-wide text-white drop-shadow-md">
                VATtours
             </h1>
 
             <button
-               className="
-            bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
-            transition-colors duration-300 
-            h-14 w-full rounded-lg 
-            text-white text-lg font-semibold 
-            shadow-md 
-            flex items-center justify-center
-            focus:outline-none focus:ring-4 focus:ring-blue-400
-            select-none
-            "
+               className="flex h-14 w-full items-center justify-center rounded-lg bg-blue-600 text-lg font-semibold text-white shadow-md transition-colors duration-300 select-none hover:bg-blue-700 focus:ring-4 focus:ring-blue-400 focus:outline-none active:bg-blue-800"
                onClick={() => signIn('vatsim', { callbackUrl: '/' })}
                aria-label="Entrar com VATSIM"
             >
                Entrar com VATSIM
             </button>
 
-            <p className="text-gray-400 text-center text-sm">
+            <p className="text-center text-sm text-gray-400">
                Faça login usando sua conta VATSIM para acessar o VATtours.
             </p>
          </div>

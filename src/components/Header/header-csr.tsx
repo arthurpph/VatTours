@@ -44,26 +44,26 @@ export default function HeaderClient({ session }: Props) {
    }, []);
 
    return (
-      <header className="bg-gray-900 text-white shadow-lg h-[70px] px-6 md:px-12 flex items-center justify-between relative z-10">
+      <header className="relative z-10 flex h-[70px] items-center justify-between bg-gray-900 px-6 text-white shadow-lg md:px-12">
          <div className="text-2xl font-extrabold tracking-tight">
-            <Link href="/" className="hover:text-blue-400 transition-colors">
+            <Link href="/" className="transition-colors hover:text-blue-400">
                VAT Tours
             </Link>
          </div>
 
-         <nav className="hidden md:flex gap-8 text-sm font-medium">
-            <Link href="/" className="hover:text-blue-400 transition-colors">
+         <nav className="hidden gap-8 text-sm font-medium md:flex">
+            <Link href="/" className="transition-colors hover:text-blue-400">
                Home
             </Link>
             <Link
                href="/tours"
-               className="hover:text-blue-400 transition-colors"
+               className="transition-colors hover:text-blue-400"
             >
                Tours
             </Link>
             <Link
                href="/settings"
-               className="hover:text-blue-400 transition-colors"
+               className="transition-colors hover:text-blue-400"
             >
                Configurações
             </Link>
@@ -71,7 +71,7 @@ export default function HeaderClient({ session }: Props) {
 
          <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-white"
+            className="text-white md:hidden"
          >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
          </button>
@@ -79,18 +79,18 @@ export default function HeaderClient({ session }: Props) {
          <div ref={userMenuRef} className="relative ml-4">
             <button
                onClick={() => setUserMenuOpen(!userMenuOpen)}
-               className="bg-gray-800 px-3 py-1 rounded-xl text-sm font-semibold cursor-pointer hover:scale-115"
+               className="cursor-pointer rounded-xl bg-gray-800 px-3 py-1 text-sm font-semibold hover:scale-115"
             >
                {session.user?.name}
             </button>
 
             {userMenuOpen && (
-               <ul className="absolute right-0 mt-2 bg-gray-800 text-white rounded-md shadow-lg w-40 py-2 z-50 border border-gray-700">
+               <ul className="absolute right-0 z-50 mt-2 w-40 rounded-md border border-gray-700 bg-gray-800 py-2 text-white shadow-lg">
                   {role.isAtLeast('admin') && (
                      <li>
                         <Link
                            href="/admin"
-                           className="block px-4 py-2 hover:bg-gray-700 transition-colors"
+                           className="block px-4 py-2 transition-colors hover:bg-gray-700"
                            onClick={closeUserMenu}
                         >
                            Admin
@@ -103,7 +103,7 @@ export default function HeaderClient({ session }: Props) {
                            closeUserMenu();
                            signOut();
                         }}
-                        className="w-full text-left px-4 py-2 hover:bg-gray-700 transition-colors cursor-pointer"
+                        className="w-full cursor-pointer px-4 py-2 text-left transition-colors hover:bg-gray-700"
                      >
                         Sair
                      </button>
@@ -115,7 +115,7 @@ export default function HeaderClient({ session }: Props) {
          {menuOpen && (
             <div
                ref={menuRef}
-               className="absolute top-[70px] left-0 w-full bg-gray-900 text-white flex flex-col gap-4 p-4 md:hidden z-20"
+               className="absolute top-[70px] left-0 z-20 flex w-full flex-col gap-4 bg-gray-900 p-4 text-white md:hidden"
             >
                <Link
                   href="/"

@@ -14,26 +14,26 @@ export default async function ToursPage() {
    }
 
    return (
-      <main className="bg-gray-900 min-h-screen px-6 py-12">
-         <div className="max-w-5xl mx-auto mb-14 text-center px-4">
-            <h1 className="text-5xl font-extrabold text-white mb-3 leading-tight">
+      <main className="min-h-screen bg-gray-900 px-6 py-12">
+         <div className="mx-auto mb-14 max-w-5xl px-4 text-center">
+            <h1 className="mb-3 text-5xl leading-tight font-extrabold text-white">
                Olá, {session.user?.name}
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto">
+            <p className="mx-auto max-w-3xl text-lg text-gray-400">
                Segue abaixo todos os nossos tours disponíveis para você explorar
                e aproveitar ao máximo sua experiência de voo.
             </p>
          </div>
 
          <section
-            className={`max-w-7xl mx-auto grid gap-10 px-4 ${
+            className={`mx-auto grid max-w-7xl gap-10 px-4 ${
                tours.length === 1
                   ? 'grid-cols-1 place-items-center'
                   : 'grid-cols-[repeat(auto-fit,minmax(280px,1fr))]'
             }`}
          >
             {tours.length === 0 ? (
-               <p className="text-gray-400 text-center mt-12 text-lg">
+               <p className="mt-12 text-center text-lg text-gray-400">
                   Nenhum tour disponível no momento.
                </p>
             ) : (
@@ -41,31 +41,31 @@ export default async function ToursPage() {
                   <Link
                      key={index}
                      href={`/tours/${tour.id}`}
-                     className="group transform transition-transform hover:scale-[1.03] hover:shadow-2xl duration-300 max-w-md w-full mx-auto"
+                     className="group mx-auto w-full max-w-md transform transition-transform duration-300 hover:scale-[1.03] hover:shadow-2xl"
                   >
-                     <article className="bg-gray-800 rounded-3xl shadow-lg flex flex-col overflow-hidden h-full">
-                        <div className="relative w-full h-64 rounded-3xl overflow-hidden shadow-lg group transition-transform duration-300 group-hover:scale-[1.02]">
+                     <article className="flex h-full flex-col overflow-hidden rounded-3xl bg-gray-800 shadow-lg">
+                        <div className="group relative h-64 w-full overflow-hidden rounded-3xl shadow-lg transition-transform duration-300 group-hover:scale-[1.02]">
                            {isValidUrl(tour.image) ? (
                               <Image
                                  src={tour.image}
                                  alt={tour.title}
                                  fill
                                  sizes="(max-width: 640px) 100vw, 280px"
-                                 className="object-contain w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                 className="h-full w-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
                               />
                            ) : (
-                              <div className="w-full h-full bg-gray-700 flex items-center justify-center">
+                              <div className="flex h-full w-full items-center justify-center bg-gray-700">
                                  <p className="text-gray-400 select-none">
                                     Imagem inválida
                                  </p>
                               </div>
                            )}
                         </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                           <h2 className="text-2xl font-bold text-white mb-2 truncate">
+                        <div className="flex flex-grow flex-col p-6">
+                           <h2 className="mb-2 truncate text-2xl font-bold text-white">
                               {tour.title}
                            </h2>
-                           <p className="text-gray-400 text-sm flex-grow leading-relaxed">
+                           <p className="flex-grow text-sm leading-relaxed text-gray-400">
                               {tour.description}
                            </p>
                         </div>

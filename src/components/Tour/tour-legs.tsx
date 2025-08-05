@@ -35,18 +35,18 @@ export default async function TourLegs({ tourId }: Props) {
    }
 
    return (
-      <section className="w-full px-4 py-8 sm:px-6 lg:px-8 text-gray-100">
-         <div className="max-w-5xl mx-auto">
-            <h2 className="text-4xl font-extrabold text-center mb-10 tracking-tight">
+      <section className="w-full px-4 py-8 text-gray-100 sm:px-6 lg:px-8">
+         <div className="mx-auto max-w-5xl">
+            <h2 className="mb-10 text-center text-4xl font-extrabold tracking-tight">
                Pernas
             </h2>
 
             {legs.length === 0 ? (
-               <p className="text-gray-400 text-center text-lg">
+               <p className="text-center text-lg text-gray-400">
                   Nenhuma perna encontrada.
                </p>
             ) : (
-               <ul className="space-y-6 sm:space-y-8 overflow-x-auto">
+               <ul className="space-y-6 overflow-x-auto sm:space-y-8">
                   {legs.map((leg, index) => (
                      <LegItem
                         key={leg.id}

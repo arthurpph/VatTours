@@ -9,7 +9,7 @@ export default function CountrySelector({
 }) {
    return (
       <select
-         className="bg-gray-800 text-gray-100 w-full border p-2 rounded"
+         className="w-full rounded border bg-gray-800 p-2 text-gray-100"
          value={country}
          onChange={(e) => setCountry(e.target.value as CountryCode)}
          required
