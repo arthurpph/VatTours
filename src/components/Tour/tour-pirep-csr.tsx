@@ -18,6 +18,17 @@ export default function TourPirepClientSide({ leg }: Props) {
    const [success, setSuccess] = useState(false);
    const [error, setError] = useState<string | null>(null);
 
+   const handleCallsignChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const limit = 7;
+      if (e.target.value.length > limit) {
+         setError(
+            `O indicativo de chamada não pode exceder ${limit} caracteres.`,
+         );
+         return;
+      }
+      setCallsign(e.target.value);
+   };
+
    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const limit = 100;
       if (e.target.value.length > limit) {
@@ -63,17 +74,14 @@ export default function TourPirepClientSide({ leg }: Props) {
    return (
       <section className="w-full px-4 py-8 text-gray-100 sm:px-6 lg:px-8">
          <div className="mx-auto max-w-3xl space-y-6">
-            {/* Título fora do quadrado */}
             <h2 className="text-center text-3xl font-bold">PIREP</h2>
 
-            {/* Info ICAO fora do quadrado */}
             <div className="text-center text-lg font-medium">
                <span className="text-white">{leg.departureIcao}</span>
                <span className="mx-2 text-gray-400">→</span>
                <span className="text-white">{leg.arrivalIcao}</span>
             </div>
 
-            {/* Quadrado somente para inputs */}
             <div className="space-y-5 rounded-xl border border-gray-700 bg-gray-900 p-6 shadow-xl sm:p-8">
                <div>
                   <label className="mb-1 block text-sm font-semibold text-gray-300">
@@ -83,7 +91,7 @@ export default function TourPirepClientSide({ leg }: Props) {
                      type="text"
                      placeholder="Ex: UAE406"
                      value={callsign}
-                     onChange={(e) => setCallsign(e.target.value)}
+                     onChange={handleCallsignChange}
                      className="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-2 text-white transition-all focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                   />
                </div>
@@ -102,12 +110,12 @@ export default function TourPirepClientSide({ leg }: Props) {
 
                {success && (
                   <p className="text-center text-sm font-medium text-green-400">
-                     ✅ PIREP enviado com sucesso!
+                     PIREP enviado com sucesso!
                   </p>
                )}
                {error && (
                   <p className="text-center text-sm font-medium text-red-400">
-                     ⚠️ {error}
+                     {error}
                   </p>
                )}
 

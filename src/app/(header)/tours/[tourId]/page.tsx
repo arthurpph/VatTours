@@ -24,9 +24,25 @@ export default async function TourPage({ params, searchParams }: Props) {
    };
 
    return (
-      <main className="flex min-h-screen w-full flex-col items-center gap-20 bg-gradient-to-b from-gray-950 to-gray-900 py-8 text-white">
-         <TourMenu />
-         {actionComponents[action ?? ''] ?? <TourInfo tourId={tourId} />}
+      <main className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 text-white">
+         <div className="relative">
+            <div className="absolute inset-0 overflow-hidden">
+               <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 blur-3xl"></div>
+               <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 blur-3xl"></div>
+            </div>
+
+            <div className="relative flex min-h-screen w-full flex-col items-center gap-12 py-8">
+               <div className="w-full">
+                  <TourMenu />
+               </div>
+
+               <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+                  {actionComponents[action ?? ''] ?? (
+                     <TourInfo tourId={tourId} />
+                  )}
+               </div>
+            </div>
+         </div>
       </main>
    );
 }

@@ -11,7 +11,7 @@ import z from 'zod';
 export async function GET(req: Request) {
    const session = await getServerSession();
 
-   if (!session) {
+   if (!session || !session.id) {
       return NextResponse.json(
          { message: 'Usuário não autenticado' },
          { status: 401 },
@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       const { tourId, callsign, comment } = await req.json();
       const session = await getServerSession();
 
-      if (!session) {
+      if (!session || !session.id) {
          return NextResponse.json(
             { message: 'Usuário não autenticado' },
             { status: 401 },
