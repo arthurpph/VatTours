@@ -29,6 +29,8 @@ export default function TourManagePage() {
 
    const [tours, setTours] = useState<Tour[]>([]);
    const [loading, setLoading] = useState(false);
+   const [editingTour, setEditingTour] = useState<Tour | null>(null);
+   const [isEditing, setIsEditing] = useState(false);
 
    useEffect(() => {
       fetchTours();
@@ -76,22 +78,64 @@ export default function TourManagePage() {
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      const res = await fetch(ADMIN_API_ROUTES.tours, {
-         method: 'POST',
+      
+      const url = isEditing && editingTour 
+         ? `${ADMIN_API_ROUTES.tours}/${editingTour.id}`
+         : ADMIN_API_ROUTES.tours;
+      
+      const method = isEditing ? 'PUT' : 'POST';
+      
+      const res = await fetch(url, {
+         method,
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ title, description, image, legs }),
       });
 
       if (res.ok) {
-         alert('Tour criado com sucesso!');
+         alert(isEditing ? 'Tour atualizado com sucesso!' : 'Tour criado com sucesso!');
          fetchTours();
-         setTitle('');
-         setDescription('');
-         setImage('');
-         setLegs([{ description: '', departureIcao: '', arrivalIcao: '' }]);
+         resetForm();
       } else {
-         alert('Erro ao criar tour. ' + (await res.json()).message);
+         alert(`Erro ao ${isEditing ? 'atualizar' : 'criar'} tour. ` + (await res.json()).message);
       }
+   };
+
+   const resetForm = () => {
+      setTitle('');
+      setDescription('');
+      setImage('');
+      setLegs([{ description: '', departureIcao: '', arrivalIcao: '' }]);
+      setEditingTour(null);
+      setIsEditing(false);
+   };
+
+   const handleEdit = (tour: Tour) => {
+      setTitle(tour.title);
+      setDescription(tour.description || '');
+      setImage(tour.image);
+      setLegs(tour.legs.length > 0 ? tour.legs : [{ description: '', departureIcao: '', arrivalIcao: '' }]);
+      setEditingTour(tour);
+      setIsEditing(true);
+   };
+
+   const handleMoveLegUp = (index: number) => {
+      if (index > 0) {
+         const newLegs = [...legs];
+         [newLegs[index - 1], newLegs[index]] = [newLegs[index], newLegs[index - 1]];
+         setLegs(newLegs);
+      }
+   };
+
+   const handleMoveLegDown = (index: number) => {
+      if (index < legs.length - 1) {
+         const newLegs = [...legs];
+         [newLegs[index], newLegs[index + 1]] = [newLegs[index + 1], newLegs[index]];
+         setLegs(newLegs);
+      }
+   };
+
+   const handleCancelEdit = () => {
+      resetForm();
    };
 
    const handleDelete = async (id: number) => {
@@ -148,6 +192,31 @@ export default function TourManagePage() {
             </div>
 
             <div className="mb-16 rounded-3xl border border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-8 backdrop-blur-sm">
+               {isEditing && editingTour && (
+                  <div className="mb-6 rounded-2xl border border-blue-500/30 bg-blue-600/10 p-4">
+                     <div className="flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-500">
+                           <svg
+                              className="h-4 w-4 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                           >
+                              <path
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 strokeWidth={2}
+                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                           </svg>
+                        </div>
+                        <div>
+                           <h3 className="font-semibold text-blue-400">Editando Tour</h3>
+                           <p className="text-sm text-blue-300">Modificando: {editingTour.title}</p>
+                        </div>
+                     </div>
+                  </div>
+               )}
                <div className="mb-8 flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500">
                      <svg
@@ -165,7 +234,7 @@ export default function TourManagePage() {
                      </svg>
                   </div>
                   <h2 className="text-3xl font-bold text-white">
-                     Criar Novo Tour
+                     {isEditing ? 'Editar Tour' : 'Criar Novo Tour'}
                   </h2>
                </div>
 
@@ -266,27 +335,76 @@ export default function TourManagePage() {
                                        </div>
                                        Perna {index + 1}
                                     </h4>
-                                    {legs.length > 1 && (
-                                       <button
-                                          type="button"
-                                          onClick={() => handleRemoveLeg(index)}
-                                          className="rounded-full p-2 text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
-                                       >
-                                          <svg
-                                             className="h-5 w-5"
-                                             fill="none"
-                                             stroke="currentColor"
-                                             viewBox="0 0 24 24"
+                                    <div className="flex items-center gap-2">
+                                       {legs.length > 1 && (
+                                          <div className="flex gap-1">
+                                             <button
+                                                type="button"
+                                                onClick={() => handleMoveLegUp(index)}
+                                                disabled={index === 0}
+                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                title="Mover para cima"
+                                             >
+                                                <svg
+                                                   className="h-4 w-4"
+                                                   fill="none"
+                                                   stroke="currentColor"
+                                                   viewBox="0 0 24 24"
+                                                >
+                                                   <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      strokeWidth={2}
+                                                      d="M5 15l7-7 7 7"
+                                                   />
+                                                </svg>
+                                             </button>
+                                             <button
+                                                type="button"
+                                                onClick={() => handleMoveLegDown(index)}
+                                                disabled={index === legs.length - 1}
+                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                title="Mover para baixo"
+                                             >
+                                                <svg
+                                                   className="h-4 w-4"
+                                                   fill="none"
+                                                   stroke="currentColor"
+                                                   viewBox="0 0 24 24"
+                                                >
+                                                   <path
+                                                      strokeLinecap="round"
+                                                      strokeLinejoin="round"
+                                                      strokeWidth={2}
+                                                      d="M19 9l-7 7-7-7"
+                                                   />
+                                                </svg>
+                                             </button>
+                                          </div>
+                                       )}
+                                       {legs.length > 1 && (
+                                          <button
+                                             type="button"
+                                             onClick={() => handleRemoveLeg(index)}
+                                             className="rounded-full p-2 text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
+                                             title="Remover perna"
                                           >
-                                             <path
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth={2}
-                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                             />
-                                          </svg>
-                                       </button>
-                                    )}
+                                             <svg
+                                                className="h-5 w-5"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                             >
+                                                <path
+                                                   strokeLinecap="round"
+                                                   strokeLinejoin="round"
+                                                   strokeWidth={2}
+                                                   d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                />
+                                             </svg>
+                                          </button>
+                                       )}
+                                    </div>
                                  </div>
 
                                  <div className="space-y-4">
@@ -348,28 +466,56 @@ export default function TourManagePage() {
                      </div>
                   </div>
 
-                  <button
-                     type="submit"
-                     className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/25"
-                  >
-                     <span className="relative z-10 flex items-center justify-center gap-2">
-                        <svg
-                           className="h-5 w-5"
-                           fill="none"
-                           stroke="currentColor"
-                           viewBox="0 0 24 24"
+                  <div className="flex gap-4">
+                     <button
+                        type="submit"
+                        className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/25"
+                     >
+                        <span className="relative z-10 flex items-center justify-center gap-2">
+                           <svg
+                              className="h-5 w-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                           >
+                              <path
+                                 strokeLinecap="round"
+                                 strokeLinejoin="round"
+                                 strokeWidth={2}
+                                 d="M5 13l4 4L19 7"
+                              />
+                           </svg>
+                           {isEditing ? 'Atualizar Tour' : 'Criar Tour'}
+                        </span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                     </button>
+                     
+                     {isEditing && (
+                        <button
+                           type="button"
+                           onClick={handleCancelEdit}
+                           className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-gray-600 to-gray-700 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-gray-500/25"
                         >
-                           <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M5 13l4 4L19 7"
-                           />
-                        </svg>
-                        Criar Tour
-                     </span>
-                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-                  </button>
+                           <span className="relative z-10 flex items-center justify-center gap-2">
+                              <svg
+                                 className="h-5 w-5"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12"
+                                 />
+                              </svg>
+                              Cancelar
+                           </span>
+                           <div className="absolute inset-0 bg-gradient-to-r from-gray-700 to-gray-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                        </button>
+                     )}
+                  </div>
                </form>
             </div>
 
@@ -481,28 +627,53 @@ export default function TourManagePage() {
                                  </div>
                               </div>
 
-                              <button
-                                 onClick={() => handleDelete(tour.id)}
-                                 className="group/btn relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 to-pink-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
-                              >
-                                 <span className="relative z-10 flex items-center gap-2">
-                                    <svg
-                                       className="h-4 w-4"
-                                       fill="none"
-                                       stroke="currentColor"
-                                       viewBox="0 0 24 24"
-                                    >
-                                       <path
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                          strokeWidth={2}
-                                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                       />
-                                    </svg>
-                                    Excluir
-                                 </span>
-                                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-red-600 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"></div>
-                              </button>
+                              <div className="flex gap-3">
+                                 <button
+                                    onClick={() => handleEdit(tour)}
+                                    className="group/btn relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+                                 >
+                                    <span className="relative z-10 flex items-center gap-2">
+                                       <svg
+                                          className="h-4 w-4"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                       >
+                                          <path
+                                             strokeLinecap="round"
+                                             strokeLinejoin="round"
+                                             strokeWidth={2}
+                                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                          />
+                                       </svg>
+                                       Editar
+                                    </span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"></div>
+                                 </button>
+
+                                 <button
+                                    onClick={() => handleDelete(tour.id)}
+                                    className="group/btn relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-600 to-pink-600 px-6 py-3 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-red-500/25"
+                                 >
+                                    <span className="relative z-10 flex items-center gap-2">
+                                       <svg
+                                          className="h-4 w-4"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          viewBox="0 0 24 24"
+                                       >
+                                          <path
+                                             strokeLinecap="round"
+                                             strokeLinejoin="round"
+                                             strokeWidth={2}
+                                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                          />
+                                       </svg>
+                                       Excluir
+                                    </span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-red-600 opacity-0 transition-opacity duration-300 group-hover/btn:opacity-100"></div>
+                                 </button>
+                              </div>
                            </div>
                         </div>
                      ))}
