@@ -38,9 +38,9 @@ export default function ToursPage() {
 
    if (status === 'loading' || loading) {
       return (
-         <main className="min-h-screen bg-gray-900 px-6 py-12 flex items-center justify-center">
+         <main className="flex min-h-screen items-center justify-center bg-gray-900 px-6 py-12">
             <div className="text-center">
-               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+               <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
                <p className="text-gray-400">Carregando tours...</p>
             </div>
          </main>
@@ -81,11 +81,11 @@ export default function ToursPage() {
 
          <section
             className={`mx-auto max-w-7xl px-4 ${
-               tours.length === 0 
-                  ? 'flex justify-center' 
+               tours.length === 0
+                  ? 'flex justify-center'
                   : tours.length === 1
-                  ? 'grid grid-cols-1 place-items-center gap-10'
-                  : 'grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10'
+                    ? 'grid grid-cols-1 place-items-center gap-10'
+                    : 'grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10'
             }`}
          >
             {tours.length === 0 ? (
@@ -108,12 +108,14 @@ export default function ToursPage() {
                         </svg>
                      </div>
                   </div>
-                  <div className="text-center space-y-6 max-w-lg">
+                  <div className="max-w-lg space-y-6 text-center">
                      <h2 className="text-3xl font-bold text-gray-200">
                         Nenhum tour disponível
                      </h2>
-                     <p className="text-gray-400 leading-relaxed text-lg">
-                        Atualmente não há tours disponíveis. Nossa equipe está trabalhando para trazer novas aventuras e destinos incríveis para você explorar!
+                     <p className="text-lg leading-relaxed text-gray-400">
+                        Atualmente não há tours disponíveis. Nossa equipe está
+                        trabalhando para trazer novas aventuras e destinos
+                        incríveis para você explorar!
                      </p>
                      <div className="space-y-4 pt-6">
                         <Link href="/">
@@ -135,10 +137,10 @@ export default function ToursPage() {
                            </button>
                         </Link>
                         <div>
-                           <button 
+                           <button
                               onClick={handleRefresh}
                               disabled={loading}
-                              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:from-gray-600 hover:to-gray-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:scale-105 hover:from-gray-600 hover:to-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
                            >
                               <svg
                                  className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`}

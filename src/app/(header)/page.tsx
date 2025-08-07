@@ -36,7 +36,7 @@ export default async function Home() {
                </h2>
                <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
             </div>
-            
+
             {tours.length === 0 ? (
                <div className="flex flex-col items-center justify-center py-16">
                   <div className="relative mb-8">
@@ -57,16 +57,17 @@ export default async function Home() {
                         </svg>
                      </div>
                   </div>
-                  <div className="text-center space-y-4 max-w-md">
+                  <div className="max-w-md space-y-4 text-center">
                      <h3 className="text-2xl font-bold text-gray-300">
                         Nenhum tour disponível
                      </h3>
-                     <p className="text-gray-400 leading-relaxed">
-                        No momento não há tours disponíveis. Novos destinos e aventuras serão adicionados em breve!
+                     <p className="leading-relaxed text-gray-400">
+                        No momento não há tours disponíveis. Novos destinos e
+                        aventuras serão adicionados em breve!
                      </p>
                      <div className="pt-4">
                         <Link href="/tours">
-                           <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:from-gray-600 hover:to-gray-500 hover:scale-105">
+                           <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:scale-105 hover:from-gray-600 hover:to-gray-500">
                               <svg
                                  className="h-5 w-5"
                                  fill="none"

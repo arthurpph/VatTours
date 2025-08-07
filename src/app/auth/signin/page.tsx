@@ -11,17 +11,17 @@ export default function SignIn() {
    }
 
    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-[#0f172a] via-[#1e293b] to-[#334155] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-6 sm:py-8 md:py-0">
-         <div className="flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl flex-col items-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12 2xl:gap-14 rounded-xl sm:rounded-2xl lg:rounded-3xl border border-gray-700 bg-gray-900/90 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 2xl:p-16 shadow-2xl backdrop-blur-md">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-tr from-[#0f172a] via-[#1e293b] to-[#334155] px-4 py-6 sm:px-6 sm:py-8 md:px-8 md:py-0 lg:px-12 xl:px-16">
+         <div className="flex w-full max-w-xs flex-col items-center gap-4 rounded-xl border border-gray-700 bg-gray-900/90 p-4 shadow-2xl backdrop-blur-md sm:max-w-sm sm:gap-6 sm:rounded-2xl sm:p-6 md:max-w-md md:gap-8 md:p-8 lg:max-w-lg lg:gap-10 lg:rounded-3xl lg:p-10 xl:max-w-xl xl:gap-12 xl:p-12 2xl:max-w-2xl 2xl:gap-14 2xl:p-16">
             <div
-               className="relative h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 lg:h-60 lg:w-60 xl:h-72 xl:w-72 2xl:h-80 2xl:w-80 rounded-full p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 2xl:p-8 shadow-2xl ring-2 sm:ring-2 md:ring-3 lg:ring-3 xl:ring-4 2xl:ring-4 ring-blue-500/60 transition-transform duration-500 hover:scale-105"
+               className="relative h-32 w-32 rounded-full p-2 shadow-2xl ring-2 ring-blue-500/60 transition-transform duration-500 hover:scale-105 sm:h-40 sm:w-40 sm:p-3 sm:ring-2 md:h-48 md:w-48 md:p-4 md:ring-3 lg:h-60 lg:w-60 lg:p-5 lg:ring-3 xl:h-72 xl:w-72 xl:p-6 xl:ring-4 2xl:h-80 2xl:w-80 2xl:p-8 2xl:ring-4"
                style={{
                   background:
                      'radial-gradient(circle at center, rgba(59, 130, 246, 0.3), transparent 70%)',
                }}
             >
                <svg
-                  className="w-full h-full"
+                  className="h-full w-full"
                   viewBox="0 0 320 320"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -124,19 +124,19 @@ export default function SignIn() {
                </svg>
             </div>
 
-            <h1 className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-extrabold text-transparent drop-shadow-lg select-none text-center leading-tight">
+            <h1 className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-center text-xl leading-tight font-extrabold text-transparent drop-shadow-lg select-none sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">
                VatTours
             </h1>
 
             <button
-               className="flex h-10 sm:h-11 md:h-12 lg:h-13 xl:h-14 2xl:h-16 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg transform cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-semibold text-white shadow-lg transition duration-200 select-none hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-indigo-400 focus:outline-none active:scale-95"
+               className="flex h-10 w-full max-w-xs transform cursor-pointer items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-semibold text-white shadow-lg transition duration-200 select-none hover:from-blue-700 hover:to-indigo-700 focus:ring-4 focus:ring-indigo-400 focus:outline-none active:scale-95 sm:h-11 sm:max-w-sm sm:text-sm md:h-12 md:max-w-md md:text-base lg:h-13 lg:max-w-lg lg:text-lg xl:h-14 xl:text-xl 2xl:h-16"
                onClick={() => signIn('vatsim', { callbackUrl: '/' })}
                aria-label="Entrar com VATSIM"
             >
                Entrar com VATSIM
             </button>
 
-            <p className="max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg text-center text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed text-gray-300 select-none px-2">
+            <p className="max-w-xs px-2 text-center text-xs leading-relaxed text-gray-300 select-none sm:max-w-sm sm:text-sm md:max-w-md md:text-base lg:max-w-lg lg:text-lg">
                Faça login usando sua conta VATSIM para acessar o VatTours.
             </p>
          </div>
