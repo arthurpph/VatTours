@@ -8,6 +8,7 @@ import {
   badgesTable,
   userBadgesTable,
   userToursTable,
+  pirepsTable,
 } from '@/lib/db/schema';
 import 'dotenv/config';
 
@@ -20,7 +21,24 @@ if (!databaseUrl) {
 const client = postgres(databaseUrl);
 const db = drizzle(client);
 
-async function seed() {
+async function clearData() {
+  console.log('Limpando dados existentes...');
+  
+  await db.delete(pirepsTable);
+  await db.delete(userBadgesTable);
+  await db.delete(userToursTable);
+  await db.delete(legsTable);
+  await db.delete(toursTable);
+  await db.delete(badgesTable);
+  await db.delete(airportsTable);
+  await db.delete(usersTable);
+  
+  console.log('Dados limpos com sucesso!');
+}
+
+async function seedData() {
+  console.log('Inserindo dados de seed...');
+  
   await db.insert(usersTable).values([
     {
       id: 'user1',
@@ -69,8 +87,6 @@ async function seed() {
       order: 2,
     },
   ]).returning({ id: legsTable.id });
-  const legId1 = legsResult[0].id;
-  const legId2 = legsResult[1].id;
 
   const badgeResult = await db.insert(badgesTable).values([
     {
@@ -97,8 +113,19 @@ async function seed() {
     },
   ]);
 
-  await client.end();
-  console.log('Seed concluded successfully!');
+  console.log('Dados de seed inseridos com sucesso!');
+}
+
+async function seed() {
+  try {
+    await clearData();
+    await seedData();
+    console.log('Seed executado com sucesso!');
+  } catch (error) {
+    console.error('Erro durante o seed:', error);
+  } finally {
+    await client.end();
+  }
 }
 
 seed();

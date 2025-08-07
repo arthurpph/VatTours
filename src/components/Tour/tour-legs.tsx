@@ -35,24 +35,24 @@ export default async function TourLegs({ tourId }: Props) {
    }
 
    return (
-      <section className="w-full">
+      <section className="w-full px-4 sm:px-6 lg:px-8">
          <div className="mx-auto max-w-6xl">
-            <div className="mb-16 text-center">
-               <h2 className="mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-5xl font-bold text-transparent">
+            <div className="mb-8 sm:mb-12 lg:mb-16 text-center">
+               <h2 className="mb-4 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-3xl sm:text-4xl lg:text-5xl font-bold text-transparent">
                   Pernas do Tour
                </h2>
-               <div className="mx-auto h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
-               <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-300">
+               <div className="mx-auto h-1 w-20 sm:w-28 lg:w-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
+               <p className="mx-auto mt-4 sm:mt-6 max-w-2xl text-sm sm:text-base lg:text-lg text-gray-300 px-4">
                   Complete cada etapa da sua jornada e explore destinos
                   incríveis pelo mundo
                </p>
             </div>
 
             {legs.length === 0 ? (
-               <div className="py-20 text-center">
-                  <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800">
+               <div className="py-12 sm:py-16 lg:py-20 text-center">
+                  <div className="mx-auto mb-4 sm:mb-6 flex h-16 w-16 sm:h-20 sm:w-20 lg:h-24 lg:w-24 items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800">
                      <svg
-                        className="h-12 w-12 text-gray-400"
+                        className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-gray-400"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -65,18 +65,18 @@ export default async function TourLegs({ tourId }: Props) {
                         />
                      </svg>
                   </div>
-                  <h3 className="mb-2 text-2xl font-bold text-gray-300">
+                  <h3 className="mb-2 text-xl sm:text-2xl font-bold text-gray-300">
                      Nenhuma perna encontrada
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-sm sm:text-base text-gray-400 px-4">
                      Este tour ainda não possui pernas configuradas.
                   </p>
                </div>
             ) : (
                <div className="relative">
-                  <div className="absolute top-0 bottom-0 left-8 hidden w-0.5 bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-indigo-500/30 lg:block"></div>
+                  <div className="absolute top-0 bottom-0 left-4 sm:left-6 lg:left-8 hidden w-0.5 bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-indigo-500/30 md:block"></div>
 
-                  <ul className="space-y-8">
+                  <ul className="space-y-4 sm:space-y-6 lg:space-y-8">
                      {legs.map((leg, index) => (
                         <LegItem
                            key={leg.id}

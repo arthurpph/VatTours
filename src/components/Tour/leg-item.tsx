@@ -24,7 +24,7 @@ export default function LegItem({
 
    return (
       <li
-         className={`group relative overflow-hidden rounded-2xl border transition-all duration-500 hover:scale-[1.02] ${
+         className={`group relative overflow-hidden rounded-xl sm:rounded-2xl border transition-all duration-500 hover:scale-[1.01] sm:hover:scale-[1.02] ${
             highlight
                ? 'border-cyan-400/50 bg-gradient-to-br from-cyan-900/40 to-cyan-800/40 shadow-xl shadow-cyan-500/20'
                : 'border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/10'
@@ -35,11 +35,11 @@ export default function LegItem({
             <div className="absolute -top-1 -right-1 h-3 w-3 animate-pulse rounded-full bg-cyan-400"></div>
          )}
 
-         <div className="relative p-8">
-            <div className="mb-6 flex items-center justify-between">
+         <div className="relative p-4 sm:p-6 lg:p-8">
+            <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                <div className="flex items-center gap-3">
                   <div
-                     className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${
+                     className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm font-bold ${
                         highlight
                            ? 'bg-gradient-to-r from-cyan-400 to-blue-400 text-white'
                            : 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
@@ -47,20 +47,25 @@ export default function LegItem({
                   >
                      {index + 1}
                   </div>
-                  <span className="text-sm font-medium text-gray-300">
+                  <span className="text-xs sm:text-sm font-medium text-gray-300">
                      Etapa {index + 1}
                   </span>
                </div>
                {leg.description && (
                   <button
                      onClick={() => setShowDescription(!showDescription)}
-                     className="group/btn flex items-center gap-2 rounded-full bg-blue-600/20 px-4 py-2 text-sm font-medium text-blue-400 transition-all hover:bg-blue-600/30 hover:text-blue-300"
+                     className="group/btn flex items-center justify-center sm:justify-start gap-2 rounded-full bg-blue-600/20 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-blue-400 transition-all hover:bg-blue-600/30 hover:text-blue-300 w-full sm:w-auto"
                   >
-                     {showDescription
-                        ? 'Esconder detalhes'
-                        : 'Mostrar detalhes'}
+                     <span className="hidden sm:inline">
+                        {showDescription
+                           ? 'Esconder detalhes'
+                           : 'Mostrar detalhes'}
+                     </span>
+                     <span className="sm:hidden">
+                        {showDescription ? 'Esconder' : 'Detalhes'}
+                     </span>
                      <svg
-                        className={`h-4 w-4 transition-transform duration-300 ${showDescription ? 'rotate-180' : ''}`}
+                        className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform duration-300 ${showDescription ? 'rotate-180' : ''}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -76,19 +81,19 @@ export default function LegItem({
                )}
             </div>
 
-            <div className="flex items-center justify-center gap-6 text-2xl font-bold">
-               <div className="flex items-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-lg sm:text-xl lg:text-2xl font-bold">
+               <div className="flex items-center gap-2 sm:gap-3">
                   <span
-                     className={`fi fi-${leg.departureCountry.toLowerCase()} h-6 w-8 rounded border border-gray-600 shadow-sm`}
+                     className={`fi fi-${leg.departureCountry.toLowerCase()} h-5 w-6 sm:h-6 sm:w-8 rounded border border-gray-600 shadow-sm`}
                   ></span>
-                  <span className="text-white">{leg.departureIcao}</span>
+                  <span className="text-white text-base sm:text-lg lg:text-xl">{leg.departureIcao}</span>
                </div>
 
-               <div className="flex items-center gap-2">
-                  <div className="h-px w-8 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                  <div className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-2">
+               <div className="flex items-center gap-1 sm:gap-2">
+                  <div className="h-px w-4 sm:w-6 lg:w-8 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                  <div className="rounded-full bg-gradient-to-r from-blue-500 to-purple-500 p-1.5 sm:p-2">
                      <svg
-                        className="h-4 w-4 text-white"
+                        className="h-3 w-3 sm:h-4 sm:w-4 text-white"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                      >
@@ -99,23 +104,23 @@ export default function LegItem({
                         />
                      </svg>
                   </div>
-                  <div className="h-px w-8 bg-gradient-to-r from-purple-500 to-indigo-500"></div>
+                  <div className="h-px w-4 sm:w-6 lg:w-8 bg-gradient-to-r from-purple-500 to-indigo-500"></div>
                </div>
 
-               <div className="flex items-center gap-3">
-                  <span className="text-white">{leg.arrivalIcao}</span>
+               <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="text-white text-base sm:text-lg lg:text-xl">{leg.arrivalIcao}</span>
                   <span
-                     className={`fi fi-${leg.arrivalCountry.toLowerCase()} h-6 w-8 rounded border border-gray-600 shadow-sm`}
+                     className={`fi fi-${leg.arrivalCountry.toLowerCase()} h-5 w-6 sm:h-6 sm:w-8 rounded border border-gray-600 shadow-sm`}
                   ></span>
                </div>
             </div>
 
             {showDescription && leg.description && (
-               <div className="mt-8 overflow-hidden rounded-xl border border-gray-700/50 bg-gray-800/50 p-6 backdrop-blur-sm">
-                  <h4 className="mb-3 font-semibold text-blue-400">
+               <div className="mt-6 sm:mt-8 overflow-hidden rounded-lg sm:rounded-xl border border-gray-700/50 bg-gray-800/50 p-4 sm:p-6 backdrop-blur-sm">
+                  <h4 className="mb-2 sm:mb-3 text-sm sm:text-base font-semibold text-blue-400">
                      Detalhes da Rota
                   </h4>
-                  <p className="leading-relaxed text-gray-300">
+                  <p className="text-sm sm:text-base leading-relaxed text-gray-300">
                      {leg.description}
                   </p>
                </div>
