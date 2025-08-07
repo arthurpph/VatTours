@@ -78,13 +78,14 @@ export default function TourManagePage() {
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      
-      const url = isEditing && editingTour 
-         ? `${ADMIN_API_ROUTES.tours}/${editingTour.id}`
-         : ADMIN_API_ROUTES.tours;
-      
+
+      const url =
+         isEditing && editingTour
+            ? `${ADMIN_API_ROUTES.tours}/${editingTour.id}`
+            : ADMIN_API_ROUTES.tours;
+
       const method = isEditing ? 'PUT' : 'POST';
-      
+
       const res = await fetch(url, {
          method,
          headers: { 'Content-Type': 'application/json' },
@@ -92,11 +93,18 @@ export default function TourManagePage() {
       });
 
       if (res.ok) {
-         alert(isEditing ? 'Tour atualizado com sucesso!' : 'Tour criado com sucesso!');
+         alert(
+            isEditing
+               ? 'Tour atualizado com sucesso!'
+               : 'Tour criado com sucesso!',
+         );
          fetchTours();
          resetForm();
       } else {
-         alert(`Erro ao ${isEditing ? 'atualizar' : 'criar'} tour. ` + (await res.json()).message);
+         alert(
+            `Erro ao ${isEditing ? 'atualizar' : 'criar'} tour. ` +
+               (await res.json()).message,
+         );
       }
    };
 
@@ -113,7 +121,11 @@ export default function TourManagePage() {
       setTitle(tour.title);
       setDescription(tour.description || '');
       setImage(tour.image);
-      setLegs(tour.legs.length > 0 ? tour.legs : [{ description: '', departureIcao: '', arrivalIcao: '' }]);
+      setLegs(
+         tour.legs.length > 0
+            ? tour.legs
+            : [{ description: '', departureIcao: '', arrivalIcao: '' }],
+      );
       setEditingTour(tour);
       setIsEditing(true);
    };
@@ -121,7 +133,10 @@ export default function TourManagePage() {
    const handleMoveLegUp = (index: number) => {
       if (index > 0) {
          const newLegs = [...legs];
-         [newLegs[index - 1], newLegs[index]] = [newLegs[index], newLegs[index - 1]];
+         [newLegs[index - 1], newLegs[index]] = [
+            newLegs[index],
+            newLegs[index - 1],
+         ];
          setLegs(newLegs);
       }
    };
@@ -129,7 +144,10 @@ export default function TourManagePage() {
    const handleMoveLegDown = (index: number) => {
       if (index < legs.length - 1) {
          const newLegs = [...legs];
-         [newLegs[index], newLegs[index + 1]] = [newLegs[index + 1], newLegs[index]];
+         [newLegs[index], newLegs[index + 1]] = [
+            newLegs[index + 1],
+            newLegs[index],
+         ];
          setLegs(newLegs);
       }
    };
@@ -211,8 +229,12 @@ export default function TourManagePage() {
                            </svg>
                         </div>
                         <div>
-                           <h3 className="font-semibold text-blue-400">Editando Tour</h3>
-                           <p className="text-sm text-blue-300">Modificando: {editingTour.title}</p>
+                           <h3 className="font-semibold text-blue-400">
+                              Editando Tour
+                           </h3>
+                           <p className="text-sm text-blue-300">
+                              Modificando: {editingTour.title}
+                           </p>
                         </div>
                      </div>
                   </div>
@@ -340,9 +362,11 @@ export default function TourManagePage() {
                                           <div className="flex gap-1">
                                              <button
                                                 type="button"
-                                                onClick={() => handleMoveLegUp(index)}
+                                                onClick={() =>
+                                                   handleMoveLegUp(index)
+                                                }
                                                 disabled={index === 0}
-                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:cursor-not-allowed disabled:opacity-50"
                                                 title="Mover para cima"
                                              >
                                                 <svg
@@ -361,9 +385,13 @@ export default function TourManagePage() {
                                              </button>
                                              <button
                                                 type="button"
-                                                onClick={() => handleMoveLegDown(index)}
-                                                disabled={index === legs.length - 1}
-                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                onClick={() =>
+                                                   handleMoveLegDown(index)
+                                                }
+                                                disabled={
+                                                   index === legs.length - 1
+                                                }
+                                                className="rounded-full p-2 text-blue-400 transition-colors hover:bg-blue-500/10 hover:text-blue-300 disabled:cursor-not-allowed disabled:opacity-50"
                                                 title="Mover para baixo"
                                              >
                                                 <svg
@@ -385,7 +413,9 @@ export default function TourManagePage() {
                                        {legs.length > 1 && (
                                           <button
                                              type="button"
-                                             onClick={() => handleRemoveLeg(index)}
+                                             onClick={() =>
+                                                handleRemoveLeg(index)
+                                             }
                                              className="rounded-full p-2 text-red-400 transition-colors hover:bg-red-500/10 hover:text-red-300"
                                              title="Remover perna"
                                           >
@@ -489,7 +519,7 @@ export default function TourManagePage() {
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
                      </button>
-                     
+
                      {isEditing && (
                         <button
                            type="button"
