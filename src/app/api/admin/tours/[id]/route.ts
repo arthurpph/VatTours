@@ -18,7 +18,6 @@ export async function PUT(req: Request) {
       const body = await req.json();
       const { title, description, image, legs } = body;
 
-      // Validar tour
       const tourValidation = TourSchema.safeParse({
          title,
          description,
@@ -31,7 +30,6 @@ export async function PUT(req: Request) {
          );
       }
 
-      // Validar legs
       if (!Array.isArray(legs) || legs.length === 0) {
          return NextResponse.json(
             { message: 'É necessário pelo menos uma leg.' },
@@ -57,7 +55,6 @@ export async function PUT(req: Request) {
          validatedLegs.push(result.data);
       }
 
-      // Verificar se o tour existe
       const tourExists = await db
          .select()
          .from(toursTable)
@@ -71,7 +68,6 @@ export async function PUT(req: Request) {
          );
       }
 
-      // Verificar se todos os aeroportos existem
       const allIcaos = legs
          .flatMap((leg: { departureIcao: string; arrivalIcao: string }) => [
             leg.departureIcao.toUpperCase(),
@@ -88,7 +84,7 @@ export async function PUT(req: Request) {
       const missingIcaos = allIcaos.filter(
          (icao) => !existingIcaos.includes(icao),
       );
-      
+
       if (missingIcaos.length > 0) {
          return NextResponse.json(
             {
@@ -98,7 +94,6 @@ export async function PUT(req: Request) {
          );
       }
 
-      // Atualizar o tour
       await db
          .update(toursTable)
          .set({
@@ -108,10 +103,8 @@ export async function PUT(req: Request) {
          })
          .where(eq(toursTable.id, id));
 
-      // Remover legs antigas
       await db.delete(legsTable).where(eq(legsTable.tourId, id));
 
-      // Inserir novas legs
       const legsToInsert = legs.map(
          (
             leg: {
