@@ -7,9 +7,10 @@ import { PirepSchema } from '@/lib/validation';
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import z from 'zod';
+import { authOptions } from '../auth/[...nextauth]/auth';
 
 export async function GET(req: Request) {
-   const session = await getServerSession();
+   const session = await getServerSession(authOptions);
 
    if (!session || !session.id) {
       return NextResponse.json(
@@ -39,7 +40,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
    try {
       const { tourId, callsign, comment } = await req.json();
-      const session = await getServerSession();
+      const session = await getServerSession(authOptions);
 
       if (!session || !session.id) {
          return NextResponse.json(
