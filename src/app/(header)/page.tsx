@@ -36,62 +36,114 @@ export default async function Home() {
                </h2>
                <div className="mx-auto h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
             </div>
-            <div className="flex flex-wrap justify-center gap-8">
-               {tours.slice(0, 4).map((tour, index) => (
-                  <Link
-                     href={`/tours/${tour.id}`}
-                     className="group block w-full max-w-sm"
-                     key={index}
-                  >
-                     <div className="relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
-                        <div className="relative overflow-hidden">
-                           {isValidUrl(tour.image) ? (
-                              <Image
-                                 src={`${tour.image}`}
-                                 alt={tour.title}
-                                 width={1000}
-                                 height={1000}
-                                 className="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
-                           ) : (
-                              <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-gray-700 to-gray-800">
-                                 <div className="text-center">
-                                    <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-gray-600">
-                                       <svg
-                                          className="h-6 w-6 text-gray-400"
-                                          fill="currentColor"
-                                          viewBox="0 0 20 20"
-                                       >
-                                          <path
-                                             fillRule="evenodd"
-                                             d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                             clipRule="evenodd"
-                                          />
-                                       </svg>
-                                    </div>
-                                    <p className="text-sm text-gray-400">
-                                       Imagem inválida
-                                    </p>
-                                 </div>
-                              </div>
-                           )}
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-                        </div>
-
-                        <div className="p-6">
-                           <h3 className="mb-2 text-xl font-bold text-white transition-colors duration-300 group-hover:text-blue-400">
-                              {tour.title}
-                           </h3>
-                           <p className="line-clamp-3 text-sm leading-relaxed text-gray-400">
-                              {tour.description}
-                           </p>
-                        </div>
-
-                        <div className="absolute inset-0 -z-10 rounded-2xl border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+            
+            {tours.length === 0 ? (
+               <div className="flex flex-col items-center justify-center py-16">
+                  <div className="relative mb-8">
+                     <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-2xl"></div>
+                     <div className="relative flex h-32 w-32 items-center justify-center rounded-full border-2 border-dashed border-gray-600 bg-gray-800/50">
+                        <svg
+                           className="h-16 w-16 text-gray-500"
+                           fill="none"
+                           stroke="currentColor"
+                           viewBox="0 0 24 24"
+                        >
+                           <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={1.5}
+                              d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0118 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                           />
+                        </svg>
                      </div>
-                  </Link>
-               ))}
-            </div>
+                  </div>
+                  <div className="text-center space-y-4 max-w-md">
+                     <h3 className="text-2xl font-bold text-gray-300">
+                        Nenhum tour disponível
+                     </h3>
+                     <p className="text-gray-400 leading-relaxed">
+                        No momento não há tours disponíveis. Novos destinos e aventuras serão adicionados em breve!
+                     </p>
+                     <div className="pt-4">
+                        <Link href="/tours">
+                           <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:from-gray-600 hover:to-gray-500 hover:scale-105">
+                              <svg
+                                 className="h-5 w-5"
+                                 fill="none"
+                                 stroke="currentColor"
+                                 viewBox="0 0 24 24"
+                              >
+                                 <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                                 />
+                              </svg>
+                              Verificar novamente
+                           </button>
+                        </Link>
+                     </div>
+                  </div>
+               </div>
+            ) : (
+               <div className="flex flex-wrap justify-center gap-8">
+                  {tours.slice(0, 4).map((tour, index) => (
+                     <Link
+                        href={`/tours/${tour.id}`}
+                        className="group block w-full max-w-sm"
+                        key={index}
+                     >
+                        <div className="relative overflow-hidden rounded-2xl border border-gray-700/50 bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+                           <div className="relative overflow-hidden">
+                              {isValidUrl(tour.image) ? (
+                                 <Image
+                                    src={`${tour.image}`}
+                                    alt={tour.title}
+                                    width={1000}
+                                    height={1000}
+                                    className="h-48 w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                 />
+                              ) : (
+                                 <div className="flex h-48 w-full items-center justify-center bg-gradient-to-br from-gray-700 to-gray-800">
+                                    <div className="text-center">
+                                       <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-gray-600">
+                                          <svg
+                                             className="h-6 w-6 text-gray-400"
+                                             fill="currentColor"
+                                             viewBox="0 0 20 20"
+                                          >
+                                             <path
+                                                fillRule="evenodd"
+                                                d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                                                clipRule="evenodd"
+                                             />
+                                          </svg>
+                                       </div>
+                                       <p className="text-sm text-gray-400">
+                                          Imagem inválida
+                                       </p>
+                                    </div>
+                                 </div>
+                              )}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                           </div>
+
+                           <div className="p-6">
+                              <h3 className="mb-2 text-xl font-bold text-white transition-colors duration-300 group-hover:text-blue-400">
+                                 {tour.title}
+                              </h3>
+                              <p className="line-clamp-3 text-sm leading-relaxed text-gray-400">
+                                 {tour.description}
+                              </p>
+                           </div>
+
+                           <div className="absolute inset-0 -z-10 rounded-2xl border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                        </div>
+                     </Link>
+                  ))}
+               </div>
+            )}
          </section>
          <section className="relative text-center">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 blur-2xl"></div>
