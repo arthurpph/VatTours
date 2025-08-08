@@ -147,33 +147,6 @@ export default async function TourStatus({ tourId }: Props) {
                                     </span>
                                  </div>
                               </div>
-
-                              <div className="hidden items-center gap-6 sm:flex">
-                                 {['approved', 'pending', 'rejected'].map(
-                                    (status) => {
-                                       const count = user.pireps.filter(
-                                          (p) => p.status === status,
-                                       ).length;
-                                       const colors = {
-                                          approved:
-                                             'text-green-400 bg-green-500/10 border-green-400/20',
-                                          pending:
-                                             'text-yellow-400 bg-yellow-500/10 border-yellow-400/20',
-                                          rejected:
-                                             'text-red-400 bg-red-500/10 border-red-400/20',
-                                       };
-
-                                       return (
-                                          <div
-                                             key={status}
-                                             className={`rounded-full border px-3 py-1 text-sm font-medium ${colors[status as keyof typeof colors]}`}
-                                          >
-                                             {count} {status}
-                                          </div>
-                                       );
-                                    },
-                                 )}
-                              </div>
                            </div>
 
                            <div className="grid gap-6">
