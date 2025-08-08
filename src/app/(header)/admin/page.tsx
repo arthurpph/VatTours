@@ -42,10 +42,10 @@ export default function AdminHomePage() {
    ];
 
    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 px-6 py-10 text-white">
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 px-6 py-10 text-white">
          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-40 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-600/10 to-purple-600/10 blur-3xl"></div>
-            <div className="absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-600/10 to-indigo-600/10 blur-3xl"></div>
+            <div className="absolute top-40 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/10 to-purple-900/10 blur-3xl"></div>
+            <div className="absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/10 to-indigo-900/10 blur-3xl"></div>
          </div>
 
          <div className="relative mx-auto max-w-6xl">

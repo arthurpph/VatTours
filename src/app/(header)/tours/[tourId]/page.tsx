@@ -24,11 +24,11 @@ export default async function TourPage({ params, searchParams }: Props) {
    };
 
    return (
-      <main className="min-h-screen w-full bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 text-white">
+      <main className="min-h-screen w-full bg-gradient-to-br from-black via-gray-950 to-gray-900 text-white">
          <div className="relative">
             <div className="absolute inset-0 overflow-hidden">
-               <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 blur-3xl"></div>
-               <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-br from-purple-600/20 to-indigo-600/20 blur-3xl"></div>
+               <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
+               <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl"></div>
             </div>
 
             <div className="relative flex min-h-screen w-full flex-col items-center gap-12 py-8">
