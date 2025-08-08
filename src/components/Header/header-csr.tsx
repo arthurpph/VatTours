@@ -44,14 +44,17 @@ export default function HeaderClient({ session }: Props) {
    }, []);
 
    return (
-      <header className="relative z-50 flex h-[70px] items-center justify-between border-b border-gray-800/50 bg-black/95 px-6 text-white shadow-xl backdrop-blur-sm md:px-12">
+      <header className="sticky top-0 z-50 flex h-[70px] items-center justify-between border-b border-gray-800/50 bg-black/95 px-6 text-white shadow-xl backdrop-blur-lg transition-all duration-300 md:px-12">
          <div className="text-2xl font-extrabold tracking-tight">
             <Link
                href="/"
-               className="rounded-lg px-2 py-1 transition-all duration-300 hover:scale-105 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+               className="group relative rounded-lg px-2 py-1 transition-all duration-300 hover:scale-105 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
                aria-label="Voltar ao início"
             >
-               VatTours
+               <span className="text-gradient animate-glow-pulse relative z-10">
+                  VatTours
+               </span>
+               <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
             </Link>
          </div>
 
@@ -60,27 +63,45 @@ export default function HeaderClient({ session }: Props) {
             role="navigation"
             aria-label="Navegação principal"
          >
-            <Link
-               href="/"
-               className="group relative rounded-lg px-3 py-2 transition-all duration-300 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
-            >
-               <span className="relative z-10">Home</span>
-               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-            <Link
-               href="/tours"
-               className="group relative rounded-lg px-3 py-2 transition-all duration-300 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
-            >
-               <span className="relative z-10">Tours</span>
-               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full"></span>
-            </Link>
-            <Link
-               href="/settings"
-               className="group relative rounded-lg px-3 py-2 transition-all duration-300 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
-            >
-               <span className="relative z-10">Configurações</span>
-               <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full"></span>
-            </Link>
+            {[
+               {
+                  href: '/',
+                  label: 'Home',
+                  icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
+               },
+               {
+                  href: '/tours',
+                  label: 'Tours',
+                  icon: 'M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7',
+               },
+               {
+                  href: '/settings',
+                  label: 'Configurações',
+                  icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z',
+               },
+            ].map((item) => (
+               <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group relative flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-300 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+               >
+                  <svg
+                     className="h-4 w-4 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                     fill="none"
+                     stroke="currentColor"
+                     viewBox="0 0 24 24"
+                  >
+                     <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d={item.icon}
+                     />
+                  </svg>
+                  <span className="relative z-10">{item.label}</span>
+                  <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full"></span>
+               </Link>
+            ))}
          </nav>
 
          <button
@@ -96,16 +117,16 @@ export default function HeaderClient({ session }: Props) {
          <div ref={userMenuRef} className="relative ml-4">
             <button
                onClick={() => setUserMenuOpen(!userMenuOpen)}
-               className="group cursor-pointer rounded-xl border border-gray-800 bg-gray-900 px-4 py-2 text-sm font-semibold transition-all duration-300 hover:scale-105 hover:bg-gray-800 hover:shadow-lg focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+               className="group cursor-pointer rounded-xl border border-gray-800 bg-gray-900 px-4 py-2 text-sm font-semibold transition-all duration-300 hover:scale-105 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/20 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
                aria-label={`Menu do usuário: ${session.user?.name}`}
                aria-expanded={userMenuOpen}
                aria-haspopup="true"
             >
                <span className="flex items-center gap-2">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-xs font-bold text-white">
+                  <div className="animate-glow-pulse flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-xs font-bold text-white">
                      {session.user?.name?.charAt(0).toUpperCase()}
                   </div>
-                  {session.user?.name}
+                  <span className="hidden sm:inline">{session.user?.name}</span>
                   <svg
                      className={`h-4 w-4 transition-transform duration-300 ${
                         userMenuOpen ? 'rotate-180' : ''
@@ -126,7 +147,7 @@ export default function HeaderClient({ session }: Props) {
 
             {userMenuOpen && (
                <ul
-                  className="absolute right-0 z-50 mt-3 w-48 rounded-xl border border-gray-800 bg-black/95 py-2 text-white shadow-2xl backdrop-blur-sm"
+                  className="animate-scale-in absolute right-0 z-50 mt-3 w-48 rounded-xl border border-gray-800 bg-black/95 py-2 text-white shadow-2xl backdrop-blur-lg"
                   role="menu"
                   aria-labelledby="user-menu-button"
                >
@@ -194,7 +215,7 @@ export default function HeaderClient({ session }: Props) {
             <div
                ref={menuRef}
                id="mobile-menu"
-               className="absolute top-[70px] left-0 z-20 w-full border-t border-gray-800 bg-black/95 p-6 text-white shadow-2xl backdrop-blur-sm md:hidden"
+               className="animate-slide-in-right absolute top-[70px] left-0 z-20 w-full border-t border-gray-800 bg-black/95 p-6 text-white shadow-2xl backdrop-blur-lg md:hidden"
                role="navigation"
                aria-label="Menu móvel"
             >

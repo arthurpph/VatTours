@@ -3,6 +3,8 @@ import { toursTable } from '@/lib/db/schema';
 import { isValidUrl } from '@/lib/utils';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 type Props = {
    tourId: string;
@@ -100,12 +102,7 @@ export default async function TourInfo({ tourId }: Props) {
 
                      <div className="flex items-center gap-4">
                         <div className="h-1 w-24 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                        <div className="flex items-center gap-2 rounded-full border border-green-500/30 bg-green-500/20 px-3 py-1">
-                           <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-                           <span className="text-xs font-medium text-green-300">
-                              Tour Ativo
-                           </span>
-                        </div>
+                        <Status type="online" label="Tour Ativo" pulse />
                      </div>
                   </div>
 
@@ -115,7 +112,7 @@ export default async function TourInfo({ tourId }: Props) {
                      </p>
 
                      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                        <div className="group rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-600/10 to-blue-700/10 p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/20">
+                        <Card className="group hover-lift border-blue-500/20 bg-gradient-to-br from-blue-600/10 to-blue-700/10 p-4">
                            <div className="mb-4 flex items-center gap-3">
                               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-500/20">
                                  <svg
@@ -142,9 +139,9 @@ export default async function TourInfo({ tourId }: Props) {
                            <p className="mt-1 text-sm text-gray-400">
                               Pronto para participar
                            </p>
-                        </div>
+                        </Card>
 
-                        <div className="group rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-600/10 to-purple-700/10 p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20">
+                        <Card className="group hover-lift border-purple-500/20 bg-gradient-to-br from-purple-600/10 to-purple-700/10 p-4">
                            <div className="mb-4 flex items-center gap-3">
                               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/20">
                                  <svg
@@ -169,9 +166,9 @@ export default async function TourInfo({ tourId }: Props) {
                            <p className="mt-1 text-sm text-gray-400">
                               Voe no seu ritmo
                            </p>
-                        </div>
+                        </Card>
 
-                        <div className="group rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-600/10 to-emerald-700/10 p-6 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/20 sm:col-span-2 lg:col-span-1">
+                        <Card className="group hover-lift border-emerald-500/20 bg-gradient-to-br from-emerald-600/10 to-emerald-700/10 p-4 sm:col-span-2 lg:col-span-1">
                            <div className="mb-4 flex items-center gap-3">
                               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500/20">
                                  <svg
@@ -204,7 +201,7 @@ export default async function TourInfo({ tourId }: Props) {
                            <p className="mt-1 text-sm text-gray-400">
                               Experiência completa
                            </p>
-                        </div>
+                        </Card>
                      </div>
 
                      <div className="space-y-4">
@@ -232,7 +229,7 @@ export default async function TourInfo({ tourId }: Props) {
                            ].map((item, index) => (
                               <div
                                  key={index}
-                                 className="flex items-center gap-3 rounded-lg border border-gray-800/30 bg-gray-950/50 p-3"
+                                 className="flex items-center gap-3 rounded-lg border border-gray-800/30 bg-gray-950/50 p-3 transition-all duration-300 hover:border-blue-500/30 hover:bg-gray-900/50"
                               >
                                  <svg
                                     className="h-5 w-5 flex-shrink-0 text-blue-400"

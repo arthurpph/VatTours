@@ -5,6 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { useEffect, useState } from 'react';
+import Loading from '@/components/ui/Loading';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 interface Tour {
    id: string;
@@ -37,14 +41,7 @@ export default function ToursPage() {
    }, [status]);
 
    if (status === 'loading' || loading) {
-      return (
-         <main className="flex min-h-screen items-center justify-center bg-gray-900 px-6 py-12">
-            <div className="text-center">
-               <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-blue-500"></div>
-               <p className="text-gray-400">Carregando tours...</p>
-            </div>
-         </main>
-      );
+      return <Loading fullScreen text="Carregando tours..." />;
    }
 
    if (status === 'unauthenticated') {
@@ -70,13 +67,16 @@ export default function ToursPage() {
    return (
       <main className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900">
          <div className="pointer-events-none fixed inset-0 overflow-hidden">
-            <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
-            <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
+            <div className="animate-float-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
+            <div
+               className="animate-float-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl"
+               style={{ animationDelay: '2s' }}
+            ></div>
          </div>
 
          <div className="relative px-6 py-12">
             <div className="mx-auto mb-16 max-w-5xl px-4 text-center">
-               <div className="space-y-8">
+               <div className="animate-fade-in-up space-y-8">
                   <div className="inline-flex items-center gap-3 rounded-full border border-blue-800/40 bg-gradient-to-r from-blue-900/30 to-purple-900/30 px-6 py-3 backdrop-blur-sm">
                      <svg
                         className="h-5 w-5 text-blue-400"
@@ -120,13 +120,14 @@ export default function ToursPage() {
                               : 'Tours Disponíveis'}
                         </span>
                      </div>
-                     <button
+                     <Button
+                        variant="ghost"
+                        size="sm"
                         onClick={handleRefresh}
-                        disabled={loading}
-                        className="flex items-center gap-2 rounded-lg border border-gray-800/50 bg-gray-950/80 px-4 py-2 transition-all duration-300 hover:bg-gray-900/80 disabled:cursor-not-allowed disabled:opacity-50"
+                        loading={loading}
                      >
                         <svg
-                           className={`h-4 w-4 text-blue-400 ${loading ? 'animate-spin' : ''}`}
+                           className="h-4 w-4"
                            fill="none"
                            stroke="currentColor"
                            viewBox="0 0 24 24"
@@ -138,10 +139,8 @@ export default function ToursPage() {
                               d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                            />
                         </svg>
-                        <span className="text-sm text-gray-300">
-                           {loading ? 'Atualizando...' : 'Atualizar'}
-                        </span>
-                     </button>
+                        Atualizar
+                     </Button>
                   </div>
                </div>
             </div>
@@ -186,7 +185,7 @@ export default function ToursPage() {
                         </p>
                         <div className="space-y-4 pt-6">
                            <Link href="/">
-                              <button className="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
+                              <Button variant="primary" size="lg">
                                  <svg
                                     className="h-5 w-5"
                                     fill="none"
@@ -201,16 +200,16 @@ export default function ToursPage() {
                                     />
                                  </svg>
                                  Voltar ao início
-                              </button>
+                              </Button>
                            </Link>
                            <div>
-                              <button
+                              <Button
+                                 variant="secondary"
                                  onClick={handleRefresh}
-                                 disabled={loading}
-                                 className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:scale-105 hover:from-gray-600 hover:to-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
+                                 loading={loading}
                               >
                                  <svg
-                                    className={`h-5 w-5 ${loading ? 'animate-spin' : ''}`}
+                                    className="h-5 w-5"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -222,10 +221,8 @@ export default function ToursPage() {
                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                                     />
                                  </svg>
-                                 {loading
-                                    ? 'Atualizando...'
-                                    : 'Atualizar página'}
-                              </button>
+                                 Atualizar página
+                              </Button>
                            </div>
                         </div>
                      </div>
@@ -235,10 +232,14 @@ export default function ToursPage() {
                      <Link
                         key={index}
                         href={`/tours/${tour.id}`}
-                        className="group hover-lift mx-auto w-full max-w-md transform transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl"
+                        className="mx-auto w-full max-w-md transform transition-all duration-300"
                      >
-                        <article className="glass flex h-full flex-col overflow-hidden rounded-3xl border border-gray-800/50 bg-gradient-to-br from-gray-950 to-black shadow-xl">
-                           <div className="group relative h-64 w-full overflow-hidden rounded-t-3xl">
+                        <Card
+                           hoverable
+                           className="group animate-fade-in-up hover-lift-lg flex h-full flex-col overflow-hidden"
+                           style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                           <div className="relative h-64 w-full overflow-hidden rounded-t-2xl">
                               {isValidUrl(tour.image) ? (
                                  <div className="relative h-full">
                                     <Image
@@ -269,14 +270,11 @@ export default function ToursPage() {
                                     </div>
 
                                     <div className="absolute bottom-3 left-3 translate-y-2 transform opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                       <div className="rounded-full border border-green-500/30 bg-green-500/20 px-3 py-1 backdrop-blur-sm">
-                                          <div className="flex items-center gap-2">
-                                             <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-                                             <span className="text-xs font-medium text-green-300">
-                                                Ativo
-                                             </span>
-                                          </div>
-                                       </div>
+                                       <Status
+                                          type="online"
+                                          label="Ativo"
+                                          pulse
+                                       />
                                     </div>
                                  </div>
                               ) : (
@@ -318,9 +316,7 @@ export default function ToursPage() {
                               </p>
 
                               <div className="flex items-center justify-between border-t border-gray-800/50 pt-2">
-                                 <span className="rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400">
-                                    Disponível
-                                 </span>
+                                 <Status type="online" label="Disponível" />
                                  <span className="flex items-center gap-1 text-xs text-gray-500 transition-colors duration-300 group-hover:text-blue-400">
                                     Explorar
                                     <svg
@@ -339,7 +335,7 @@ export default function ToursPage() {
                                  </span>
                               </div>
                            </div>
-                        </article>
+                        </Card>
                      </Link>
                   ))
                )}

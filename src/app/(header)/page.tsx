@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { authOptions } from '../api/auth/[...nextauth]/auth';
 import { getTours } from '@/lib/db/queries';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 export default async function Home() {
    const session = await getServerSession(authOptions);
@@ -17,21 +20,17 @@ export default async function Home() {
    return (
       <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 px-6 py-10 text-white">
          <div className="pointer-events-none fixed inset-0 overflow-hidden">
-            <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
-            <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
+            <div className="animate-float-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
+            <div
+               className="animate-float-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl"
+               style={{ animationDelay: '2s' }}
+            ></div>
             <div className="animate-float absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-blue-900/10"></div>
          </div>
 
          <section className="relative mb-20 text-center">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 blur-3xl"></div>
-            <div className="relative space-y-8">
-               <div className="inline-flex items-center gap-3 rounded-full border border-blue-800/40 bg-gradient-to-r from-blue-900/30 to-purple-900/30 px-6 py-3 backdrop-blur-sm">
-                  <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-                  <span className="text-sm font-medium text-blue-300">
-                     Sistema Online
-                  </span>
-               </div>
-
+            <div className="animate-fade-in-up relative space-y-8">
                <h1 className="animate-float bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-5xl font-bold text-transparent md:text-6xl">
                   Bem-vindo de volta, {session.user?.name}!
                </h1>
@@ -41,43 +40,6 @@ export default async function Home() {
                   através dos nossos tours exclusivos. Sua próxima jornada pelos
                   céus te espera.
                </p>
-
-               <div className="flex flex-wrap justify-center gap-4 pt-4">
-                  <div className="flex items-center gap-2 rounded-lg border border-gray-800/50 bg-gray-950/80 px-4 py-2">
-                     <svg
-                        className="h-5 w-5 text-blue-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                     >
-                        <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           strokeWidth={2}
-                           d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                     </svg>
-                     <span className="text-sm text-gray-300">
-                        Conectado ao VATSIM
-                     </span>
-                  </div>
-                  <div className="flex items-center gap-2 rounded-lg border border-gray-800/50 bg-gray-950/80 px-4 py-2">
-                     <svg
-                        className="h-5 w-5 text-green-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                     >
-                        <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           strokeWidth={2}
-                           d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                     </svg>
-                     <span className="text-sm text-gray-300">Tours Ativos</span>
-                  </div>
-               </div>
             </div>
          </section>
 
@@ -119,7 +81,7 @@ export default async function Home() {
                      </p>
                      <div className="pt-4">
                         <Link href="/tours">
-                           <button className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-gray-700 to-gray-600 px-6 py-3 font-medium text-white transition-all duration-300 hover:scale-105 hover:from-gray-600 hover:to-gray-500">
+                           <Button variant="secondary" size="lg">
                               <svg
                                  className="h-5 w-5"
                                  fill="none"
@@ -134,7 +96,7 @@ export default async function Home() {
                                  />
                               </svg>
                               Verificar novamente
-                           </button>
+                           </Button>
                         </Link>
                      </div>
                   </div>
@@ -144,13 +106,17 @@ export default async function Home() {
                   {tours.slice(0, 4).map((tour, index) => (
                      <Link
                         href={`/tours/${tour.id}`}
-                        className="group hover-lift block w-full max-w-sm"
+                        className="block w-full max-w-sm"
                         key={index}
                      >
-                        <div className="glass relative overflow-hidden rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-950 to-black shadow-xl transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/25">
+                        <Card
+                           hoverable
+                           className="group animate-fade-in-up hover-lift-lg overflow-hidden"
+                           style={{ animationDelay: `${index * 0.1}s` }}
+                        >
                            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-purple-600/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
 
-                           <div className="relative overflow-hidden">
+                           <div className="relative overflow-hidden rounded-xl">
                               {isValidUrl(tour.image) ? (
                                  <div className="relative">
                                     <Image
@@ -209,27 +175,21 @@ export default async function Home() {
                                  <h3 className="line-clamp-2 text-xl font-bold text-white transition-colors duration-300 group-hover:text-blue-400">
                                     {tour.title}
                                  </h3>
-                                 <div className="ml-2 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-green-500/20">
-                                    <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-                                 </div>
+                                 <Status type="online" label="" />
                               </div>
 
                               <p className="mb-4 line-clamp-3 text-sm leading-relaxed text-gray-400">
                                  {tour.description}
                               </p>
 
-                              <div className="flex items-center justify-between">
-                                 <span className="rounded-full bg-blue-500/10 px-2 py-1 text-xs font-medium text-blue-400">
-                                    Disponível
-                                 </span>
+                              <div className="flex items-center justify-between border-t border-gray-800/30 pt-3">
+                                 <Status type="online" label="Disponível" />
                                  <span className="text-xs text-gray-500 transition-colors duration-300 group-hover:text-blue-400">
                                     Ver detalhes →
                                  </span>
                               </div>
                            </div>
-
-                           <div className="absolute inset-0 -z-10 rounded-2xl border-2 border-transparent bg-gradient-to-r from-blue-500 to-purple-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-                        </div>
+                        </Card>
                      </Link>
                   ))}
                </div>
@@ -237,7 +197,7 @@ export default async function Home() {
          </section>
          <section className="relative text-center">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/10 to-purple-600/10 blur-2xl"></div>
-            <div className="relative space-y-8 rounded-3xl border border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-8 backdrop-blur-sm">
+            <Card className="animate-scale-in relative space-y-8 text-center">
                <div className="space-y-4">
                   <h2 className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-3xl font-bold text-transparent">
                      Pronto para seu próximo voo?
@@ -248,27 +208,24 @@ export default async function Home() {
                   </p>
                </div>
                <Link href="/tours">
-                  <button className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25">
-                     <span className="relative z-10 flex items-center justify-center gap-2">
-                        Explorar Tours
-                        <svg
-                           className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
-                           fill="none"
-                           stroke="currentColor"
-                           viewBox="0 0 24 24"
-                        >
-                           <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M13 7l5 5m0 0l-5 5m5-5H6"
-                           />
-                        </svg>
-                     </span>
-                     <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
-                  </button>
+                  <Button variant="primary" size="lg">
+                     Explorar Tours
+                     <svg
+                        className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                     >
+                        <path
+                           strokeLinecap="round"
+                           strokeLinejoin="round"
+                           strokeWidth={2}
+                           d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                     </svg>
+                  </Button>
                </Link>
-            </div>
+            </Card>
          </section>
       </div>
    );

@@ -74,7 +74,7 @@ export const badgesTable = pgTable('badges', {
    id: serial('id').primaryKey(),
    name: text('name').notNull(),
    description: text('description'),
-   icon: text('icon'),
+   icon: text('icon').notNull(),
 });
 
 export const userBadgesTable = pgTable(

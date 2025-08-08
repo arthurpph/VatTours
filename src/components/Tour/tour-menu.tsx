@@ -38,7 +38,7 @@ export default function TourMenu() {
 
    return (
       <div className="relative mx-auto mb-12 w-full max-w-2xl px-4">
-         <div className="glass rounded-2xl border border-gray-800/50 bg-black/40 p-2">
+         <div className="glass-strong shadow-glow-lg rounded-2xl border border-gray-800/50 bg-black/60 p-2">
             <nav
                className="flex flex-wrap justify-center gap-2"
                role="tablist"
@@ -58,8 +58,8 @@ export default function TourMenu() {
                         aria-controls={`panel-${item.action || 'info'}`}
                         className={`group relative min-w-[80px] flex-1 cursor-pointer rounded-xl px-4 py-3 text-center text-sm font-medium tracking-wide transition-all duration-300 select-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none sm:min-w-[120px] sm:flex-auto sm:px-6 sm:py-3 sm:text-base ${
                            isActive
-                              ? 'scale-105 bg-gradient-to-r from-blue-700 to-purple-700 text-white shadow-lg shadow-blue-500/25'
-                              : 'text-gray-300 hover:scale-105 hover:bg-gray-900/50 hover:text-white'
+                              ? 'animate-glow-pulse scale-105 bg-gradient-to-r from-blue-700 to-purple-700 text-white shadow-lg shadow-blue-500/25'
+                              : 'text-gray-300 hover:scale-105 hover:bg-gray-900/50 hover:text-white hover:shadow-md hover:shadow-blue-500/10'
                         }`}
                         disabled={isPending}
                      >
@@ -131,11 +131,11 @@ export default function TourMenu() {
                         </span>
 
                         {!isActive && (
-                           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-800/20 to-purple-800/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+                           <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-800/20 to-purple-800/20 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:shadow-lg"></div>
                         )}
 
                         {isActive && (
-                           <div className="animate-glow absolute inset-0 rounded-xl bg-gradient-to-r from-blue-700 to-purple-700"></div>
+                           <div className="animate-glow-pulse shadow-glow absolute inset-0 rounded-xl bg-gradient-to-r from-blue-700 to-purple-700"></div>
                         )}
                      </button>
                   );

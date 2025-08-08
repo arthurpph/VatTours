@@ -4,6 +4,10 @@ import { useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 import { Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
+import Loading from '@/components/ui/Loading';
+import Card from '@/components/ui/Card';
+import Button from '@/components/ui/Button';
+import Status from '@/components/ui/Status';
 
 const AGREEMENT_VERSION = 'v1.2.3';
 
@@ -12,36 +16,7 @@ export default function SettingsPage() {
    const [showPolicy, setShowPolicy] = useState(false);
 
    if (status === 'loading') {
-      return (
-         <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-black via-gray-950 to-gray-900 text-white">
-            <div className="space-y-6 text-center">
-               <div className="mx-auto flex h-16 w-16 animate-pulse items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
-                  <svg
-                     className="h-8 w-8 animate-spin text-white"
-                     fill="none"
-                     stroke="currentColor"
-                     viewBox="0 0 24 24"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                     />
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                     />
-                  </svg>
-               </div>
-               <p className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xl font-semibold text-transparent">
-                  Carregando configurações...
-               </p>
-            </div>
-         </main>
-      );
+      return <Loading fullScreen text="Carregando configurações..." />;
    }
 
    if (!session || !session.user) {
@@ -57,13 +32,16 @@ export default function SettingsPage() {
             aria-hidden={showPolicy}
          >
             <div className="pointer-events-none fixed inset-0 overflow-hidden">
-               <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
-               <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
+               <div className="animate-float-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
+               <div
+                  className="animate-float-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl"
+                  style={{ animationDelay: '2s' }}
+               ></div>
                <div className="animate-float absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-blue-900/10"></div>
             </div>
 
             <div className="relative mx-auto mb-14 max-w-5xl px-4 text-center">
-               <div className="mb-16 space-y-8">
+               <div className="animate-fade-in-up mb-16 space-y-8">
                   <div className="space-y-6">
                      <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-6xl font-bold text-transparent md:text-7xl">
                         Configurações
@@ -77,11 +55,15 @@ export default function SettingsPage() {
                </div>
 
                <div className="mb-16 grid grid-cols-1 gap-8 lg:grid-cols-2">
-                  <div className="group relative overflow-hidden rounded-3xl border border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-8 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/10">
+                  <Card
+                     hoverable
+                     className="group animate-scale-in hover-lift-lg relative overflow-hidden"
+                     style={{ animationDelay: '0.1s' }}
+                  >
                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
 
                      <div className="relative space-y-6">
-                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
+                        <div className="animate-glow-pulse mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
                            <svg
                               className="h-8 w-8 text-white"
                               fill="none"
@@ -107,29 +89,34 @@ export default function SettingsPage() {
                            </p>
                         </div>
 
-                        <button
+                        <Button
+                           variant="primary"
+                           size="lg"
                            onClick={() => setShowPolicy(true)}
-                           className="group/btn w-full rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 px-8 py-4 font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
-                           type="button"
+                           className="w-full"
                         >
-                           <span className="flex items-center justify-center gap-3">
-                              Visualizar Política
-                              <ChevronDownIcon className="h-5 w-5 transition-transform duration-300 group-hover/btn:translate-y-1" />
-                           </span>
-                        </button>
+                           Visualizar Política
+                           <ChevronDownIcon className="h-5 w-5 transition-transform duration-300 group-hover:translate-y-1" />
+                        </Button>
 
                         <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-                           <div className="h-2 w-2 rounded-full bg-green-400"></div>
-                           <span>Versão {AGREEMENT_VERSION}</span>
+                           <Status
+                              type="online"
+                              label={`Versão ${AGREEMENT_VERSION}`}
+                           />
                         </div>
                      </div>
-                  </div>
+                  </Card>
 
-                  <div className="group relative overflow-hidden rounded-3xl border border-gray-700/50 bg-gradient-to-br from-gray-800/50 to-gray-900/50 p-8 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:border-purple-500/30 hover:shadow-xl hover:shadow-purple-500/10">
+                  <Card
+                     hoverable
+                     className="group animate-scale-in hover-lift-lg relative overflow-hidden"
+                     style={{ animationDelay: '0.2s' }}
+                  >
                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
 
                      <div className="relative space-y-6">
-                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-indigo-500">
+                        <div className="animate-glow-pulse mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-500 to-indigo-500">
                            <svg
                               className="h-8 w-8 text-white"
                               fill="none"
@@ -154,25 +141,16 @@ export default function SettingsPage() {
                            </p>
                         </div>
 
-                        <div className="space-y-4 rounded-2xl border border-gray-700/30 bg-gray-800/50 p-6">
+                        <Card className="space-y-4 bg-gray-800/50">
                            <div className="flex items-center justify-between">
                               <span className="text-gray-400">Nome:</span>
                               <span className="font-medium text-white">
                                  {session.user.name}
                               </span>
                            </div>
-                           <div className="flex items-center justify-between">
-                              <span className="text-gray-400">Status:</span>
-                              <span className="flex items-center gap-2">
-                                 <div className="h-2 w-2 rounded-full bg-green-400"></div>
-                                 <span className="font-medium text-green-400">
-                                    Ativo
-                                 </span>
-                              </span>
-                           </div>
-                        </div>
+                        </Card>
                      </div>
-                  </div>
+                  </Card>
                </div>
             </div>
          </main>
