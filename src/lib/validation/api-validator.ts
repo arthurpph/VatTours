@@ -74,7 +74,6 @@ export function handleApiError(error: unknown): NextResponse {
    );
 }
 
-// Middleware para validação de autenticação
 export function validateAuthSession(session: unknown) {
    if (
       !session ||
@@ -87,7 +86,6 @@ export function validateAuthSession(session: unknown) {
    return session;
 }
 
-// Middleware para validação de permissões de admin
 export function validateAdminPermission(session: unknown) {
    validateAuthSession(session);
 
