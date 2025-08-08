@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       const validatedData = validateJson(createTourSchema, body);
 
       const { title, description } = validatedData;
-      const { legs } = body; // As legs ainda usam o schema antigo
+      const { legs } = body;
 
       if (!Array.isArray(legs) || legs.length === 0) {
          return NextResponse.json(
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       const insertedTour = await insertTour({
          title: title,
          description,
-         image: '', // String vazia em vez de null
+         image: '',
          createdAt: new Date(),
       });
 

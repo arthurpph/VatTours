@@ -63,7 +63,7 @@ describe('TourInfo Component', () => {
 
       expect(screen.getByText('Tour Test')).toBeInTheDocument();
       expect(screen.getByText('Uma descrição de teste')).toBeInTheDocument();
-      expect(screen.getAllByText('Tour Ativo')).toHaveLength(2); // Aparece no status e no card
+      expect(screen.getAllByText('Tour Ativo')).toHaveLength(2);
    });
 
    it('should render not found message when tour does not exist', async () => {

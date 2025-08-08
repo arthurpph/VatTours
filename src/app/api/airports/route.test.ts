@@ -23,7 +23,6 @@ jest.mock('@/lib/validation/api-schemas', () => ({
    getAirportsSchema: {},
 }));
 
-// Mock global Request
 global.Request = class MockRequest {
    url: string;
    constructor(url: string) {
