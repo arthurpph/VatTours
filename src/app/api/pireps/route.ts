@@ -4,65 +4,51 @@ import {
    insertPirep,
 } from '@/lib/db/queries';
 import { PirepSchema } from '@/lib/validation';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getServerSession } from 'next-auth';
-import z from 'zod';
 import { authOptions } from '../auth/[...nextauth]/auth';
+import {
+   validateQuery,
+   validateJson,
+   validateAuthSession,
+   handleApiError,
+} from '@/lib/validation/api-validator';
+import {
+   getPirepsSchema,
+   createPirepSchema,
+} from '@/lib/validation/api-schemas';
 
-export async function GET(req: Request) {
-   const session = await getServerSession(authOptions);
-
-   if (!session || !session.id) {
-      return NextResponse.json(
-         { message: 'Usuário não autenticado' },
-         { status: 401 },
-      );
-   }
-
-   const { searchParams } = new URL(req.url);
-   const status = searchParams.get('status');
-
+export async function GET(request: NextRequest) {
    try {
+      const session = await getServerSession(authOptions);
+      validateAuthSession(session);
+
+      const { searchParams } = new URL(request.url);
+      const query = validateQuery(getPirepsSchema, searchParams);
+
       const pireps = await getPirepsByUserAndStatus(
-         session.id,
-         status ?? undefined,
+         session!.id,
+         query.status !== 'all' ? query.status : undefined,
       );
       return NextResponse.json(pireps);
-   } catch (err) {
-      console.error(err);
-      return NextResponse.json(
-         { message: 'Erro ao buscar PIREPs' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
    try {
-      const { tourId, callsign, comment } = await req.json();
       const session = await getServerSession(authOptions);
+      validateAuthSession(session);
 
-      if (!session || !session.id) {
-         return NextResponse.json(
-            { message: 'Usuário não autenticado' },
-            { status: 401 },
-         );
-      }
+      const body = await request.json();
+      const validatedData = validateJson(createPirepSchema, body);
 
-      const tourIdParse = z.number().int().nonnegative().safeParse(tourId);
-
-      if (!tourIdParse.success) {
-         return NextResponse.json(
-            { message: 'Tour ID inválido' },
-            { status: 400 },
-         );
-      }
-
-      const userId = session.id;
+      const userId = session!.id;
 
       const nextLegPirepResult = await getNextLegForUser(
          userId,
-         Number(tourId),
+         validatedData.tourId,
       );
 
       if (!nextLegPirepResult) {
@@ -77,20 +63,20 @@ export async function POST(req: Request) {
 
       const legId = nextLegPirepResult.id;
 
-      const parser = PirepSchema.safeParse({
+      const pirepData = {
          userId,
          legId,
-         callsign,
-         comment,
-      });
+         callsign: validatedData.callsign,
+         comment: validatedData.comment,
+      };
+
+      const parser = PirepSchema.safeParse(pirepData);
 
       if (!parser.success) {
-         const formattedErrors = z.treeifyError(parser.error);
-
          return NextResponse.json(
             {
                message: 'Dados inválidos',
-               errors: formattedErrors,
+               errors: parser.error.format(),
             },
             { status: 400 },
          );
@@ -99,16 +85,12 @@ export async function POST(req: Request) {
       await insertPirep({
          userId,
          legId,
-         callsign,
-         comment: comment || null,
+         callsign: validatedData.callsign,
+         comment: validatedData.comment || null,
       });
 
       return NextResponse.json(null, { status: 201 });
-   } catch (err) {
-      console.error(err);
-      return NextResponse.json(
-         { message: 'Erro interno do servidor' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }

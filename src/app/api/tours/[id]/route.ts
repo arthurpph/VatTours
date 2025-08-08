@@ -1,15 +1,19 @@
 import { getLegsByTourIds, getTours } from '@/lib/db/queries';
 import { NextResponse } from 'next/server';
+import { validateParams, handleApiError } from '@/lib/validation/api-validator';
+import { IdParamsSchema, type IdParams } from '@/lib/validation/api-schemas';
 
-export async function GET(req: Request) {
+export async function GET(
+   req: Request,
+   { params }: { params: Promise<{ id: string }> },
+) {
    try {
-      const url = new URL(req.url);
-      const idParam = url.pathname.split('/').pop();
-      const id = Number(idParam);
-
-      if (isNaN(id)) {
-         return NextResponse.json({ message: 'ID inválido' }, { status: 400 });
-      }
+      const resolvedParams = await params;
+      const validatedParams: IdParams = validateParams(
+         IdParamsSchema,
+         resolvedParams,
+      );
+      const id = validatedParams.id;
 
       const tours = await getTours();
       const tour = tours.find((t) => t.id === id);
@@ -28,11 +32,7 @@ export async function GET(req: Request) {
       };
 
       return NextResponse.json(tourWithLegs);
-   } catch (err) {
-      console.error(err);
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }

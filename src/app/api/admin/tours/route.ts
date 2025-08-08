@@ -1,26 +1,28 @@
 import { db } from '@/lib/db';
 import { airportsTable } from '@/lib/db/schema';
 import { insertLegs, insertTour } from '@/lib/db/queries';
-import { LegSchema, TourSchema } from '@/lib/validation';
+import { LegSchema } from '@/lib/validation';
 import { inArray } from 'drizzle-orm';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/auth';
+import {
+   validateJson,
+   validateAdminPermission,
+   handleApiError,
+} from '@/lib/validation/api-validator';
+import { createTourSchema } from '@/lib/validation/api-schemas';
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
    try {
-      const body = await req.json();
-      const { title, description, image, legs } = body;
+      const session = await getServerSession(authOptions);
+      validateAdminPermission(session);
 
-      const tourValidation = TourSchema.safeParse({
-         title,
-         description,
-         image,
-      });
-      if (!tourValidation.success) {
-         return NextResponse.json(
-            { message: 'Título e ao menos uma leg são obrigatórios.' },
-            { status: 400 },
-         );
-      }
+      const body = await request.json();
+      const validatedData = validateJson(createTourSchema, body);
+
+      const { title, description } = validatedData;
+      const { legs } = body; // As legs ainda usam o schema antigo
 
       if (!Array.isArray(legs) || legs.length === 0) {
          return NextResponse.json(
@@ -39,7 +41,10 @@ export async function POST(req: Request) {
 
          if (!result.success) {
             return NextResponse.json(
-               { message: `Leg ${index + 1} inválida`, issues: result.error },
+               {
+                  message: `Leg ${index + 1} inválida`,
+                  issues: result.error.format(),
+               },
                { status: 400 },
             );
          }
@@ -48,9 +53,9 @@ export async function POST(req: Request) {
       }
 
       const insertedTour = await insertTour({
-         title,
+         title: title,
          description,
-         image,
+         image: '', // String vazia em vez de null
          createdAt: new Date(),
       });
 
@@ -113,11 +118,7 @@ export async function POST(req: Request) {
       await insertLegs(legsToInsert);
 
       return NextResponse.json({ success: true, tourId }, { status: 201 });
-   } catch (err) {
-      console.error('Erro ao criar tour:', err);
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }

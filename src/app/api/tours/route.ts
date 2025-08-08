@@ -1,8 +1,13 @@
 import { getLegsByTourIds, getTours } from '@/lib/db/queries';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
+import { validateQuery, handleApiError } from '@/lib/validation/api-validator';
+import { getToursSchema } from '@/lib/validation/api-schemas';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
    try {
+      const { searchParams } = new URL(request.url);
+      validateQuery(getToursSchema, searchParams);
+
       const tours = await getTours();
 
       const tourIds = tours.map((t) => t.id);
@@ -19,11 +24,7 @@ export async function GET() {
       }));
 
       return NextResponse.json(toursWithLegs);
-   } catch (err) {
-      console.error(err);
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }
