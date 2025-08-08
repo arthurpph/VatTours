@@ -4,7 +4,9 @@ import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { authOptions } from '../api/auth/[...nextauth]/auth';
 import { getTours } from '@/lib/db/queries';
-import { Button, Card, Status } from '@/components/ui';
+import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 export default async function Home() {
    const session = await getServerSession(authOptions);

@@ -4,7 +4,10 @@ import { useState, Fragment } from 'react';
 import { useSession } from 'next-auth/react';
 import { Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import { Loading, Card, Button, Status } from '@/components/ui';
+import Button from '@/components/ui/Button';
+import Loading from '@/components/ui/Loading';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 const AGREEMENT_VERSION = 'v1.2.3';
 
