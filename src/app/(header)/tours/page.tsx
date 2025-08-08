@@ -5,10 +5,10 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import Loading from '@/components/ui/loading';
-import Button from '@/components/ui/button';
-import Card from '@/components/ui/card';
-import Status from '@/components/ui/status';
+import Button from '@/components/ui/Button';
+import Loading from '@/components/ui/Loading';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 interface Tour {
    id: string;

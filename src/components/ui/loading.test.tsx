@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Loading from './loading';
+import Loading from './Loading';
 
 describe('Loading Component', () => {
    it('should render with default props', () => {

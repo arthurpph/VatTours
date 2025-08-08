@@ -3,8 +3,8 @@ import { toursTable } from '@/lib/db/schema';
 import { isValidUrl } from '@/lib/utils';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
-import Card from '@/components/ui/card';
-import Status from '@/components/ui/status';
+import Card from '@/components/ui/Card';
+import Status from '@/components/ui/Status';
 
 type Props = {
    tourId: string;
