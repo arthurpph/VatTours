@@ -1,0 +1,4 @@
+# Validate commit message format
+# This ensures commit messages follow conventional commits format
+# Examples: feat: add new feature, fix: bug fix, docs: update readme
+npx --no -- commitlint --edit ${1}

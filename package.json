@@ -10,7 +10,8 @@
       "lint:fix": "next lint --fix",
       "format": "npx prettier --write .",
       "test": "jest",
-      "test:watch": "jest --watch"
+      "test:watch": "jest --watch",
+      "prepare": "husky"
    },
    "dependencies": {
       "@headlessui/react": "^2.2.7",
@@ -26,6 +27,8 @@
       "zod": "^4.0.14"
    },
    "devDependencies": {
+      "@commitlint/cli": "^19.8.1",
+      "@commitlint/config-conventional": "^19.8.1",
       "@eslint/js": "^9.32.0",
       "@tailwindcss/postcss": "^4",
       "@testing-library/jest-dom": "^6.6.4",
@@ -45,6 +48,7 @@
       "eslint-plugin-next": "^0.0.0",
       "eslint-plugin-prettier": "^5.5.3",
       "globals": "^16.3.0",
+      "husky": "^9.1.7",
       "jest": "^30.0.5",
       "jest-environment-jsdom": "^30.0.5",
       "jiti": "^2.5.1",
