@@ -2,6 +2,7 @@
 
 import AirportSelector from '@/components/Selector/airport-selector';
 import { ADMIN_API_ROUTES, PUBLIC_API_ROUTES } from '@/config/api-routes';
+import { isValidUrl } from '@/lib/utils';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
@@ -78,6 +79,11 @@ export default function TourManagePage() {
 
    const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+
+      if (image && !isValidUrl(image)) {
+         alert('Por favor, insira uma URL de imagem válida.');
+         return;
+      }
 
       const url =
          isEditing && editingTour
@@ -172,10 +178,11 @@ export default function TourManagePage() {
    };
 
    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-indigo-900 px-6 py-10">
-         <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-40 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-600/10 to-cyan-600/10 blur-3xl"></div>
-            <div className="absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-cyan-600/10 to-blue-600/10 blur-3xl"></div>
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 px-6 py-10">
+         <div className="pointer-events-none fixed inset-0 overflow-hidden">
+            <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
+            <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
+            <div className="animate-float absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-blue-900/10"></div>
          </div>
 
          <div className="relative mx-auto max-w-7xl">
@@ -280,14 +287,61 @@ export default function TourManagePage() {
                         <label className="block font-medium text-gray-300">
                            URL da Imagem
                         </label>
-                        <input
-                           type="text"
-                           className="w-full rounded-2xl border border-gray-600/50 bg-gray-800/50 p-4 text-gray-100 placeholder-gray-400 backdrop-blur-sm transition-all focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
-                           placeholder="https://exemplo.com/imagem.jpg"
-                           value={image}
-                           onChange={(e) => setImage(e.target.value)}
-                           required
-                        />
+                        <div className="relative">
+                           <input
+                              type="text"
+                              className={`w-full rounded-2xl border p-4 text-gray-100 placeholder-gray-400 backdrop-blur-sm transition-all focus:ring-2 focus:outline-none ${
+                                 image && !isValidUrl(image)
+                                    ? 'border-red-500/50 bg-red-900/20 focus:border-red-500/50 focus:ring-red-500/20'
+                                    : image && isValidUrl(image)
+                                      ? 'border-green-500/50 bg-green-900/20 focus:border-green-500/50 focus:ring-green-500/20'
+                                      : 'border-gray-600/50 bg-gray-800/50 focus:border-blue-500/50 focus:ring-blue-500/20'
+                              }`}
+                              placeholder="https://exemplo.com/imagem.jpg"
+                              value={image}
+                              onChange={(e) => setImage(e.target.value)}
+                              required
+                           />
+                           {image && (
+                              <div className="absolute top-1/2 right-3 -translate-y-1/2">
+                                 {isValidUrl(image) ? (
+                                    <svg
+                                       className="h-5 w-5 text-green-400"
+                                       fill="none"
+                                       stroke="currentColor"
+                                       viewBox="0 0 24 24"
+                                    >
+                                       <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M5 13l4 4L19 7"
+                                       />
+                                    </svg>
+                                 ) : (
+                                    <svg
+                                       className="h-5 w-5 text-red-400"
+                                       fill="none"
+                                       stroke="currentColor"
+                                       viewBox="0 0 24 24"
+                                    >
+                                       <path
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                          strokeWidth={2}
+                                          d="M6 18L18 6M6 6l12 12"
+                                       />
+                                    </svg>
+                                 )}
+                              </div>
+                           )}
+                        </div>
+                        {image && !isValidUrl(image) && (
+                           <p className="text-sm text-red-400">
+                              Por favor, insira uma URL válida (ex:
+                              https://exemplo.com/imagem.jpg)
+                           </p>
+                        )}
                      </div>
                   </div>
 
@@ -627,7 +681,7 @@ export default function TourManagePage() {
 
                            <div className="relative flex flex-col items-start justify-between gap-6 p-8 lg:flex-row lg:items-center">
                               <div className="flex flex-1 flex-col items-start gap-6 sm:flex-row sm:items-center">
-                                 {tour.image && (
+                                 {tour.image && isValidUrl(tour.image) && (
                                     <div className="relative overflow-hidden rounded-2xl border border-gray-600/50">
                                        <Image
                                           src={tour.image}
