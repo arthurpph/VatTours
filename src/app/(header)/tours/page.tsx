@@ -5,10 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { isValidUrl } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import Loading from '@/components/ui/loading';
-import Button from '@/components/ui/button';
-import Card from '@/components/ui/card';
-import Status from '@/components/ui/status';
+import { Loading, Button, Card, Status } from '@/components/ui';
 
 interface Tour {
    id: string;
