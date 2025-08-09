@@ -18,7 +18,7 @@ type SearchParams = {
 export default async function Profile({
    searchParams,
 }: {
-   searchParams: SearchParams;
+   searchParams: Promise<SearchParams>;
 }) {
    const session = await getServerSession(authOptions);
 
