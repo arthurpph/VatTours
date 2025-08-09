@@ -56,14 +56,9 @@ export const createTourSchema = z.object({
 });
 
 export const createPirepSchema = z.object({
-   legId: z.number().int().positive(),
    tourId: z.number().int().positive(),
    callsign: z.string().min(1).max(12),
-   comment: z.string().optional().nullable(),
-   aircraftType: z.string().min(1).max(50),
-   flightTime: z.number().int().positive(),
-   route: z.string().min(1).max(500),
-   remarks: z.string().max(1000).optional(),
+   comment: z.string().max(100).optional().nullable(),
 });
 
 export type IdParams = z.infer<typeof IdParamsSchema>;
