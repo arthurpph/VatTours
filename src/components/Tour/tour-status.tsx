@@ -1,6 +1,8 @@
-import { getPirepsByTour } from '@/lib/db/queries';
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
+import { getPirepsByUserAndTour } from '@/lib/db/queries';
 import { PirepStatus } from '@/models/types';
 import { CheckCircle, Clock, XCircle } from 'lucide-react';
+import { getServerSession } from 'next-auth';
 
 type PirepWithUserAndLeg = {
    id: number;
@@ -32,7 +34,13 @@ type Props = {
 };
 
 export default async function TourStatus({ tourId }: Props) {
-   const pireps = await getPirepsByTour(Number(tourId));
+   const session = await getServerSession(authOptions);
+
+   if (!session) {
+      return <></>;
+   }
+
+   const pireps = await getPirepsByUserAndTour(session.id, Number(tourId));
    const grouped: Record<string, GroupedByUser> = {};
 
    for (const pirep of pireps) {
