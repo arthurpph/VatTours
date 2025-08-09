@@ -339,7 +339,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Transatlântico
    await db.insert(legsTable).values([
       {
          tourId: tourResults[4].id,
@@ -364,7 +363,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Sul do Brasil
    await db.insert(legsTable).values([
       {
          tourId: tourResults[5].id,
@@ -382,7 +380,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Nordeste Brasileiro
    await db.insert(legsTable).values([
       {
          tourId: tourResults[6].id,
@@ -407,7 +404,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Rota do Pacífico
    await db.insert(legsTable).values([
       {
          tourId: tourResults[7].id,
@@ -425,7 +421,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Europa Central
    await db.insert(legsTable).values([
       {
          tourId: tourResults[8].id,
@@ -443,7 +438,6 @@ async function seedData() {
       },
    ]);
 
-   // Legs para Grandes Metrópoles
    await db.insert(legsTable).values([
       {
          tourId: tourResults[9].id,
@@ -565,7 +559,6 @@ async function seedData() {
       },
    ]);
 
-   // Tours completados pelos usuários
    await db.insert(userToursTable).values([
       {
          userId: '1000001',
@@ -589,12 +582,12 @@ async function seedData() {
       },
       {
          userId: '1000002',
-         tourId: tourResults[5].id, // Sul do Brasil
+         tourId: tourResults[5].id,
          completedAt: new Date('2024-01-10'),
       },
       {
          userId: '1000002',
-         tourId: tourResults[6].id, // Nordeste
+         tourId: tourResults[6].id,
          completedAt: new Date('2024-03-05'),
       },
       {
@@ -619,22 +612,22 @@ async function seedData() {
       },
       {
          userId: '1000005',
-         tourId: tourResults[4].id, // Transatlântico
+         tourId: tourResults[4].id,
          completedAt: new Date('2024-01-20'),
       },
       {
          userId: '1000005',
-         tourId: tourResults[5].id, // Sul do Brasil
+         tourId: tourResults[5].id,
          completedAt: new Date('2024-02-10'),
       },
       {
          userId: '1000005',
-         tourId: tourResults[7].id, // Rota do Pacífico
+         tourId: tourResults[7].id,
          completedAt: new Date('2024-03-15'),
       },
       {
          userId: '1000005',
-         tourId: tourResults[8].id, // Europa Central
+         tourId: tourResults[8].id,
          completedAt: new Date('2024-04-01'),
       },
    ]);
