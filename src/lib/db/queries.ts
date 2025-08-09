@@ -113,6 +113,38 @@ export async function getPirepsByTour(tourId: number) {
    return pireps;
 }
 
+export async function getPirepsByUserAndTour(userId: string, tourId: number) {
+   const depAirport = alias(airportsTable, 'depAirport');
+   const arrAirport = alias(airportsTable, 'arrAirport');
+
+   const pireps = await db
+      .select({
+         id: pirepsTable.id,
+         callsign: pirepsTable.callsign,
+         comment: pirepsTable.comment,
+         reviewerNote: pirepsTable.reviewNote,
+         status: pirepsTable.status,
+         submittedAt: pirepsTable.submittedAt,
+         departureCountry: depAirport.country,
+         departureName: depAirport.name,
+         departureIcao: legsTable.departureIcao,
+         arrivalCountry: arrAirport.country,
+         arrivalName: arrAirport.name,
+         arrivalIcao: legsTable.arrivalIcao,
+         userId: usersTable.id,
+         userName: usersTable.name,
+         userEmail: usersTable.email,
+      })
+      .from(pirepsTable)
+      .innerJoin(legsTable, eq(pirepsTable.legId, legsTable.id))
+      .innerJoin(usersTable, eq(pirepsTable.userId, usersTable.id))
+      .innerJoin(depAirport, eq(legsTable.departureIcao, depAirport.icao))
+      .innerJoin(arrAirport, eq(legsTable.arrivalIcao, arrAirport.icao))
+      .where(and(eq(legsTable.tourId, tourId), eq(pirepsTable.userId, userId)));
+
+   return pireps;
+}
+
 export async function getPirepsByUserAndStatus(
    userId: string,
    status?: string,
@@ -162,9 +194,11 @@ export async function getNextLegForUser(
    const subqueryCompletedOrPending = db
       .select({ legId: pirepsTable.legId })
       .from(pirepsTable)
+      .innerJoin(legsTable, eq(pirepsTable.legId, legsTable.id))
       .where(
          and(
             eq(pirepsTable.userId, userId),
+            eq(legsTable.tourId, tourId),
             or(
                eq(pirepsTable.status, 'approved'),
                eq(pirepsTable.status, 'pending'),
