@@ -2,6 +2,7 @@ export const PUBLIC_API_ROUTES = {
    airports: '/api/airports',
    tours: '/api/tours',
    pireps: '/api/pireps',
+   users: '/api/users',
 };
 
 export const ADMIN_API_ROUTES = {

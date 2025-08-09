@@ -1,13 +1,24 @@
 import { db } from '@/lib/db';
 import {
    airportsTable,
+   badgesTable,
    legsTable,
    pirepsTable,
    toursTable,
+   userBadgesTable,
    usersTable,
 } from '@/lib/db/schema';
 import { CountryCode, PirepStatus, pirepStatus } from '@/models/types';
-import { and, asc, eq, notExists, notInArray, or, inArray } from 'drizzle-orm';
+import {
+   and,
+   asc,
+   eq,
+   notExists,
+   notInArray,
+   or,
+   inArray,
+   sql,
+} from 'drizzle-orm';
 import { alias } from 'drizzle-orm/pg-core';
 
 export async function getTours() {
@@ -259,4 +270,58 @@ export async function insertTour(data: {
       .returning();
 
    return insertedTour;
+}
+
+export async function getUserProfile(userId: string) {
+   const [user] = await db
+      .select({
+         id: usersTable.id,
+         name: usersTable.name,
+         email: usersTable.email,
+         image: usersTable.image,
+         role: usersTable.role,
+      })
+      .from(usersTable)
+      .where(eq(usersTable.id, userId));
+
+   return user;
+}
+
+export async function getUserBadges(userId: string) {
+   const badges = await db
+      .select({
+         id: badgesTable.id,
+         name: badgesTable.name,
+         description: badgesTable.description,
+         icon: badgesTable.icon,
+         earnedAt: userBadgesTable.earnedAt,
+      })
+      .from(userBadgesTable)
+      .innerJoin(badgesTable, eq(userBadgesTable.badgeId, badgesTable.id))
+      .where(eq(userBadgesTable.userId, userId));
+
+   return badges;
+}
+
+export async function searchUsers(query: string) {
+   if (!query.trim()) return [];
+
+   const users = await db
+      .select({
+         id: usersTable.id,
+         name: usersTable.name,
+         email: usersTable.email,
+         image: usersTable.image,
+         role: usersTable.role,
+      })
+      .from(usersTable)
+      .where(
+         or(
+            sql`${usersTable.name} ILIKE '%' || ${query} || '%'`,
+            sql`${usersTable.id} ILIKE '%' || ${query} || '%'`,
+         ),
+      )
+      .limit(10);
+
+   return users;
 }
