@@ -43,7 +43,7 @@ export default function SettingsPage() {
             <div className="relative mx-auto mb-14 max-w-5xl px-4 text-center">
                <div className="animate-fade-in-up mb-16 space-y-8">
                   <div className="space-y-6">
-                     <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-6xl font-bold text-transparent md:text-7xl">
+                     <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text py-2 text-6xl leading-tight font-bold text-transparent md:text-7xl">
                         Configurações
                      </h1>
                      <div className="mx-auto h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
@@ -230,7 +230,7 @@ export default function SettingsPage() {
                            </div>
                            <h2
                               id="modal-title"
-                              className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-5xl font-bold text-transparent"
+                              className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text py-2 text-5xl leading-tight font-bold text-transparent"
                            >
                               Política de Privacidade
                            </h2>
