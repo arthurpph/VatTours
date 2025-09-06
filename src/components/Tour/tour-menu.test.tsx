@@ -43,18 +43,10 @@ describe('TourMenu', () => {
    it('should render all navigation items', () => {
       render(<TourMenu />);
 
-      expect(
-         screen.getByRole('tab', { name: /info/i }),
-      ).toBeInTheDocument();
-      expect(
-         screen.getByRole('tab', { name: /pernas/i }),
-      ).toBeInTheDocument();
-      expect(
-         screen.getByRole('tab', { name: /status/i }),
-      ).toBeInTheDocument();
-      expect(
-         screen.getByRole('tab', { name: /pirep/i }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /info/i })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /pernas/i })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /status/i })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /pirep/i })).toBeInTheDocument();
    });
 
    it('should highlight the active tab based on search params', () => {

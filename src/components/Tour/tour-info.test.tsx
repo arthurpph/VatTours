@@ -74,8 +74,12 @@ describe('TourInfo Component', () => {
    beforeEach(() => {
       jest.clearAllMocks();
       // Setup default mocks
-      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(mockTour);
-      (mockDb.query.legsTable.findMany as jest.Mock).mockResolvedValue(mockLegs);
+      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
+         mockTour,
+      );
+      (mockDb.query.legsTable.findMany as jest.Mock).mockResolvedValue(
+         mockLegs,
+      );
    });
 
    it('should render tour information correctly', async () => {
