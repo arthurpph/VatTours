@@ -24,26 +24,36 @@ export default async function TourPage({ params, searchParams }: Props) {
    };
 
    return (
-      <main className="min-h-screen w-full bg-gradient-to-br from-black via-gray-950 to-gray-900 text-white">
-         <div className="relative">
-            <div className="pointer-events-none fixed inset-0 overflow-hidden">
-               <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
-               <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
-               <div className="animate-float absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-blue-900/10"></div>
-            </div>
-
-            <div className="relative flex min-h-screen w-full flex-col items-center gap-12 py-8">
-               <div className="w-full">
-                  <TourMenu />
-               </div>
-
-               <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-                  {actionComponents[action ?? ''] ?? (
-                     <TourInfo tourId={tourId} />
-                  )}
+      <div className="min-h-screen bg-[#0d1117]">
+         {/* GitHub-style header */}
+         <div className="border-b border-[#21262d] bg-[#010409]">
+            <div className="mx-auto max-w-7xl px-4 py-6">
+               <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#21262d]">
+                     <svg
+                        className="h-5 w-5 text-[#7d8590]"
+                        fill="currentColor"
+                        viewBox="0 0 16 16"
+                     >
+                        <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002Z" />
+                     </svg>
+                  </div>
+                  <h1 className="text-xl font-semibold text-[#f0f6fc]">
+                     Detalhes do Tour
+                  </h1>
                </div>
             </div>
          </div>
-      </main>
+
+         {/* Conteúdo principal */}
+         <div className="mx-auto max-w-7xl px-4 py-8">
+            <div className="mb-6">
+               <TourMenu />
+            </div>
+            <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
+               {actionComponents[action ?? ''] ?? <TourInfo tourId={tourId} />}
+            </div>
+         </div>
+      </div>
    );
 }

@@ -7,7 +7,8 @@ describe('Loading Component', () => {
       render(<Loading />);
 
       expect(screen.getByText('Carregando...')).toBeInTheDocument();
-      expect(document.querySelector('.spinner')).toBeInTheDocument();
+      // Verificar o ícone SVG do Lucide
+      expect(document.querySelector('svg')).toBeInTheDocument();
    });
 
    it('should render with custom text', () => {
@@ -21,18 +22,18 @@ describe('Loading Component', () => {
       render(<Loading text="" />);
 
       expect(screen.queryByText('Carregando...')).not.toBeInTheDocument();
-      expect(document.querySelector('.spinner')).toBeInTheDocument();
+      expect(document.querySelector('svg')).toBeInTheDocument();
    });
 
    it('should render different sizes', () => {
       const { rerender } = render(<Loading size="sm" />);
-      expect(document.querySelector('.spinner-sm')).toBeInTheDocument();
+      expect(document.querySelector('svg')).toHaveClass('h-4', 'w-4');
 
       rerender(<Loading size="md" />);
-      expect(document.querySelector('.spinner')).toBeInTheDocument();
+      expect(document.querySelector('svg')).toHaveClass('h-6', 'w-6');
 
       rerender(<Loading size="lg" />);
-      expect(document.querySelector('.spinner-lg')).toBeInTheDocument();
+      expect(document.querySelector('svg')).toHaveClass('h-8', 'w-8');
    });
 
    it('should render with custom className', () => {
@@ -47,21 +48,17 @@ describe('Loading Component', () => {
 
       const fullScreenContainer = document.querySelector('.fixed.inset-0.z-50');
       expect(fullScreenContainer).toBeInTheDocument();
-      expect(fullScreenContainer).toHaveClass(
-         'bg-gradient-to-br',
-         'from-black',
-         'via-gray-950',
-         'to-gray-900',
-      );
+      expect(fullScreenContainer).toHaveClass('bg-[#0d1117]');
    });
 
-   it('should render background effects in fullScreen mode', () => {
+   it('should not render background effects in fullScreen mode', () => {
       render(<Loading fullScreen />);
 
+      // Não deve haver efeitos de background no novo design
       const backgroundEffects = document.querySelectorAll(
          '.pointer-events-none .absolute',
       );
-      expect(backgroundEffects.length).toBeGreaterThan(0);
+      expect(backgroundEffects.length).toBe(0);
    });
 
    it('should not render fullScreen container when fullScreen is false', () => {

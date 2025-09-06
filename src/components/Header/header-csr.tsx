@@ -44,22 +44,28 @@ export default function HeaderClient({ session }: Props) {
    }, []);
 
    return (
-      <header className="sticky top-0 z-50 flex h-[70px] items-center justify-between border-b border-gray-800/50 bg-black/95 px-6 text-white shadow-xl backdrop-blur-lg transition-all duration-300 md:px-12">
-         <div className="text-2xl font-extrabold tracking-tight">
+      <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b border-[#21262d] bg-[#010409] px-6">
+         <div className="flex items-center gap-4">
             <Link
                href="/"
-               className="group relative rounded-lg px-2 py-1 transition-all duration-300 hover:scale-105 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+               className="flex items-center gap-2 text-[#f0f6fc] hover:text-[#2f81f7] focus:outline-none"
                aria-label="Voltar ao início"
             >
-               <span className="text-gradient animate-glow-pulse relative z-10">
-                  VatTours
-               </span>
-               <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-600/20 to-purple-600/20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#21262d]">
+                  <svg
+                     className="h-4 w-4"
+                     fill="currentColor"
+                     viewBox="0 0 16 16"
+                  >
+                     <path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002Z" />
+                  </svg>
+               </div>
+               <span className="text-lg font-semibold">VatTours</span>
             </Link>
          </div>
 
          <nav
-            className="hidden gap-8 text-sm font-medium md:flex"
+            className="hidden gap-6 text-sm md:flex"
             role="navigation"
             aria-label="Navegação principal"
          >
@@ -83,10 +89,10 @@ export default function HeaderClient({ session }: Props) {
                <Link
                   key={item.href}
                   href={item.href}
-                  className="group relative flex items-center gap-2 rounded-lg px-3 py-2 transition-all duration-300 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+                  className="flex items-center gap-2 text-[#f0f6fc] hover:text-[#2f81f7] focus:outline-none"
                >
                   <svg
-                     className="h-4 w-4 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
+                     className="h-4 w-4"
                      fill="none"
                      stroke="currentColor"
                      viewBox="0 0 24 24"
@@ -98,56 +104,53 @@ export default function HeaderClient({ session }: Props) {
                         d={item.icon}
                      />
                   </svg>
-                  <span className="relative z-10">{item.label}</span>
-                  <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gradient-to-r from-blue-400 to-purple-400 transition-all duration-300 group-hover:w-full"></span>
+                  <span>{item.label}</span>
                </Link>
             ))}
          </nav>
 
          <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="rounded-lg p-2 text-white transition-all duration-300 hover:scale-110 hover:bg-gray-900 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none md:hidden"
+            className="rounded-md p-2 text-[#f0f6fc] hover:bg-[#21262d] focus:outline-none md:hidden"
             aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            {menuOpen ? <X size={20} /> : <Menu size={20} />}
          </button>
 
-         <div ref={userMenuRef} className="relative ml-4">
+         <div ref={userMenuRef} className="relative">
             <button
                onClick={() => setUserMenuOpen(!userMenuOpen)}
-               className="group cursor-pointer rounded-xl border border-gray-800 bg-gray-900 px-4 py-2 text-sm font-semibold transition-all duration-300 hover:scale-105 hover:bg-gray-800 hover:shadow-lg hover:shadow-blue-500/20 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:ring-offset-black focus:outline-none"
+               className="flex items-center gap-2 rounded-md border border-[#21262d] bg-[#21262d] px-3 py-1.5 text-sm text-[#f0f6fc] hover:bg-[#30363d] focus:outline-none"
                aria-label={`Menu do usuário: ${session.user?.name}`}
                aria-expanded={userMenuOpen}
                aria-haspopup="true"
             >
-               <span className="flex items-center gap-2">
-                  <div className="animate-glow-pulse flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-purple-400 text-xs font-bold text-white">
-                     {session.user?.name?.charAt(0).toUpperCase()}
-                  </div>
-                  <span className="hidden sm:inline">{session.user?.name}</span>
-                  <svg
-                     className={`h-4 w-4 transition-transform duration-300 ${
-                        userMenuOpen ? 'rotate-180' : ''
-                     }`}
-                     fill="none"
-                     stroke="currentColor"
-                     viewBox="0 0 24 24"
-                  >
-                     <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M19 9l-7 7-7-7"
-                     />
-                  </svg>
-               </span>
+               <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2f81f7] text-xs font-medium text-white">
+                  {session.user?.name?.charAt(0).toUpperCase()}
+               </div>
+               <span className="hidden sm:inline">{session.user?.name}</span>
+               <svg
+                  className={`h-4 w-4 transition-transform duration-200 ${
+                     userMenuOpen ? 'rotate-180' : ''
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+               >
+                  <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth={2}
+                     d="M19 9l-7 7-7-7"
+                  />
+               </svg>
             </button>
 
             {userMenuOpen && (
                <ul
-                  className="animate-scale-in absolute right-0 z-50 mt-3 w-48 rounded-xl border border-gray-800 bg-black/95 py-2 text-white shadow-2xl backdrop-blur-lg"
+                  className="absolute right-0 z-50 mt-2 w-48 rounded-md border border-[#21262d] bg-[#161b22] py-1 shadow-lg"
                   role="menu"
                   aria-labelledby="user-menu-button"
                >
@@ -155,7 +158,7 @@ export default function HeaderClient({ session }: Props) {
                      <li role="none">
                         <Link
                            href="/admin"
-                           className="flex items-center gap-3 px-4 py-3 transition-all duration-200 hover:bg-gray-900 hover:text-blue-400 focus:bg-gray-900 focus:text-blue-400 focus:outline-none"
+                           className="flex items-center gap-3 px-3 py-2 text-sm text-[#f0f6fc] hover:bg-[#21262d] focus:bg-[#21262d] focus:outline-none"
                            onClick={closeUserMenu}
                            role="menuitem"
                         >
@@ -185,7 +188,7 @@ export default function HeaderClient({ session }: Props) {
                   <li role="none">
                      <Link
                         href="/profile"
-                        className="flex items-center gap-3 px-4 py-3 transition-all duration-200 hover:bg-gray-900 hover:text-blue-400 focus:bg-gray-900 focus:text-blue-400 focus:outline-none"
+                        className="flex items-center gap-3 px-3 py-2 text-sm text-[#f0f6fc] hover:bg-[#21262d] focus:bg-[#21262d] focus:outline-none"
                         onClick={closeUserMenu}
                         role="menuitem"
                      >
@@ -211,7 +214,7 @@ export default function HeaderClient({ session }: Props) {
                            closeUserMenu();
                            signOut();
                         }}
-                        className="flex w-full items-center gap-3 px-4 py-3 text-left transition-all duration-200 hover:bg-red-600/20 hover:text-red-400 focus:bg-red-600/20 focus:text-red-400 focus:outline-none"
+                        className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm text-[#f0f6fc] hover:bg-[#da3633]/10 hover:text-[#da3633] focus:bg-[#da3633]/10 focus:text-[#da3633] focus:outline-none"
                         role="menuitem"
                      >
                         <svg
@@ -238,18 +241,18 @@ export default function HeaderClient({ session }: Props) {
             <div
                ref={menuRef}
                id="mobile-menu"
-               className="animate-slide-in-right absolute top-[70px] left-0 z-20 w-full border-t border-gray-800 bg-black/95 p-6 text-white shadow-2xl backdrop-blur-lg md:hidden"
+               className="absolute top-16 left-0 z-20 w-full border-t border-[#21262d] bg-[#010409] p-4 shadow-lg md:hidden"
                role="navigation"
                aria-label="Menu móvel"
             >
-               <div className="flex flex-col gap-4">
+               <div className="flex flex-col gap-2">
                   <Link
                      href="/"
-                     className="group flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-300 hover:bg-gray-900 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                     className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[#f0f6fc] hover:bg-[#21262d] focus:outline-none"
                      onClick={() => setMenuOpen(false)}
                   >
                      <svg
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -265,11 +268,11 @@ export default function HeaderClient({ session }: Props) {
                   </Link>
                   <Link
                      href="/tours"
-                     className="group flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-300 hover:bg-gray-900 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                     className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[#f0f6fc] hover:bg-[#21262d] focus:outline-none"
                      onClick={() => setMenuOpen(false)}
                   >
                      <svg
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -285,11 +288,11 @@ export default function HeaderClient({ session }: Props) {
                   </Link>
                   <Link
                      href="/settings"
-                     className="group flex items-center gap-3 rounded-lg px-4 py-3 transition-all duration-300 hover:bg-gray-900 hover:text-blue-400 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                     className="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-[#f0f6fc] hover:bg-[#21262d] focus:outline-none"
                      onClick={() => setMenuOpen(false)}
                   >
                      <svg
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"

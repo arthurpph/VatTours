@@ -4,6 +4,13 @@ import { PUBLIC_API_ROUTES } from '@/config/api-routes';
 import { Leg } from '@/models/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import {
+   FileText,
+   Plane,
+   CheckCircle,
+   AlertCircle,
+   Loader2,
+} from 'lucide-react';
 
 type Props = {
    leg: Leg;
@@ -27,6 +34,7 @@ export default function TourPirepClientSide({ leg }: Props) {
          return;
       }
       setCallsign(e.target.value);
+      setError(null);
    };
 
    const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,6 +44,7 @@ export default function TourPirepClientSide({ leg }: Props) {
          return;
       }
       setComment(e.target.value);
+      setError(null);
    };
 
    const handleSubmit = async () => {
@@ -72,19 +81,46 @@ export default function TourPirepClientSide({ leg }: Props) {
    };
 
    return (
-      <section className="w-full px-4 py-8 text-gray-100 sm:px-6 lg:px-8">
-         <div className="mx-auto max-w-3xl space-y-6">
-            <h2 className="text-center text-3xl font-bold">PIREP</h2>
-
-            <div className="text-center text-lg font-medium">
-               <span className="text-white">{leg.departureIcao}</span>
-               <span className="mx-2 text-gray-400">→</span>
-               <span className="text-white">{leg.arrivalIcao}</span>
+      <div className="space-y-6">
+         <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#2f81f7]/20">
+               <FileText className="h-5 w-5 text-[#2f81f7]" />
             </div>
+            <div>
+               <h2 className="text-xl font-semibold text-[#f0f6fc]">PIREP</h2>
+               <p className="text-sm text-[#7d8590]">
+                  Envie seu relatório de voo
+               </p>
+            </div>
+         </div>
 
-            <div className="space-y-5 rounded-xl border border-gray-700 bg-gray-900 p-6 shadow-xl sm:p-8">
+         {/* Rota atual */}
+         <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
+            <div className="flex items-center justify-center gap-4">
+               <div className="flex items-center gap-2">
+                  <span className="font-mono text-lg font-semibold text-[#f0f6fc]">
+                     {leg.departureIcao}
+                  </span>
+               </div>
+
+               <div className="flex items-center gap-2">
+                  <Plane className="h-5 w-5 text-[#7d8590]" />
+                  <div className="h-px w-8 bg-[#21262d]"></div>
+               </div>
+
+               <div className="flex items-center gap-2">
+                  <span className="font-mono text-lg font-semibold text-[#f0f6fc]">
+                     {leg.arrivalIcao}
+                  </span>
+               </div>
+            </div>
+         </div>
+
+         {/* Formulário */}
+         <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
+            <div className="space-y-4">
                <div>
-                  <label className="mb-1 block text-sm font-semibold text-gray-300">
+                  <label className="mb-2 block text-sm font-medium text-[#f0f6fc]">
                      Indicativo de chamada
                   </label>
                   <input
@@ -92,46 +128,70 @@ export default function TourPirepClientSide({ leg }: Props) {
                      placeholder="Ex: UAE406"
                      value={callsign}
                      onChange={handleCallsignChange}
-                     className="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-2 text-white transition-all focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                     className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-sm text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
                   />
+                  <p className="mt-1 text-xs text-[#7d8590]">
+                     Máximo 7 caracteres
+                  </p>
                </div>
 
                <div>
-                  <label className="mb-1 block text-sm font-semibold text-gray-300">
+                  <label className="mb-2 block text-sm font-medium text-[#f0f6fc]">
                      Comentário (opcional)
                   </label>
                   <textarea
                      value={comment}
                      onChange={handleCommentChange}
-                     className="w-full rounded-lg border border-gray-600 bg-gray-800 px-4 py-2 text-white transition-all focus:ring-2 focus:ring-indigo-500 focus:outline-none"
                      rows={4}
+                     placeholder="Adicione observações sobre o voo..."
+                     className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-sm text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
                   />
+                  <p className="mt-1 text-xs text-[#7d8590]">
+                     {comment.length}/100 caracteres
+                  </p>
                </div>
 
+               {/* Mensagens de sucesso/erro */}
                {success && (
-                  <p className="text-center text-sm font-medium text-green-400">
-                     PIREP enviado com sucesso!
-                  </p>
-               )}
-               {error && (
-                  <p className="text-center text-sm font-medium text-red-400">
-                     {error}
-                  </p>
+                  <div className="flex items-center gap-2 rounded-md border border-[#238636]/30 bg-[#238636]/20 p-3">
+                     <CheckCircle className="h-4 w-4 text-[#238636]" />
+                     <p className="text-sm font-medium text-[#238636]">
+                        PIREP enviado com sucesso!
+                     </p>
+                  </div>
                )}
 
-               <div className="flex justify-center pt-4">
+               {error && (
+                  <div className="flex items-center gap-2 rounded-md border border-[#da3633]/30 bg-[#da3633]/20 p-3">
+                     <AlertCircle className="h-4 w-4 text-[#da3633]" />
+                     <p className="text-sm font-medium text-[#da3633]">
+                        {error}
+                     </p>
+                  </div>
+               )}
+
+               {/* Botão de envio */}
+               <div className="pt-4">
                   <button
                      disabled={isSubmitting || !callsign.trim()}
                      onClick={handleSubmit}
-                     className={`rounded-lg bg-indigo-600 px-6 py-2 font-semibold shadow transition-colors duration-300 hover:bg-indigo-700 hover:shadow-lg disabled:opacity-50 ${
-                        !isSubmitting && 'cursor-pointer'
-                     }`}
+                     className="flex w-full items-center justify-center gap-2 rounded-md bg-[#238636] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[#2ea043] disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                     {isSubmitting ? 'Enviando...' : 'Enviar PIREP'}
+                     {isSubmitting ? (
+                        <>
+                           <Loader2 className="h-4 w-4 animate-spin" />
+                           Enviando...
+                        </>
+                     ) : (
+                        <>
+                           <FileText className="h-4 w-4" />
+                           Enviar PIREP
+                        </>
+                     )}
                   </button>
                </div>
             </div>
          </div>
-      </section>
+      </div>
    );
 }

@@ -1,5 +1,12 @@
 import Link from 'next/link';
-import { Compass, PlaneTakeoff, MapPin, Users } from 'lucide-react';
+import {
+   Settings,
+   Compass,
+   PlaneTakeoff,
+   MapPin,
+   Users,
+   ArrowRight,
+} from 'lucide-react';
 
 export default function AdminHomePage() {
    const adminLinks = [
@@ -7,135 +14,143 @@ export default function AdminHomePage() {
          href: '/admin/tours',
          title: 'Gerenciar Tours',
          description: 'Criar, editar e gerenciar tours de voo',
-         icon: <Compass className="h-8 w-8" />,
-         color: 'from-blue-500 to-cyan-500',
-         bgColor: 'from-blue-600/10 to-cyan-600/10',
-         borderColor: 'border-blue-500/30',
+         icon: <Compass className="h-6 w-6" />,
+         color: 'text-[#2f81f7]',
+         bgColor: 'bg-[#2f81f7]/10',
       },
       {
          href: '/admin/pireps',
          title: 'Gerenciar PIREPs',
          description: 'Revisar e aprovar relatórios de voo',
-         icon: <PlaneTakeoff className="h-8 w-8" />,
-         color: 'from-purple-500 to-indigo-500',
-         bgColor: 'from-purple-600/10 to-indigo-600/10',
-         borderColor: 'border-purple-500/30',
+         icon: <PlaneTakeoff className="h-6 w-6" />,
+         color: 'text-[#8b5cf6]',
+         bgColor: 'bg-[#8b5cf6]/10',
       },
       {
          href: '/admin/airports',
          title: 'Gerenciar Aeroportos',
          description: 'Administrar base de dados de aeroportos',
-         icon: <MapPin className="h-8 w-8" />,
-         color: 'from-emerald-500 to-teal-500',
-         bgColor: 'from-emerald-600/10 to-teal-600/10',
-         borderColor: 'border-emerald-500/30',
+         icon: <MapPin className="h-6 w-6" />,
+         color: 'text-[#238636]',
+         bgColor: 'bg-[#238636]/10',
       },
       {
          href: '/admin/users',
          title: 'Gerenciar Usuários',
          description: 'Controlar acesso e permissões de usuários',
-         icon: <Users className="h-8 w-8" />,
-         color: 'from-orange-500 to-red-500',
-         bgColor: 'from-orange-600/10 to-red-600/10',
-         borderColor: 'border-orange-500/30',
+         icon: <Users className="h-6 w-6" />,
+         color: 'text-[#fb8500]',
+         bgColor: 'bg-[#fb8500]/10',
       },
    ];
 
    return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-950 to-gray-900 px-6 py-10 text-white">
-         <div className="pointer-events-none fixed inset-0 overflow-hidden">
-            <div className="animate-pulse-slow absolute top-20 right-20 h-96 w-96 rounded-full bg-gradient-to-br from-blue-900/20 to-purple-900/20 blur-3xl"></div>
-            <div className="animate-pulse-slow absolute bottom-40 left-20 h-96 w-96 rounded-full bg-gradient-to-br from-purple-900/20 to-indigo-900/20 blur-3xl delay-1000"></div>
-            <div className="animate-float absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 transform rounded-full border border-blue-900/10"></div>
+      <div className="min-h-screen bg-[#0d1117]">
+         {/* GitHub-style header */}
+         <div className="border-b border-[#21262d] bg-[#010409]">
+            <div className="mx-auto max-w-7xl px-4 py-6">
+               <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#238636]/20">
+                     <Settings className="h-5 w-5 text-[#238636]" />
+                  </div>
+                  <div>
+                     <h1 className="text-2xl font-semibold text-[#f0f6fc]">
+                        Painel de Administração
+                     </h1>
+                     <p className="text-[#7d8590]">
+                        Gerencie todos os aspectos da plataforma VatTours
+                     </p>
+                  </div>
+               </div>
+            </div>
          </div>
 
-         <div className="relative mx-auto max-w-6xl">
-            <div className="mb-16 space-y-8 text-center">
-               <div className="space-y-6">
-                  <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-500">
-                     <svg
-                        className="h-10 w-10 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                     >
-                        <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           strokeWidth={2}
-                           d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                        />
-                        <path
-                           strokeLinecap="round"
-                           strokeLinejoin="round"
-                           strokeWidth={2}
-                           d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                     </svg>
-                  </div>
-
-                  <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 bg-clip-text text-6xl font-bold text-transparent md:text-7xl">
-                     Painel de Administração
-                  </h1>
-                  <div className="mx-auto h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"></div>
-               </div>
-
-               <p className="mx-auto max-w-3xl text-xl leading-relaxed text-gray-300">
-                  Gerencie todos os aspectos da plataforma VatTours através
-                  desta central de controle administrativa
-               </p>
-            </div>
-
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
-               {adminLinks.map((link, index) => (
+         {/* Main content */}
+         <div className="mx-auto max-w-7xl px-4 py-8">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+               {adminLinks.map((link) => (
                   <Link
                      key={link.href}
                      href={link.href}
-                     className={`group relative overflow-hidden rounded-3xl border ${link.borderColor} bg-gradient-to-br ${link.bgColor} p-8 backdrop-blur-sm transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20`}
+                     className="group rounded-md border border-[#21262d] bg-[#161b22] p-6 transition-colors hover:bg-[#21262d]"
                   >
-                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-
-                     <div className="relative flex items-start gap-6">
+                     <div className="flex items-start gap-4">
                         <div
-                           className={`flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-r ${link.color} text-white shadow-lg transition-transform duration-300 group-hover:scale-110`}
+                           className={`flex h-12 w-12 items-center justify-center rounded-md ${link.bgColor}`}
                         >
-                           {link.icon}
+                           <div className={link.color}>{link.icon}</div>
                         </div>
 
-                        <div className="flex-1 space-y-3">
-                           <h3 className="text-2xl font-bold text-white transition-colors duration-300 group-hover:text-blue-400">
-                              {link.title}
-                           </h3>
-                           <p className="leading-relaxed text-gray-400">
+                        <div className="flex-1">
+                           <div className="flex items-center justify-between">
+                              <h3 className="text-lg font-semibold text-[#f0f6fc] group-hover:text-[#2f81f7]">
+                                 {link.title}
+                              </h3>
+                              <ArrowRight className="h-4 w-4 text-[#7d8590] transition-transform group-hover:translate-x-1 group-hover:text-[#2f81f7]" />
+                           </div>
+                           <p className="mt-2 text-[#7d8590]">
                               {link.description}
                            </p>
-
-                           <div className="flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors duration-300 group-hover:text-blue-400">
-                              <span>Acessar painel</span>
-                              <svg
-                                 className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24"
-                              >
-                                 <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                                 />
-                              </svg>
-                           </div>
                         </div>
-                     </div>
-
-                     <div className="absolute top-4 right-4 opacity-0 transition-opacity duration-300 group-hover:opacity-20">
-                        <span className="text-6xl font-bold text-white">
-                           {String(index + 1).padStart(2, '0')}
-                        </span>
                      </div>
                   </Link>
                ))}
+            </div>
+
+            {/* Quick stats */}
+            <div className="mt-8">
+               <h2 className="mb-4 text-lg font-semibold text-[#f0f6fc]">
+                  Estatísticas Rápidas
+               </h2>
+               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
+                     <div className="flex items-center gap-2">
+                        <Compass className="h-5 w-5 text-[#2f81f7]" />
+                        <h3 className="font-medium text-[#f0f6fc]">
+                           Tours Ativos
+                        </h3>
+                     </div>
+                     <p className="mt-2 text-2xl font-semibold text-[#2f81f7]">
+                        12
+                     </p>
+                     <p className="text-sm text-[#7d8590]">Em andamento</p>
+                  </div>
+
+                  <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
+                     <div className="flex items-center gap-2">
+                        <PlaneTakeoff className="h-5 w-5 text-[#238636]" />
+                        <h3 className="font-medium text-[#f0f6fc]">PIREPs</h3>
+                     </div>
+                     <p className="mt-2 text-2xl font-semibold text-[#238636]">
+                        48
+                     </p>
+                     <p className="text-sm text-[#7d8590]">Pendentes</p>
+                  </div>
+
+                  <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
+                     <div className="flex items-center gap-2">
+                        <MapPin className="h-5 w-5 text-[#8b5cf6]" />
+                        <h3 className="font-medium text-[#f0f6fc]">
+                           Aeroportos
+                        </h3>
+                     </div>
+                     <p className="mt-2 text-2xl font-semibold text-[#8b5cf6]">
+                        156
+                     </p>
+                     <p className="text-sm text-[#7d8590]">Cadastrados</p>
+                  </div>
+
+                  <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
+                     <div className="flex items-center gap-2">
+                        <Users className="h-5 w-5 text-[#fb8500]" />
+                        <h3 className="font-medium text-[#f0f6fc]">Usuários</h3>
+                     </div>
+                     <p className="mt-2 text-2xl font-semibold text-[#fb8500]">
+                        1,234
+                     </p>
+                     <p className="text-sm text-[#7d8590]">Registrados</p>
+                  </div>
+               </div>
             </div>
          </div>
       </div>

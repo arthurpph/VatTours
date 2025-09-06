@@ -7,6 +7,9 @@ jest.mock('@/lib/db', () => ({
          toursTable: {
             findFirst: jest.fn(),
          },
+         legsTable: {
+            findMany: jest.fn(),
+         },
       },
    },
 }));
@@ -49,21 +52,38 @@ describe('TourInfo Component', () => {
       image: 'https://example.com/image.jpg',
    };
 
+   const mockLegs = [
+      {
+         id: 1,
+         tourId: 1,
+         departureIcao: 'KJFK',
+         arrivalIcao: 'KLAX',
+         description: 'New York to Los Angeles',
+         order: 1,
+      },
+      {
+         id: 2,
+         tourId: 1,
+         departureIcao: 'KLAX',
+         arrivalIcao: 'KSFO',
+         description: 'Los Angeles to San Francisco',
+         order: 2,
+      },
+   ];
+
    beforeEach(() => {
       jest.clearAllMocks();
+      // Setup default mocks
+      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(mockTour);
+      (mockDb.query.legsTable.findMany as jest.Mock).mockResolvedValue(mockLegs);
    });
 
    it('should render tour information correctly', async () => {
-      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
-         mockTour,
-      );
-
       const TourInfoComponent = await TourInfo({ tourId: '1' });
       render(TourInfoComponent);
 
       expect(screen.getByText('Tour Test')).toBeInTheDocument();
       expect(screen.getByText('Uma descrição de teste')).toBeInTheDocument();
-      expect(screen.getAllByText('Tour Ativo')).toHaveLength(2);
    });
 
    it('should render not found message when tour does not exist', async () => {
@@ -81,10 +101,6 @@ describe('TourInfo Component', () => {
    });
 
    it('should render image when valid URL is provided', async () => {
-      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
-         mockTour,
-      );
-
       const TourInfoComponent = await TourInfo({ tourId: '1' });
       render(TourInfoComponent);
 
@@ -106,32 +122,24 @@ describe('TourInfo Component', () => {
    });
 
    it('should render tour features', async () => {
-      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
-         mockTour,
-      );
-
       const TourInfoComponent = await TourInfo({ tourId: '1' });
       render(TourInfoComponent);
 
-      expect(screen.getByText('Recursos Inclusos')).toBeInTheDocument();
-      expect(screen.getByText('Rotas detalhadas')).toBeInTheDocument();
-      expect(screen.getByText('Pontos de interesse')).toBeInTheDocument();
-      expect(screen.getByText('Informações técnicas')).toBeInTheDocument();
-      expect(screen.getByText('Suporte completo')).toBeInTheDocument();
+      expect(screen.getByText('Estatísticas')).toBeInTheDocument();
+      expect(screen.getByText('Progresso')).toBeInTheDocument();
+      expect(screen.getByText('Badges Disponíveis')).toBeInTheDocument();
+      expect(screen.getByText('Explorador')).toBeInTheDocument();
+      expect(screen.getByText('Aventureiro')).toBeInTheDocument();
    });
 
    it('should render tour status cards', async () => {
-      (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
-         mockTour,
-      );
-
       const TourInfoComponent = await TourInfo({ tourId: '1' });
       render(TourInfoComponent);
 
-      expect(screen.getByText('Status')).toBeInTheDocument();
-      expect(screen.getByText('Duração')).toBeInTheDocument();
-      expect(screen.getByText('Tipo')).toBeInTheDocument();
-      expect(screen.getByText('Flexível')).toBeInTheDocument();
-      expect(screen.getByText('Tour Guiado')).toBeInTheDocument();
+      expect(screen.getByText('Etapas:')).toBeInTheDocument();
+      expect(screen.getByText('Dificuldade:')).toBeInTheDocument();
+      expect(screen.getByText('Concluído:')).toBeInTheDocument();
+      expect(screen.getByText('Ativo')).toBeInTheDocument();
+      expect(screen.getByText('Intermediário')).toBeInTheDocument();
    });
 });

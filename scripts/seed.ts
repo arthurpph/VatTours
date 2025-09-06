@@ -26,62 +26,62 @@ async function seedBadges() {
       {
          name: 'Primeiro Voo',
          description: 'Complete seu primeiro tour no VatTours',
-         icon: '🛫',
+         icon: '/badges/first-flight.svg',
       },
       {
          name: 'Explorador',
          description: 'Complete 5 tours diferentes',
-         icon: '🌍',
+         icon: '/badges/explorer.svg',
       },
       {
          name: 'Aventureiro',
          description: 'Complete 10 tours diferentes',
-         icon: '⭐',
+         icon: '/badges/adventurer.svg',
       },
       {
          name: 'Piloto Veterano',
          description: 'Complete 25 tours diferentes',
-         icon: '🏆',
+         icon: '/badges/veteran-pilot.svg',
       },
       {
          name: 'Ace do Céu',
          description: 'Complete 50 tours diferentes',
-         icon: '👨‍✈️',
+         icon: '/badges/sky-ace.svg',
       },
       {
          name: 'Lenda dos Céus',
          description: 'Complete 100 tours diferentes',
-         icon: '🎖️',
+         icon: '/badges/sky-legend.svg',
       },
       {
          name: 'Madrugador',
          description: 'Complete um voo antes das 6h da manhã',
-         icon: '🌅',
+         icon: '/badges/early-bird.svg',
       },
       {
          name: 'Coruja Noturna',
          description: 'Complete um voo depois das 22h',
-         icon: '🦉',
+         icon: '/badges/night-owl.svg',
       },
       {
          name: 'Volta ao Mundo',
          description: 'Visite todos os continentes',
-         icon: '🌎',
+         icon: '/badges/around-world.svg',
       },
       {
          name: 'Pontualidade',
          description: 'Complete 10 voos consecutivos no horário',
-         icon: '⏰',
+         icon: '/badges/punctuality.svg',
       },
       {
          name: 'Comunicador',
          description: 'Faça contato com ATC em 20 voos',
-         icon: '📡',
+         icon: '/badges/communicator.svg',
       },
       {
          name: 'Instrutor',
          description: 'Ajude 5 novos pilotos em seus primeiros voos',
-         icon: '🎓',
+         icon: '/badges/instructor.svg',
       },
    ];
 

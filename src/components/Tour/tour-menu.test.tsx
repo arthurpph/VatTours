@@ -44,16 +44,16 @@ describe('TourMenu', () => {
       render(<TourMenu />);
 
       expect(
-         screen.getByRole('tab', { name: /info info/i }),
+         screen.getByRole('tab', { name: /info/i }),
       ).toBeInTheDocument();
       expect(
-         screen.getByRole('tab', { name: /pernas pernas/i }),
+         screen.getByRole('tab', { name: /pernas/i }),
       ).toBeInTheDocument();
       expect(
-         screen.getByRole('tab', { name: /status status/i }),
+         screen.getByRole('tab', { name: /status/i }),
       ).toBeInTheDocument();
       expect(
-         screen.getByRole('tab', { name: /pirep pirep/i }),
+         screen.getByRole('tab', { name: /pirep/i }),
       ).toBeInTheDocument();
    });
 
@@ -62,9 +62,9 @@ describe('TourMenu', () => {
 
       render(<TourMenu />);
 
-      const pernasButton = screen.getByRole('tab', { name: /pernas pernas/i });
+      const pernasButton = screen.getByRole('tab', { name: /pernas/i });
       expect(pernasButton).toHaveAttribute('aria-selected', 'true');
-      expect(pernasButton).toHaveClass('from-blue-700', 'to-purple-700');
+      expect(pernasButton).toHaveClass('border-[#2f81f7]', 'text-[#f0f6fc]');
    });
 
    it('should highlight Info tab when no action param is set', () => {
@@ -72,9 +72,9 @@ describe('TourMenu', () => {
 
       render(<TourMenu />);
 
-      const infoButton = screen.getByRole('tab', { name: /info info/i });
+      const infoButton = screen.getByRole('tab', { name: /info/i });
       expect(infoButton).toHaveAttribute('aria-selected', 'true');
-      expect(infoButton).toHaveClass('from-blue-700', 'to-purple-700');
+      expect(infoButton).toHaveClass('border-[#2f81f7]', 'text-[#f0f6fc]');
    });
 
    it('should navigate to legs when Pernas is clicked', async () => {
@@ -190,15 +190,13 @@ describe('TourMenu', () => {
       });
    });
 
-   it('should have responsive text display', () => {
+   it('should render tab labels', () => {
       render(<TourMenu />);
 
       const buttons = screen.getAllByRole('tab');
       buttons.forEach((button) => {
-         const hiddenSpan = button.querySelector('.hidden.sm\\:inline');
-         const visibleSpan = button.querySelector('.sm\\:hidden');
-
-         expect(hiddenSpan || visibleSpan).toBeInTheDocument();
+         const span = button.querySelector('span');
+         expect(span).toBeInTheDocument();
       });
    });
 });
