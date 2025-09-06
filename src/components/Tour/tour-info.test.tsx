@@ -73,7 +73,6 @@ describe('TourInfo Component', () => {
 
    beforeEach(() => {
       jest.clearAllMocks();
-      // Setup default mocks
       (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(
          mockTour,
       );

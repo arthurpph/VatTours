@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Shield, User, ChevronRight, X } from 'lucide-react';
 import Loading from '@/components/ui/Loading';
 
-const AGREEMENT_VERSION = 'v1.2.3';
+const AGREEMENT_VERSION = '1.0.0';
 
 export default function SettingsPage() {
    const { data: session, status } = useSession();
@@ -24,7 +24,6 @@ export default function SettingsPage() {
          <main
             className={`min-h-screen bg-[#0d1117] ${showPolicy ? 'pointer-events-none' : ''}`}
          >
-            {/* GitHub-style header */}
             <div className="border-b border-[#21262d] bg-[#010409]">
                <div className="mx-auto max-w-7xl px-4 py-6">
                   <h1 className="text-2xl font-semibold text-[#f0f6fc]">
@@ -37,10 +36,8 @@ export default function SettingsPage() {
                </div>
             </div>
 
-            {/* Main content */}
             <div className="mx-auto max-w-7xl px-4 py-8">
                <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                  {/* Privacy Policy Card */}
                   <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6 transition-colors hover:bg-[#21262d]">
                      <div className="mb-4 flex items-center justify-center">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#21262d]">
@@ -60,7 +57,7 @@ export default function SettingsPage() {
 
                      <button
                         onClick={() => setShowPolicy(true)}
-                        className="flex w-full items-center justify-between rounded-md border border-[#21262d] bg-[#0d1117] px-4 py-3 text-left transition-colors hover:bg-[#21262d]"
+                        className="flex w-full cursor-pointer items-center justify-between rounded-md border border-[#21262d] bg-[#0d1117] px-4 py-3 text-left transition-colors hover:bg-[#21262d]"
                      >
                         <span className="text-[#f0f6fc]">
                            Visualizar Política
@@ -76,7 +73,6 @@ export default function SettingsPage() {
                      </div>
                   </div>
 
-                  {/* Account Information Card */}
                   <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
                      <div className="mb-4 flex items-center justify-center">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#21262d]">
@@ -106,7 +102,6 @@ export default function SettingsPage() {
             </div>
          </main>
 
-         {/* Privacy Policy Modal */}
          {showPolicy && (
             <div
                className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4 backdrop-blur-sm"
@@ -115,7 +110,7 @@ export default function SettingsPage() {
                <div className="relative w-full max-w-4xl">
                   <button
                      onClick={() => setShowPolicy(false)}
-                     className="absolute -top-4 -right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#21262d] text-[#f0f6fc] shadow-xl transition-colors hover:bg-[#7d8590]"
+                     className="absolute -top-4 -right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-[#21262d] text-[#f0f6fc] shadow-xl transition-colors hover:bg-[#7d8590]"
                   >
                      <X className="h-5 w-5" />
                   </button>

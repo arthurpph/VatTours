@@ -178,7 +178,6 @@ export default function TourManagePage() {
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-4">
                <div className="flex items-center gap-3">
@@ -201,7 +200,6 @@ export default function TourManagePage() {
          </div>
 
          <div className="mx-auto max-w-7xl px-4 py-8">
-            {/* Form Section */}
             <div className="mb-8 rounded-md border border-[#21262d] bg-[#161b22] p-6">
                <div className="mb-6 flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#238636]/20">
@@ -278,7 +276,6 @@ export default function TourManagePage() {
                      />
                   </div>
 
-                  {/* Legs Section */}
                   <div>
                      <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-sm font-medium text-[#f0f6fc]">
@@ -395,7 +392,6 @@ export default function TourManagePage() {
                </form>
             </div>
 
-            {/* Tours List */}
             <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
                <h2 className="mb-6 text-lg font-semibold text-[#f0f6fc]">
                   Tours Existentes

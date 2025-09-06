@@ -121,13 +121,13 @@ export default function ProfilePage({
    const getRoleColor = (role: string) => {
       switch (role) {
          case 'owner':
-            return 'text-[#da3633] bg-[#da3633]/10 border border-[#da3633]/20';
+            return 'text-[#f85149] bg-[#f85149]/10 border border-[#f85149]/20';
          case 'admin':
-            return 'text-[#fb8500] bg-[#fb8500]/10 border border-[#fb8500]/20';
+            return 'text-[#d29922] bg-[#d29922]/10 border border-[#d29922]/20';
          case 'moderator':
-            return 'text-[#8b5cf6] bg-[#8b5cf6]/10 border border-[#8b5cf6]/20';
+            return 'text-[#a5a5a5] bg-[#a5a5a5]/10 border border-[#a5a5a5]/20';
          default:
-            return 'text-[#2f81f7] bg-[#2f81f7]/10 border border-[#2f81f7]/20';
+            return 'text-[#7d8590] bg-[#7d8590]/10 border border-[#7d8590]/20';
       }
    };
 
@@ -146,7 +146,6 @@ export default function ProfilePage({
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-6">
                <div className="mb-4" ref={searchRef}>
@@ -164,7 +163,7 @@ export default function ProfilePage({
                               search.length >= 2 && setShowResults(true)
                            }
                            placeholder="Pesquisar usuários..."
-                           className="w-full rounded-md border border-[#21262d] bg-[#0d1117] py-2 pr-10 pl-10 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                           className="w-full rounded-md border border-[#21262d] bg-[#0d1117] py-2 pr-10 pl-10 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff] focus:outline-none"
                         />
                         {search && (
                            <button
@@ -175,76 +174,74 @@ export default function ProfilePage({
                               <X className="h-4 w-4" />
                            </button>
                         )}
+
+                        {showResults && (
+                           <div className="absolute top-full right-0 left-0 z-10 mt-1 max-h-80 overflow-y-auto rounded-md border border-[#21262d] bg-[#161b22] shadow-xl">
+                              {isSearching ? (
+                                 <div className="p-4 text-center">
+                                    <div className="mx-auto h-4 w-4 animate-spin rounded-full border-b-2 border-[#58a6ff]"></div>
+                                    <p className="mt-2 text-sm text-[#7d8590]">
+                                       Procurando...
+                                    </p>
+                                 </div>
+                              ) : searchResults.length > 0 ? (
+                                 <div className="p-2">
+                                    {searchResults.map((user) => (
+                                       <Link
+                                          key={user.id}
+                                          href={`/profile?user=${user.id}`}
+                                          className="block rounded-md p-3 transition-colors hover:bg-[#21262d]"
+                                          onClick={() => setShowResults(false)}
+                                       >
+                                          <div className="flex items-center gap-3">
+                                             <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-[#21262d]">
+                                                {user.image ? (
+                                                   <Image
+                                                      src={user.image}
+                                                      alt={user.name}
+                                                      width={32}
+                                                      height={32}
+                                                      className="h-full w-full object-cover"
+                                                   />
+                                                ) : (
+                                                   <User className="h-4 w-4 text-[#7d8590]" />
+                                                )}
+                                             </div>
+                                             <div className="flex-1">
+                                                <div className="flex items-center gap-2">
+                                                   <span className="text-sm font-medium text-[#f0f6fc]">
+                                                      {user.name}
+                                                   </span>
+                                                   <span
+                                                      className={`rounded-full px-2 py-0.5 text-xs ${getRoleColor(user.role)}`}
+                                                   >
+                                                      {formatRole(user.role)}
+                                                   </span>
+                                                </div>
+                                                <p className="text-xs text-[#7d8590]">
+                                                   ID: {user.id}
+                                                </p>
+                                             </div>
+                                          </div>
+                                       </Link>
+                                    ))}
+                                 </div>
+                              ) : search.length >= 2 ? (
+                                 <div className="p-4 text-center">
+                                    <p className="text-sm text-[#7d8590]">
+                                       Nenhum usuário encontrado.
+                                    </p>
+                                 </div>
+                              ) : null}
+                           </div>
+                        )}
                      </div>
                   </form>
-
-                  {showResults && (
-                     <div className="absolute top-2 right-0 left-0 z-10 max-h-80 overflow-y-auto rounded-md border border-[#21262d] bg-[#161b22] shadow-xl">
-                        {isSearching ? (
-                           <div className="p-4 text-center">
-                              <div className="mx-auto h-4 w-4 animate-spin rounded-full border-b-2 border-[#2f81f7]"></div>
-                              <p className="mt-2 text-sm text-[#7d8590]">
-                                 Procurando...
-                              </p>
-                           </div>
-                        ) : searchResults.length > 0 ? (
-                           <div className="p-2">
-                              {searchResults.map((user) => (
-                                 <Link
-                                    key={user.id}
-                                    href={`/profile?user=${user.id}`}
-                                    className="block rounded-md p-3 transition-colors hover:bg-[#21262d]"
-                                    onClick={() => setShowResults(false)}
-                                 >
-                                    <div className="flex items-center gap-3">
-                                       <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-[#21262d]">
-                                          {user.image ? (
-                                             <Image
-                                                src={user.image}
-                                                alt={user.name}
-                                                width={32}
-                                                height={32}
-                                                className="h-full w-full object-cover"
-                                             />
-                                          ) : (
-                                             <User className="h-4 w-4 text-[#7d8590]" />
-                                          )}
-                                       </div>
-                                       <div className="flex-1">
-                                          <div className="flex items-center gap-2">
-                                             <span className="text-sm font-medium text-[#f0f6fc]">
-                                                {user.name}
-                                             </span>
-                                             <span
-                                                className={`rounded-full px-2 py-0.5 text-xs ${getRoleColor(user.role)}`}
-                                             >
-                                                {formatRole(user.role)}
-                                             </span>
-                                          </div>
-                                          <p className="text-xs text-[#7d8590]">
-                                             ID: {user.id}
-                                          </p>
-                                       </div>
-                                    </div>
-                                 </Link>
-                              ))}
-                           </div>
-                        ) : search.length >= 2 ? (
-                           <div className="p-4 text-center">
-                              <p className="text-sm text-[#7d8590]">
-                                 Nenhum usuário encontrado.
-                              </p>
-                           </div>
-                        ) : null}
-                     </div>
-                  )}
                </div>
             </div>
          </div>
 
-         {/* Main content */}
          <div className="mx-auto max-w-7xl px-4 py-8">
-            {/* Profile header */}
             <div className="mb-8 rounded-md border border-[#21262d] bg-[#161b22] p-6">
                <div className="flex flex-col items-start gap-6 md:flex-row md:items-center">
                   <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-[#21262d]">
@@ -275,7 +272,7 @@ export default function ProfilePage({
                         {isOwnProfile && (
                            <Link
                               href="/settings"
-                              className="rounded-md bg-[#238636] px-3 py-1 text-sm font-medium text-white transition-colors hover:bg-[#2ea043]"
+                              className="rounded-md border border-[#30363d] bg-[#21262d] px-3 py-1 text-sm font-medium text-[#f0f6fc] transition-colors hover:border-[#484f58] hover:bg-[#30363d]"
                            >
                               Editar Perfil
                            </Link>
@@ -285,14 +282,13 @@ export default function ProfilePage({
                </div>
             </div>
 
-            {/* Stats cards */}
             <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
                <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
                   <div className="mb-2 flex items-center gap-2">
-                     <Trophy className="h-5 w-5 text-[#ffd700]" />
+                     <Trophy className="h-5 w-5 text-[#d29922]" />
                      <h3 className="font-medium text-[#f0f6fc]">Badges</h3>
                   </div>
-                  <p className="text-2xl font-semibold text-[#ffd700]">
+                  <p className="text-2xl font-semibold text-[#d29922]">
                      {badges.length}
                   </p>
                   <p className="text-sm text-[#7d8590]">
@@ -302,27 +298,26 @@ export default function ProfilePage({
 
                <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
                   <div className="mb-2 flex items-center gap-2">
-                     <MapPin className="h-5 w-5 text-[#238636]" />
+                     <MapPin className="h-5 w-5 text-[#58a6ff]" />
                      <h3 className="font-medium text-[#f0f6fc]">Tours</h3>
                   </div>
-                  <p className="text-2xl font-semibold text-[#238636]">0</p>
+                  <p className="text-2xl font-semibold text-[#58a6ff]">0</p>
                   <p className="text-sm text-[#7d8590]">Tours completados</p>
                </div>
 
                <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
                   <div className="mb-2 flex items-center gap-2">
-                     <Star className="h-5 w-5 text-[#8b5cf6]" />
+                     <Star className="h-5 w-5 text-[#a5a5a5]" />
                      <h3 className="font-medium text-[#f0f6fc]">Ranking</h3>
                   </div>
-                  <p className="text-2xl font-semibold text-[#8b5cf6]">-</p>
+                  <p className="text-2xl font-semibold text-[#a5a5a5]">-</p>
                   <p className="text-sm text-[#7d8590]">Posição global</p>
                </div>
             </div>
 
-            {/* Badges section */}
             <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
                <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-[#f0f6fc]">
-                  <Trophy className="h-5 w-5 text-[#ffd700]" />
+                  <Trophy className="h-5 w-5 text-[#d29922]" />
                   Badges e Conquistas
                </h2>
 
@@ -334,7 +329,7 @@ export default function ProfilePage({
                            className="rounded-md border border-[#21262d] bg-[#0d1117] p-4 transition-colors hover:bg-[#21262d]"
                         >
                            <div className="mb-3 flex items-center gap-3">
-                              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#ffd700]/20">
+                              <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#d29922]/30 bg-[#d29922]/20">
                                  <Image
                                     src={badge.icon}
                                     alt={badge.name}
@@ -367,7 +362,7 @@ export default function ProfilePage({
                   </div>
                ) : (
                   <div className="py-12 text-center">
-                     <Trophy className="mx-auto mb-4 h-12 w-12 text-[#21262d]" />
+                     <Trophy className="mx-auto mb-4 h-12 w-12 text-[#30363d]" />
                      <p className="text-lg text-[#7d8590]">
                         {isOwnProfile
                            ? 'Você ainda não possui badges.'

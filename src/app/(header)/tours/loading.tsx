@@ -1,7 +1,6 @@
 export default function LoadingToursPage() {
    return (
       <div className="min-h-screen bg-[#0d1117] px-6 py-12">
-         {/* GitHub-style header skeleton */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-6">
                <div className="flex items-center gap-3">
@@ -13,7 +12,6 @@ export default function LoadingToursPage() {
             </div>
          </div>
 
-         {/* Skeleton main content */}
          <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="mb-6 h-10 w-48 animate-pulse rounded bg-[#21262d]" />
             <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">

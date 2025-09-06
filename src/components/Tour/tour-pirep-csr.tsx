@@ -4,13 +4,7 @@ import { PUBLIC_API_ROUTES } from '@/config/api-routes';
 import { Leg } from '@/models/types';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {
-   FileText,
-   Plane,
-   CheckCircle,
-   AlertCircle,
-   Loader2,
-} from 'lucide-react';
+import { FileText, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
 type Props = {
    leg: Leg;
@@ -94,7 +88,6 @@ export default function TourPirepClientSide({ leg }: Props) {
             </div>
          </div>
 
-         {/* Rota atual */}
          <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
             <div className="flex items-center justify-center gap-4">
                <div className="flex items-center gap-2">
@@ -104,8 +97,7 @@ export default function TourPirepClientSide({ leg }: Props) {
                </div>
 
                <div className="flex items-center gap-2">
-                  <Plane className="h-5 w-5 text-[#7d8590]" />
-                  <div className="h-px w-8 bg-[#21262d]"></div>
+                  <div className="h-px w-8 bg-[#2a3038]"></div>
                </div>
 
                <div className="flex items-center gap-2">
@@ -116,7 +108,6 @@ export default function TourPirepClientSide({ leg }: Props) {
             </div>
          </div>
 
-         {/* Formulário */}
          <div className="rounded-md border border-[#21262d] bg-[#161b22] p-6">
             <div className="space-y-4">
                <div>
@@ -151,7 +142,6 @@ export default function TourPirepClientSide({ leg }: Props) {
                   </p>
                </div>
 
-               {/* Mensagens de sucesso/erro */}
                {success && (
                   <div className="flex items-center gap-2 rounded-md border border-[#238636]/30 bg-[#238636]/20 p-3">
                      <CheckCircle className="h-4 w-4 text-[#238636]" />
@@ -170,7 +160,6 @@ export default function TourPirepClientSide({ leg }: Props) {
                   </div>
                )}
 
-               {/* Botão de envio */}
                <div className="pt-4">
                   <button
                      disabled={isSubmitting || !callsign.trim()}

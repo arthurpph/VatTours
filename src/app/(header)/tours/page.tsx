@@ -63,7 +63,6 @@ export default function ToursPage() {
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-6">
                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -99,7 +98,7 @@ export default function ToursPage() {
                      <button
                         onClick={handleRefresh}
                         disabled={loading}
-                        className="flex items-center gap-2 rounded-md border border-[#21262d] bg-[#21262d] px-3 py-1.5 text-sm text-[#f0f6fc] transition-colors hover:bg-[#30363d] disabled:opacity-50"
+                        className="flex cursor-pointer items-center gap-2 rounded-md border border-[#21262d] bg-[#21262d] px-3 py-1.5 text-sm text-[#f0f6fc] transition-colors hover:bg-[#30363d] disabled:opacity-50"
                      >
                         <svg
                            className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`}
@@ -121,10 +120,8 @@ export default function ToursPage() {
             </div>
          </div>
 
-         {/* Main content */}
          <div className="mx-auto max-w-7xl px-4 py-8">
             {tours.length === 0 ? (
-               // Empty state - GitHub style
                <div className="py-16 text-center">
                   <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-[#21262d]">
                      <svg
@@ -165,7 +162,6 @@ export default function ToursPage() {
                   </div>
                </div>
             ) : (
-               // Tours list - GitHub repository style
                <div className="space-y-4">
                   {tours.map((tour) => (
                      <div
@@ -174,7 +170,6 @@ export default function ToursPage() {
                      >
                         <Link href={`/tours/${tour.id}`} className="block">
                            <div className="flex items-start gap-4">
-                              {/* Tour image */}
                               <div className="flex-shrink-0">
                                  {isValidUrl(tour.image) ? (
                                     <Image
@@ -201,40 +196,16 @@ export default function ToursPage() {
                                  )}
                               </div>
 
-                              {/* Tour details */}
                               <div className="min-w-0 flex-1">
-                                 <div className="flex items-center gap-2">
-                                    <h3 className="text-lg font-semibold text-[#2f81f7] hover:underline">
-                                       {tour.title}
-                                    </h3>
-                                    <span className="inline-flex items-center rounded-full border border-[#21262d] bg-[#238636] px-2 py-0.5 text-xs font-medium text-white">
-                                       Disponível
-                                    </span>
-                                 </div>
+                                 <h3 className="text-lg font-semibold text-[#2f81f7] hover:underline">
+                                    {tour.title}
+                                 </h3>
 
                                  <p className="mt-1 line-clamp-2 text-sm text-[#7d8590]">
                                     {tour.description}
                                  </p>
-
-                                 <div className="mt-3 flex items-center gap-4 text-xs text-[#7d8590]">
-                                    <span className="flex items-center gap-1">
-                                       <svg
-                                          className="h-3 w-3"
-                                          fill="currentColor"
-                                          viewBox="0 0 16 16"
-                                       >
-                                          <path d="M8 .5a.5.5 0 0 1 .5.5v4H14a.5.5 0 0 1 0 1H8.5v4a.5.5 0 0 1-1 0V6H3a.5.5 0 0 1 0-1h4.5V1a.5.5 0 0 1 .5-.5z" />
-                                       </svg>
-                                       Tour de voo
-                                    </span>
-                                    <span className="flex items-center gap-1">
-                                       <div className="h-2 w-2 rounded-full bg-[#238636]"></div>
-                                       Ativo
-                                    </span>
-                                 </div>
                               </div>
 
-                              {/* Arrow icon */}
                               <div className="flex-shrink-0">
                                  <svg
                                     className="h-4 w-4 text-[#7d8590]"

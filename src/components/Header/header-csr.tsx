@@ -122,7 +122,7 @@ export default function HeaderClient({ session }: Props) {
          <div ref={userMenuRef} className="relative">
             <button
                onClick={() => setUserMenuOpen(!userMenuOpen)}
-               className="flex items-center gap-2 rounded-md border border-[#21262d] bg-[#21262d] px-3 py-1.5 text-sm text-[#f0f6fc] hover:bg-[#30363d] focus:outline-none"
+               className="flex cursor-pointer items-center gap-2 rounded-md border border-[#21262d] bg-[#21262d] px-3 py-1.5 text-sm text-[#f0f6fc] hover:bg-[#30363d] focus:outline-none"
                aria-label={`Menu do usuário: ${session.user?.name}`}
                aria-expanded={userMenuOpen}
                aria-haspopup="true"
@@ -214,7 +214,7 @@ export default function HeaderClient({ session }: Props) {
                            closeUserMenu();
                            signOut();
                         }}
-                        className="flex w-full items-center gap-3 px-3 py-2 text-left text-sm text-[#f0f6fc] hover:bg-[#da3633]/10 hover:text-[#da3633] focus:bg-[#da3633]/10 focus:text-[#da3633] focus:outline-none"
+                        className="flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left text-sm text-[#f0f6fc] hover:bg-[#da3633]/10 hover:text-[#da3633] focus:bg-[#da3633]/10 focus:text-[#da3633] focus:outline-none"
                         role="menuitem"
                      >
                         <svg

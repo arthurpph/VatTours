@@ -58,7 +58,7 @@ export default function TourMenu() {
                      role="tab"
                      aria-selected={isActive}
                      aria-controls={`panel-${item.action || 'info'}`}
-                     className={`group flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors focus:outline-none ${
+                     className={`group flex cursor-pointer items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors focus:outline-none ${
                         isActive
                            ? 'border-[#2f81f7] text-[#f0f6fc]'
                            : 'border-transparent text-[#7d8590] hover:border-[#21262d] hover:text-[#f0f6fc]'

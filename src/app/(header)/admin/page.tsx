@@ -46,7 +46,6 @@ export default function AdminHomePage() {
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-6">
                <div className="flex items-center gap-3">
@@ -65,7 +64,6 @@ export default function AdminHomePage() {
             </div>
          </div>
 
-         {/* Main content */}
          <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
                {adminLinks.map((link) => (
@@ -97,7 +95,6 @@ export default function AdminHomePage() {
                ))}
             </div>
 
-            {/* Quick stats */}
             <div className="mt-8">
                <h2 className="mb-4 text-lg font-semibold text-[#f0f6fc]">
                   Estatísticas Rápidas

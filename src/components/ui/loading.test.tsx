@@ -7,7 +7,6 @@ describe('Loading Component', () => {
       render(<Loading />);
 
       expect(screen.getByText('Carregando...')).toBeInTheDocument();
-      // Verificar o ícone SVG do Lucide
       expect(document.querySelector('svg')).toBeInTheDocument();
    });
 
@@ -54,7 +53,6 @@ describe('Loading Component', () => {
    it('should not render background effects in fullScreen mode', () => {
       render(<Loading fullScreen />);
 
-      // Não deve haver efeitos de background no novo design
       const backgroundEffects = document.querySelectorAll(
          '.pointer-events-none .absolute',
       );

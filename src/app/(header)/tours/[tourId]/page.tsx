@@ -25,7 +25,6 @@ export default async function TourPage({ params, searchParams }: Props) {
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-6">
                <div className="flex items-center gap-3">
@@ -45,7 +44,6 @@ export default async function TourPage({ params, searchParams }: Props) {
             </div>
          </div>
 
-         {/* Conteúdo principal */}
          <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="mb-6">
                <TourMenu />

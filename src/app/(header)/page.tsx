@@ -16,7 +16,6 @@ export default async function Home() {
 
    return (
       <div className="min-h-screen bg-[#0d1117]">
-         {/* GitHub-style header */}
          <div className="border-b border-[#21262d] bg-[#010409]">
             <div className="mx-auto max-w-7xl px-4 py-8">
                <div className="text-center">
@@ -32,7 +31,6 @@ export default async function Home() {
             </div>
          </div>
 
-         {/* Main content */}
          <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="mb-8">
                <h2 className="mb-2 text-xl font-semibold text-[#f0f6fc]">
@@ -44,7 +42,6 @@ export default async function Home() {
             </div>
 
             {tours.length === 0 ? (
-               // Empty state - GitHub style
                <div className="py-16 text-center">
                   <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full border-2 border-dashed border-[#21262d]">
                      <svg
@@ -89,7 +86,6 @@ export default async function Home() {
                   </Link>
                </div>
             ) : (
-               // Tours grid - GitHub style
                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {tours.slice(0, 8).map((tour) => (
                      <div
@@ -130,10 +126,6 @@ export default async function Home() {
                               <p className="line-clamp-2 text-sm text-[#7d8590]">
                                  {tour.description}
                               </p>
-                              <div className="flex items-center gap-2 text-xs text-[#7d8590]">
-                                 <div className="h-2 w-2 rounded-full bg-[#238636]"></div>
-                                 Disponível
-                              </div>
                            </div>
                         </Link>
                      </div>

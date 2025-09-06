@@ -106,9 +106,7 @@ export default async function TourStatus({ tourId }: Props) {
                <h2 className="text-xl font-semibold text-[#f0f6fc]">
                   Status do Tour
                </h2>
-               <p className="text-sm text-[#7d8590]">
-                  Acompanhe seu progresso e o de outros pilotos
-               </p>
+               <p className="text-sm text-[#7d8590]">Acompanhe seu progresso</p>
             </div>
          </div>
 
@@ -209,7 +207,7 @@ export default async function TourStatus({ tourId }: Props) {
                                        <h4 className="mb-2 text-sm font-medium text-[#f0f6fc]">
                                           Comentário
                                        </h4>
-                                       <p className="text-sm text-[#7d8590]">
+                                       <p className="text-sm break-words whitespace-pre-wrap text-[#7d8590]">
                                           {pirep.comment}
                                        </p>
                                     </div>
