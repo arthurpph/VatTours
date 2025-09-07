@@ -3,9 +3,9 @@
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { isValidUrl } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import Loading from '@/components/ui/Loading';
+import { isValidBase64Image } from '@/lib/utils';
 
 interface Tour {
    id: string;
@@ -170,14 +170,14 @@ export default function ToursPage() {
                      >
                         <Link href={`/tours/${tour.id}`} className="block">
                            <div className="flex items-start gap-4">
-                              <div className="flex-shrink-0">
-                                 {isValidUrl(tour.image) ? (
+                              <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-[#21262d]">
+                                 {tour.image &&
+                                 isValidBase64Image(tour.image) ? (
                                     <Image
-                                       src={tour.image}
+                                       src={`data:image/jpeg;base64,${tour.image}`}
                                        alt={tour.title}
-                                       width={80}
-                                       height={80}
-                                       className="rounded-md object-cover"
+                                       fill
+                                       className="object-cover"
                                     />
                                  ) : (
                                     <div className="flex h-20 w-20 items-center justify-center rounded-md bg-[#21262d]">

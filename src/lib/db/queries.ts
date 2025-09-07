@@ -290,15 +290,17 @@ export async function insertAirport(data: {
 export async function insertTour(data: {
    title: string;
    description?: string | null;
-   image: string;
+   image: Buffer | null;
    createdAt?: Date;
 }) {
+   const imageBase64 = data.image ? data.image.toString('base64') : '';
+
    const [insertedTour] = await db
       .insert(toursTable)
       .values({
          title: data.title,
          description: data.description ?? null,
-         image: data.image,
+         image: imageBase64,
          createdAt: data.createdAt ?? new Date(),
       })
       .returning();

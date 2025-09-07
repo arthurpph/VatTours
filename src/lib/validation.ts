@@ -19,7 +19,7 @@ export const TourSchema = z.object({
    id: z.number().int().nonnegative().optional(),
    title: z.string().min(1),
    description: z.string().optional(),
-   image: z.url(),
+   image: z.string().optional(),
    createdAt: z.date().optional(),
 });
 

@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { toursTable } from '@/lib/db/schema';
-import { isValidUrl } from '@/lib/utils';
+import { isValidBase64Image, isValidUrl } from '@/lib/utils';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
 import { MapPin, AlertTriangle } from 'lucide-react';
@@ -36,10 +36,10 @@ export default async function TourInfo({ tourId }: Props) {
       <div className="space-y-6">
          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="lg:col-span-2">
-               {tour.image && isValidUrl(tour.image) ? (
+               {tour.image && isValidBase64Image(tour.image) ? (
                   <div className="aspect-video overflow-hidden rounded-md border border-[#21262d] bg-[#0d1117]">
                      <Image
-                        src={tour.image}
+                        src={`data:image/jpeg;base64,${tour.image}`}
                         alt={tour.title}
                         width={800}
                         height={450}

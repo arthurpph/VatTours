@@ -2,7 +2,6 @@
 
 import AirportSelector from '@/components/Selector/airport-selector';
 import { ADMIN_API_ROUTES, PUBLIC_API_ROUTES } from '@/config/api-routes';
-import { isValidUrl } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 import { Compass, Plus, Edit2, Trash2, Save, X, ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
@@ -25,7 +24,8 @@ type Tour = {
 export default function TourManagePage() {
    const [title, setTitle] = useState('');
    const [description, setDescription] = useState('');
-   const [image, setImage] = useState('');
+   const [image, setImage] = useState<File | null>(null);
+   const [imagePreview, setImagePreview] = useState<string | null>(null);
    const [legs, setLegs] = useState<LegInput[]>([
       { description: '', departureIcao: '', arrivalIcao: '' },
    ]);
@@ -76,10 +76,36 @@ export default function TourManagePage() {
       setLegs(updatedLegs);
    };
 
+   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+         // Verificar se é uma imagem
+         if (!file.type.startsWith('image/')) {
+            alert('Apenas arquivos de imagem são permitidos.');
+            return;
+         }
+
+         // Verificar tamanho (5MB)
+         if (file.size > 5 * 1024 * 1024) {
+            alert('Arquivo muito grande. Máximo 5MB.');
+            return;
+         }
+
+         setImage(file);
+         // Criar preview
+         const reader = new FileReader();
+         reader.onload = (e) => {
+            setImagePreview(e.target?.result as string);
+         };
+         reader.readAsDataURL(file);
+      }
+   };
+
    const resetForm = () => {
       setTitle('');
       setDescription('');
-      setImage('');
+      setImage(null);
+      setImagePreview(null);
       setLegs([{ description: '', departureIcao: '', arrivalIcao: '' }]);
       setEditingTour(null);
       setIsEditing(false);
@@ -88,7 +114,10 @@ export default function TourManagePage() {
    const handleEdit = (tour: Tour) => {
       setTitle(tour.title);
       setDescription(tour.description);
-      setImage(tour.image);
+      setImage(null); // Reset file input
+      setImagePreview(
+         tour.image ? `data:image/jpeg;base64,${tour.image}` : null,
+      );
       setLegs(tour.legs);
       setEditingTour(tour);
       setIsEditing(true);
@@ -114,15 +143,18 @@ export default function TourManagePage() {
          return;
       }
 
-      if (image && !isValidUrl(image)) {
-         alert('A URL da imagem não é válida.');
-         return;
-      }
-
       setLoading(true);
 
       try {
-         const tourData = { title, description, image, legs };
+         const formData = new FormData();
+         formData.append('title', title);
+         formData.append('description', description);
+         formData.append('legs', JSON.stringify(legs));
+
+         if (image) {
+            formData.append('image', image);
+         }
+
          const url = isEditing
             ? `${ADMIN_API_ROUTES.tours}/${editingTour?.id}`
             : ADMIN_API_ROUTES.tours;
@@ -130,8 +162,7 @@ export default function TourManagePage() {
 
          const res = await fetch(url, {
             method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(tourData),
+            body: formData,
          });
 
          if (res.ok) {
@@ -241,24 +272,35 @@ export default function TourManagePage() {
 
                      <div>
                         <label className="mb-2 block text-sm font-medium text-[#f0f6fc]">
-                           URL da Imagem
+                           Imagem do Tour
                         </label>
-                        <input
-                           type="url"
-                           value={image}
-                           onChange={(e) => setImage(e.target.value)}
-                           placeholder="https://exemplo.com/imagem.jpg"
-                           className={`w-full rounded-md border px-3 py-2 text-[#f0f6fc] placeholder-[#7d8590] focus:ring-1 focus:outline-none ${
-                              image && !isValidUrl(image)
-                                 ? 'border-[#da3633] bg-[#da3633]/10 focus:border-[#da3633] focus:ring-[#da3633]'
-                                 : 'border-[#21262d] bg-[#0d1117] focus:border-[#2f81f7] focus:ring-[#2f81f7]'
-                           }`}
-                        />
-                        {image && !isValidUrl(image) && (
-                           <p className="mt-1 text-sm text-[#da3633]">
-                              URL inválida
-                           </p>
-                        )}
+                        <div className="space-y-3">
+                           <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageChange}
+                              className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] file:mr-3 file:rounded file:border-0 file:bg-[#238636] file:px-3 file:py-1 file:text-white hover:file:bg-[#2ea043] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                           />
+                           {imagePreview && (
+                              <div className="relative">
+                                 <img
+                                    src={imagePreview}
+                                    alt="Preview"
+                                    className="h-32 w-full rounded-md object-cover"
+                                 />
+                                 <button
+                                    type="button"
+                                    onClick={() => {
+                                       setImage(null);
+                                       setImagePreview(null);
+                                    }}
+                                    className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#da3633] text-white hover:bg-[#b91c1c]"
+                                 >
+                                    <X className="h-4 w-4" />
+                                 </button>
+                              </div>
+                           )}
+                        </div>
                      </div>
                   </div>
 
@@ -422,7 +464,7 @@ export default function TourManagePage() {
                            {tour.image && (
                               <div className="mb-4 aspect-video overflow-hidden rounded-md bg-[#21262d]">
                                  <Image
-                                    src={tour.image}
+                                    src={`data:image/jpeg;base64,${tour.image}`}
                                     alt={tour.title}
                                     width={300}
                                     height={169}

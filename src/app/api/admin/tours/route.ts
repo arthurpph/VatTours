@@ -18,11 +18,27 @@ export async function POST(request: NextRequest) {
       const session = await getServerSession(authOptions);
       validateAdminPermission(session);
 
-      const body = await request.json();
-      const validatedData = validateJson(createTourSchema, body);
+      const formData = await request.formData();
+      const title = formData.get('title') as string;
+      const description = formData.get('description') as string;
+      const image = formData.get('image') as File | null;
+      const legsString = formData.get('legs') as string;
 
-      const { title, description } = validatedData;
-      const { legs } = body;
+      validateJson(createTourSchema, {
+         title,
+         description,
+         image: image ? 'temp' : undefined,
+      });
+
+      let legs;
+      try {
+         legs = JSON.parse(legsString || '[]');
+      } catch {
+         return NextResponse.json(
+            { message: 'Formato inválido para legs.' },
+            { status: 400 },
+         );
+      }
 
       if (!Array.isArray(legs) || legs.length === 0) {
          return NextResponse.json(
@@ -52,10 +68,30 @@ export async function POST(request: NextRequest) {
          validatedLegs.push(result.data);
       }
 
+      let imageBuffer: Buffer | null = null;
+      if (image && image.size > 0) {
+         if (!image.type.startsWith('image/')) {
+            return NextResponse.json(
+               { message: 'Apenas arquivos de imagem são permitidos.' },
+               { status: 400 },
+            );
+         }
+
+         if (image.size > 5 * 1024 * 1024) {
+            return NextResponse.json(
+               { message: 'Arquivo muito grande. Máximo 5MB.' },
+               { status: 400 },
+            );
+         }
+
+         const bytes = await image.arrayBuffer();
+         imageBuffer = Buffer.from(bytes);
+      }
+
       const insertedTour = await insertTour({
          title: title,
          description,
-         image: '',
+         image: imageBuffer,
          createdAt: new Date(),
       });
 

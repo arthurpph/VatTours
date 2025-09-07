@@ -51,7 +51,7 @@ export const getPirepsSchema = z.object({
 export const createTourSchema = z.object({
    title: z.string().min(1).max(200),
    description: z.string().min(1).max(1000),
-   image: z.string().url().optional(),
+   image: z.string().optional(),
    status: z.enum(['active', 'completed', 'archived']).default('active'),
 });
 

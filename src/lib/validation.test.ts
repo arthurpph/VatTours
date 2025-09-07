@@ -71,7 +71,7 @@ describe('Validation Schemas', () => {
          id: 1,
          title: 'Amazing Tour',
          description: 'A great tour experience',
-         image: 'https://example.com/tour.jpg',
+         image: 'base64encodedimagedata',
          createdAt: new Date(),
       };
 
@@ -82,7 +82,6 @@ describe('Validation Schemas', () => {
       it('should validate tour without optional fields', () => {
          const minimalTour = {
             title: 'Basic Tour',
-            image: 'https://example.com/tour.jpg',
          };
          expect(TourSchema.safeParse(minimalTour).success).toBe(true);
       });
@@ -92,9 +91,9 @@ describe('Validation Schemas', () => {
          expect(TourSchema.safeParse(invalidTour).success).toBe(false);
       });
 
-      it('should reject invalid image URL', () => {
-         const invalidTour = { ...validTour, image: 'not-a-url' };
-         expect(TourSchema.safeParse(invalidTour).success).toBe(false);
+      it('should accept any string as image', () => {
+         const tourWithBase64 = { ...validTour, image: 'base64data' };
+         expect(TourSchema.safeParse(tourWithBase64).success).toBe(true);
       });
 
       it('should reject negative ID', () => {

@@ -2,11 +2,22 @@ import { db } from '@/lib/db';
 import { legsTable, toursTable, airportsTable } from '@/lib/db/schema';
 import { eq, inArray } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
-import { LegSchema, TourSchema } from '@/lib/validation';
+import { LegSchema } from '@/lib/validation';
 import { insertLegs } from '@/lib/db/queries';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../../auth/[...nextauth]/auth';
+import {
+   validateJson,
+   validateAdminPermission,
+   handleApiError,
+} from '@/lib/validation/api-validator';
+import { createTourSchema } from '@/lib/validation/api-schemas';
 
 export async function PUT(req: Request) {
    try {
+      const session = await getServerSession(authOptions);
+      validateAdminPermission(session);
+
       const url = new URL(req.url);
       const idParam = url.pathname.split('/').pop();
       const id = Number(idParam);
@@ -15,17 +26,24 @@ export async function PUT(req: Request) {
          return NextResponse.json({ message: 'ID inválido' }, { status: 400 });
       }
 
-      const body = await req.json();
-      const { title, description, image, legs } = body;
+      const formData = await req.formData();
+      const title = formData.get('title') as string;
+      const description = formData.get('description') as string;
+      const image = formData.get('image') as File | null;
+      const legsString = formData.get('legs') as string;
 
-      const tourValidation = TourSchema.safeParse({
+      const validatedData = validateJson(createTourSchema, {
          title,
          description,
-         image,
+         image: image ? 'temp' : undefined,
       });
-      if (!tourValidation.success) {
+
+      let legs;
+      try {
+         legs = JSON.parse(legsString || '[]');
+      } catch {
          return NextResponse.json(
-            { message: 'Dados do tour inválidos.' },
+            { message: 'Formato inválido para legs.' },
             { status: 400 },
          );
       }
@@ -55,17 +73,42 @@ export async function PUT(req: Request) {
          validatedLegs.push(result.data);
       }
 
-      const tourExists = await db
+      let imageBuffer: Buffer | null = null;
+      if (image && image.size > 0) {
+         if (!image.type.startsWith('image/')) {
+            return NextResponse.json(
+               { message: 'Apenas arquivos de imagem são permitidos.' },
+               { status: 400 },
+            );
+         }
+
+         if (image.size > 5 * 1024 * 1024) {
+            return NextResponse.json(
+               { message: 'Arquivo muito grande. Máximo 5MB.' },
+               { status: 400 },
+            );
+         }
+
+         const bytes = await image.arrayBuffer();
+         imageBuffer = Buffer.from(bytes);
+      }
+
+      const existingTour = await db
          .select()
          .from(toursTable)
          .where(eq(toursTable.id, id))
          .limit(1);
 
-      if (tourExists.length === 0) {
+      if (existingTour.length === 0) {
          return NextResponse.json(
             { message: 'Tour não encontrado' },
             { status: 404 },
          );
+      }
+
+      let finalImage = existingTour[0].image;
+      if (imageBuffer) {
+         finalImage = imageBuffer.toString('base64');
       }
 
       const allIcaos = legs
@@ -99,7 +142,7 @@ export async function PUT(req: Request) {
          .set({
             title,
             description,
-            image,
+            image: finalImage,
          })
          .where(eq(toursTable.id, id));
 

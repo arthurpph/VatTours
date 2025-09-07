@@ -1,9 +1,9 @@
 import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import Image from 'next/image';
-import { isValidUrl } from '@/lib/utils';
 import { authOptions } from '../api/auth/[...nextauth]/auth';
 import { getTours } from '@/lib/db/queries';
+import { isValidBase64Image } from '@/lib/utils';
 
 export default async function Home() {
    const session = await getServerSession(authOptions);
@@ -93,10 +93,10 @@ export default async function Home() {
                         className="rounded-md border border-[#21262d] bg-[#0d1117] p-4 transition-colors hover:bg-[#161b22]"
                      >
                         <Link href={`/tours/${tour.id}`} className="block">
-                           <div className="mb-3">
-                              {isValidUrl(tour.image) ? (
+                           <div className="mb-3 max-h-[200px] max-w-[300px]">
+                              {tour.image && isValidBase64Image(tour.image) ? (
                                  <Image
-                                    src={tour.image}
+                                    src={`data:image/jpeg;base64,${tour.image}`}
                                     alt={tour.title}
                                     width={300}
                                     height={200}
