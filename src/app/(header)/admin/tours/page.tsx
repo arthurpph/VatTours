@@ -371,7 +371,6 @@ export default function TourManagePage() {
                                        }
                                        placeholder="Ex: Decolagem de São Paulo"
                                        className="w-full rounded-md border border-[#21262d] bg-[#161b22] px-3 py-2 text-sm text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
-                                       required
                                     />
                                  </div>
 

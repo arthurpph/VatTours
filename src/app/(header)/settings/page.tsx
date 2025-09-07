@@ -220,19 +220,32 @@ export default function SettingsPage() {
                         </div>
 
                         <div>
-                           <h3 className="mb-4 flex items-center gap-2 text-xl font-semibold text-[#f0f6fc]">
-                              <div className="h-1.5 w-1.5 rounded-full bg-[#7d8590]"></div>
-                              Seus Direitos
-                           </h3>
-                           <div className="rounded-md border border-[#21262d] bg-[#161b22] p-4">
-                              <p className="text-[#f0f6fc]">
-                                 Você pode solicitar a exclusão de seus dados a
-                                 qualquer momento entrando em contato com a
-                                 administração da plataforma. Também pode
-                                 visualizar ou exportar os dados disponíveis no
-                                 seu perfil.
-                              </p>
-                           </div>
+                           <h2 className="mb-2 text-xl font-semibold">
+                              Seus Direitos (GDPR)
+                           </h2>
+                           <p className="text-[#7d8590]">
+                              Você pode solicitar:
+                           </p>
+                           <ul className="ml-6 list-disc text-[#7d8590]">
+                              <li>Acesso aos dados que mantemos sobre você</li>
+                              <li>Correção de dados incorretos</li>
+                              <li>Exclusão de dados pessoais</li>
+                              <li>Restrições de processamento</li>
+                           </ul>
+                           <p className="mt-2 text-[#7d8590]">
+                              Para exercer seus direitos, me mande uma mensagem
+                              no discord{' '}
+                              <a
+                                 href="https://discord.com/users/395546295940415510"
+                                 target="_blank"
+                                 rel="noopener noreferrer"
+                                 className="text-[#58a6ff] underline"
+                              >
+                                 shauuu_
+                              </a>{' '}
+                              com sua solicitação. Respondemos no prazo de uma
+                              semana.
+                           </p>
                         </div>
                      </div>
 
