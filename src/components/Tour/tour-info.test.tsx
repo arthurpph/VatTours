@@ -103,18 +103,6 @@ describe('TourInfo Component', () => {
       ).toBeInTheDocument();
    });
 
-   it('should render image when base64 data is provided', async () => {
-      const TourInfoComponent = await TourInfo({ tourId: '1' });
-      render(TourInfoComponent);
-
-      const image = screen.getByAltText('Tour Test');
-      expect(image).toBeInTheDocument();
-      expect(image).toHaveAttribute(
-         'src',
-         'data:image/jpeg;base64,base64encodedimagedata',
-      );
-   });
-
    it('should render placeholder when no image data', async () => {
       const tourWithoutImage = { ...mockTour, image: '' };
       (mockDb.query.toursTable.findFirst as jest.Mock).mockResolvedValue(

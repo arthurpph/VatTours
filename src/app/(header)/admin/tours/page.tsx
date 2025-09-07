@@ -218,8 +218,8 @@ export default function TourManagePage() {
                   >
                      <ArrowLeft className="h-4 w-4" />
                   </Link>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#2f81f7]/20">
-                     <Compass className="h-5 w-5 text-[#2f81f7]" />
+                  <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#8cc8ff]/15">
+                     <Compass className="h-5 w-5 text-[#8cc8ff]" />
                   </div>
                   <div>
                      <h1 className="text-xl font-semibold text-[#f0f6fc]">
@@ -233,11 +233,11 @@ export default function TourManagePage() {
          <div className="mx-auto max-w-7xl px-4 py-8">
             <div className="mb-8 rounded-md border border-[#21262d] bg-[#161b22] p-6">
                <div className="mb-6 flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#238636]/20">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[#8cc8ff]/15">
                      {isEditing ? (
-                        <Edit2 className="h-5 w-5 text-[#238636]" />
+                        <Edit2 className="h-5 w-5 text-[#8cc8ff]" />
                      ) : (
-                        <Plus className="h-5 w-5 text-[#238636]" />
+                        <Plus className="h-5 w-5 text-[#8cc8ff]" />
                      )}
                   </div>
                   <h2 className="text-lg font-semibold text-[#f0f6fc]">
@@ -265,7 +265,7 @@ export default function TourManagePage() {
                            value={title}
                            onChange={(e) => setTitle(e.target.value)}
                            placeholder="Nome do tour"
-                           className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                           className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
                            required
                         />
                      </div>
@@ -279,7 +279,7 @@ export default function TourManagePage() {
                               type="file"
                               accept="image/*"
                               onChange={handleImageChange}
-                              className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] file:mr-3 file:rounded file:border-0 file:bg-[#238636] file:px-3 file:py-1 file:text-white hover:file:bg-[#2ea043] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                              className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] file:mr-3 file:rounded file:border-0 file:bg-[#8cc8ff] file:px-3 file:py-1 file:text-[#0d1117] hover:file:bg-[#a5b4fc] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
                            />
                            {imagePreview && (
                               <div className="relative">
@@ -294,7 +294,7 @@ export default function TourManagePage() {
                                        setImage(null);
                                        setImagePreview(null);
                                     }}
-                                    className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#da3633] text-white hover:bg-[#b91c1c]"
+                                    className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#f85149] text-white hover:bg-[#da3633]"
                                  >
                                     <X className="h-4 w-4" />
                                  </button>
@@ -313,7 +313,7 @@ export default function TourManagePage() {
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="Descreva o tour"
                         rows={3}
-                        className="w-full resize-none rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                        className="w-full resize-none rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
                         required
                      />
                   </div>
@@ -326,7 +326,7 @@ export default function TourManagePage() {
                         <button
                            type="button"
                            onClick={addLeg}
-                           className="flex items-center gap-2 rounded-md bg-[#238636] px-3 py-1 text-sm text-white transition-colors hover:bg-[#2ea043]"
+                           className="flex items-center gap-2 rounded-md bg-[#8cc8ff] px-3 py-1 text-sm text-[#0d1117] transition-colors hover:bg-[#a5b4fc]"
                         >
                            <Plus className="h-4 w-4" />
                            Adicionar Etapa
@@ -347,7 +347,7 @@ export default function TourManagePage() {
                                     <button
                                        type="button"
                                        onClick={() => removeLeg(index)}
-                                       className="flex h-6 w-6 items-center justify-center rounded text-[#da3633] hover:bg-[#da3633]/10"
+                                       className="flex h-6 w-6 items-center justify-center rounded text-[#f85149] hover:bg-[#f85149]/10"
                                     >
                                        <Trash2 className="h-4 w-4" />
                                     </button>
@@ -370,7 +370,7 @@ export default function TourManagePage() {
                                           )
                                        }
                                        placeholder="Ex: Decolagem de São Paulo"
-                                       className="w-full rounded-md border border-[#21262d] bg-[#161b22] px-3 py-2 text-sm text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#2f81f7] focus:ring-1 focus:ring-[#2f81f7] focus:outline-none"
+                                       className="w-full rounded-md border border-[#21262d] bg-[#161b22] px-3 py-2 text-sm text-[#f0f6fc] placeholder-[#7d8590] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
                                        required
                                     />
                                  </div>
@@ -412,7 +412,7 @@ export default function TourManagePage() {
                      <button
                         type="submit"
                         disabled={loading}
-                        className="flex items-center gap-2 rounded-md bg-[#238636] px-4 py-2 text-white transition-colors hover:bg-[#2ea043] disabled:opacity-50"
+                        className="flex items-center gap-2 rounded-md bg-[#8cc8ff] px-4 py-2 text-[#0d1117] transition-colors hover:bg-[#a5b4fc] disabled:opacity-50"
                      >
                         <Save className="h-4 w-4" />
                         {loading
@@ -497,7 +497,7 @@ export default function TourManagePage() {
                               </button>
                               <button
                                  onClick={() => handleDelete(tour.id)}
-                                 className="flex items-center gap-1 rounded-md bg-[#da3633] px-3 py-1 text-sm text-white transition-colors hover:bg-[#b91c1c]"
+                                 className="flex items-center gap-1 rounded-md bg-[#f85149] px-3 py-1 text-sm text-white transition-colors hover:bg-[#da3633]"
                               >
                                  <Trash2 className="h-3 w-3" />
                                  Excluir
