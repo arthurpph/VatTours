@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { toursTable } from '@/lib/db/schema';
-import { isValidBase64Image, isValidUrl } from '@/lib/utils';
+import { isValidBase64Image } from '@/lib/utils';
 import { eq } from 'drizzle-orm';
 import Image from 'next/image';
 import { MapPin, AlertTriangle } from 'lucide-react';

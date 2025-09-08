@@ -54,7 +54,7 @@ export function isValidBase64Image(base64String: string): boolean {
       }
 
       return false;
-   } catch (error) {
+   } catch {
       return false;
    }
 }

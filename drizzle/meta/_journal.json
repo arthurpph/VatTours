@@ -1,13 +1,27 @@
 {
-   "version": "7",
-   "dialect": "postgresql",
-   "entries": [
-      {
-         "idx": 0,
-         "version": "7",
-         "when": 1754321976586,
-         "tag": "0000_outgoing_valeria_richards",
-         "breakpoints": true
-      }
-   ]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1754321976586,
+      "tag": "0000_outgoing_valeria_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1757269800190,
+      "tag": "0001_stale_toxin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1757275599877,
+      "tag": "0002_cultured_carlie_cooper",
+      "breakpoints": true
+    }
+  ]
 }

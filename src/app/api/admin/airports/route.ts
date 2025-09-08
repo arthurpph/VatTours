@@ -1,8 +1,16 @@
 import { insertAirport } from '@/lib/db/queries';
 import { IcaoSchema } from '@/lib/validation';
+import {
+   handleApiError,
+   validateAdminPermission,
+} from '@/lib/validation/api-validator';
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/auth';
 
 export async function POST(req: Request) {
+   const session = await getServerSession(authOptions);
+   validateAdminPermission(session);
    const body = await req.json();
    const { icao, name, country } = body;
 
@@ -22,10 +30,7 @@ export async function POST(req: Request) {
    try {
       await insertAirport({ icao: icao.toUpperCase(), name, country });
       return NextResponse.json({ success: true });
-   } catch {
-      return NextResponse.json(
-         { message: 'Erro ao criar aeroporto' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }

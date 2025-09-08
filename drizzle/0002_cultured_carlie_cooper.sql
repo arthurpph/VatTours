@@ -1,0 +1,1 @@
+ALTER TABLE "badges" RENAME COLUMN "icon" TO "image";

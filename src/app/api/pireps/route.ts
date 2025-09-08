@@ -18,12 +18,12 @@ import {
    createPirepSchema,
 } from '@/lib/validation/api-schemas';
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
    try {
       const session = await getServerSession(authOptions);
       validateAuthSession(session);
 
-      const { searchParams } = new URL(request.url);
+      const { searchParams } = new URL(req.url);
       const query = validateQuery(getPirepsSchema, searchParams);
 
       const pireps = await getPirepsByUserAndStatus(
@@ -36,12 +36,12 @@ export async function GET(request: NextRequest) {
    }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
    try {
       const session = await getServerSession(authOptions);
       validateAuthSession(session);
 
-      const body = await request.json();
+      const body = await req.json();
       const validatedData = validateJson(createPirepSchema, body);
 
       const userId = session!.id;

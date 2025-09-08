@@ -61,6 +61,12 @@ export const createPirepSchema = z.object({
    comment: z.string().max(100).optional().nullable(),
 });
 
+export const createBadgeSchema = z.object({
+   name: z.string().min(1).max(100),
+   description: z.string().min(1).max(500).optional().nullable(),
+   image: z.string().optional(),
+});
+
 export type IdParams = z.infer<typeof IdParamsSchema>;
 export type PaginationQuery = z.infer<typeof PaginationQuerySchema>;
 export type GetToursQuery = z.infer<typeof getToursSchema>;
@@ -68,3 +74,4 @@ export type GetAirportsQuery = z.infer<typeof getAirportsSchema>;
 export type GetPirepsQuery = z.infer<typeof getPirepsSchema>;
 export type CreateTourData = z.infer<typeof createTourSchema>;
 export type CreatePirepData = z.infer<typeof createPirepSchema>;
+export type CreateBadgeData = z.infer<typeof createBadgeSchema>;

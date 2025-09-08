@@ -18,7 +18,7 @@ type Badge = {
    id: number;
    name: string;
    description: string | null;
-   icon: string;
+   image: string;
    earnedAt: Date | null;
 };
 
@@ -331,7 +331,7 @@ export default function ProfilePage({
                            <div className="mb-3 flex items-center gap-3">
                               <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#d29922]/30 bg-[#d29922]/20">
                                  <Image
-                                    src={badge.icon}
+                                    src={badge.image}
                                     alt={badge.name}
                                     width={40}
                                     height={40}

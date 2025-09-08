@@ -32,7 +32,7 @@ export async function PUT(req: Request) {
       const image = formData.get('image') as File | null;
       const legsString = formData.get('legs') as string;
 
-      const validatedData = validateJson(createTourSchema, {
+      validateJson(createTourSchema, {
          title,
          description,
          image: image ? 'temp' : undefined,
@@ -168,17 +168,15 @@ export async function PUT(req: Request) {
       await insertLegs(legsToInsert);
 
       return NextResponse.json({ success: true });
-   } catch (err) {
-      console.error('Erro ao atualizar tour:', err);
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }
 
 export async function DELETE(req: Request) {
    try {
+      const session = await getServerSession(authOptions);
+      validateAdminPermission(session);
       const url = new URL(req.url);
       const idParam = url.pathname.split('/').pop();
       const id = Number(idParam);
@@ -201,14 +199,10 @@ export async function DELETE(req: Request) {
       }
 
       await db.delete(legsTable).where(eq(legsTable.tourId, id));
-
       await db.delete(toursTable).where(eq(toursTable.id, id));
 
       return NextResponse.json({ success: true });
-   } catch {
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }

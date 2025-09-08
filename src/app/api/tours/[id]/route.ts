@@ -4,7 +4,7 @@ import { validateParams, handleApiError } from '@/lib/validation/api-validator';
 import { IdParamsSchema, type IdParams } from '@/lib/validation/api-schemas';
 
 export async function GET(
-   req: Request,
+   _: Request,
    { params }: { params: Promise<{ id: string }> },
 ) {
    try {

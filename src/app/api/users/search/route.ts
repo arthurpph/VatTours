@@ -7,12 +7,12 @@ import {
    validateAuthSession,
 } from '@/lib/validation/api-validator';
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
    try {
       const session = await getServerSession(authOptions);
       validateAuthSession(session);
 
-      const { searchParams } = new URL(request.url);
+      const { searchParams } = new URL(req.url);
       const query = searchParams.get('q');
 
       if (!query || query.trim().length < 2) {
@@ -22,6 +22,6 @@ export async function GET(request: NextRequest) {
       const users = await searchUsers(query.trim());
       return NextResponse.json(users);
    } catch (error) {
-      handleApiError(error);
+      return handleApiError(error);
    }
 }

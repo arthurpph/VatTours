@@ -48,7 +48,7 @@ export const BadgeSchema = z.object({
    id: z.number().int().optional(),
    name: z.string().min(1),
    description: z.string().optional(),
-   icon: z.url().optional(),
+   icon: z.string().optional(),
 });
 
 export const UserBadgeSchema = z.object({

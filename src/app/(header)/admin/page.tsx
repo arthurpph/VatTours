@@ -5,6 +5,7 @@ import {
    PlaneTakeoff,
    MapPin,
    Users,
+   Award,
    ArrowRight,
 } from 'lucide-react';
 
@@ -25,6 +26,14 @@ export default function AdminHomePage() {
          icon: <PlaneTakeoff className="h-6 w-6" />,
          color: 'text-[#a5b4fc]',
          bgColor: 'bg-[#a5b4fc]/15',
+      },
+      {
+         href: '/admin/badges',
+         title: 'Gerenciar Badges',
+         description: 'Criar e administrar badges de conquistas',
+         icon: <Award className="h-6 w-6" />,
+         color: 'text-[#fbbf24]',
+         bgColor: 'bg-[#fbbf24]/15',
       },
       {
          href: '/admin/airports',

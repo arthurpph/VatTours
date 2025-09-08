@@ -1,9 +1,19 @@
 'use client';
 
 import AirportSelector from '@/components/Selector/airport-selector';
+import BadgeSelector from '@/components/Selector/badge-selector';
 import { ADMIN_API_ROUTES, PUBLIC_API_ROUTES } from '@/config/api-routes';
 import { useState, useEffect } from 'react';
-import { Compass, Plus, Edit2, Trash2, Save, X, ArrowLeft } from 'lucide-react';
+import {
+   Compass,
+   Plus,
+   Edit2,
+   Trash2,
+   Save,
+   X,
+   ArrowLeft,
+   Award,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -29,6 +39,7 @@ export default function TourManagePage() {
    const [legs, setLegs] = useState<LegInput[]>([
       { description: '', departureIcao: '', arrivalIcao: '' },
    ]);
+   const [selectedBadges, setSelectedBadges] = useState<number[]>([]);
 
    const [tours, setTours] = useState<Tour[]>([]);
    const [loading, setLoading] = useState(false);
@@ -79,20 +90,17 @@ export default function TourManagePage() {
    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
-         // Verificar se é uma imagem
          if (!file.type.startsWith('image/')) {
             alert('Apenas arquivos de imagem são permitidos.');
             return;
          }
 
-         // Verificar tamanho (5MB)
          if (file.size > 5 * 1024 * 1024) {
             alert('Arquivo muito grande. Máximo 5MB.');
             return;
          }
 
          setImage(file);
-         // Criar preview
          const reader = new FileReader();
          reader.onload = (e) => {
             setImagePreview(e.target?.result as string);
@@ -107,20 +115,31 @@ export default function TourManagePage() {
       setImage(null);
       setImagePreview(null);
       setLegs([{ description: '', departureIcao: '', arrivalIcao: '' }]);
+      setSelectedBadges([]);
       setEditingTour(null);
       setIsEditing(false);
    };
 
-   const handleEdit = (tour: Tour) => {
+   const handleEdit = async (tour: Tour) => {
       setTitle(tour.title);
       setDescription(tour.description);
-      setImage(null); // Reset file input
+      setImage(null);
       setImagePreview(
          tour.image ? `data:image/jpeg;base64,${tour.image}` : null,
       );
       setLegs(tour.legs);
       setEditingTour(tour);
       setIsEditing(true);
+
+      try {
+         const res = await fetch(`${ADMIN_API_ROUTES.tours}/${tour.id}/badges`);
+         if (res.ok) {
+            const badges = await res.json();
+            setSelectedBadges(badges.map((badge: { id: number }) => badge.id));
+         }
+      } catch (error) {
+         console.error('Error loading tour badges:', error);
+      }
    };
 
    const handleSubmit = async (e: React.FormEvent) => {
@@ -166,6 +185,26 @@ export default function TourManagePage() {
          });
 
          if (res.ok) {
+            const savedTour = await res.json();
+            const tourId = isEditing ? editingTour?.id : savedTour.id;
+
+            if (tourId) {
+               try {
+                  await fetch(`${ADMIN_API_ROUTES.tours}/${tourId}/badges`, {
+                     method: 'PUT',
+                     headers: {
+                        'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({
+                        badgeIds: selectedBadges,
+                     }),
+                  });
+               } catch (error) {
+                  console.error('Error saving tour badges:', error);
+                  alert('Tour salvo, mas houve erro ao salvar os badges.');
+               }
+            }
+
             alert(
                isEditing
                   ? 'Tour atualizado com sucesso!'
@@ -279,7 +318,7 @@ export default function TourManagePage() {
                               type="file"
                               accept="image/*"
                               onChange={handleImageChange}
-                              className="w-full rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] file:mr-3 file:rounded file:border-0 file:bg-[#8cc8ff] file:px-3 file:py-1 file:text-[#0d1117] hover:file:bg-[#a5b4fc] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
+                              className="w-full cursor-pointer rounded-md border border-[#21262d] bg-[#0d1117] px-3 py-2 text-[#f0f6fc] file:mr-3 file:cursor-pointer file:rounded file:border-0 file:bg-[#8cc8ff] file:px-3 file:py-1 file:text-[#0d1117] hover:file:bg-[#a5b4fc] focus:border-[#8cc8ff] focus:ring-1 focus:ring-[#8cc8ff] focus:outline-none"
                            />
                            {imagePreview && (
                               <div className="relative">
@@ -294,7 +333,7 @@ export default function TourManagePage() {
                                        setImage(null);
                                        setImagePreview(null);
                                     }}
-                                    className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[#f85149] text-white hover:bg-[#da3633]"
+                                    className="absolute top-2 right-2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full bg-[#f85149] text-white hover:bg-[#da3633]"
                                  >
                                     <X className="h-4 w-4" />
                                  </button>
@@ -326,10 +365,10 @@ export default function TourManagePage() {
                         <button
                            type="button"
                            onClick={addLeg}
-                           className="flex items-center gap-2 rounded-md bg-[#8cc8ff] px-3 py-1 text-sm text-[#0d1117] transition-colors hover:bg-[#a5b4fc]"
+                           className="flex cursor-pointer items-center gap-2 rounded-md bg-[#8cc8ff] px-3 py-1 text-sm text-[#0d1117] transition-colors hover:bg-[#a5b4fc]"
                         >
                            <Plus className="h-4 w-4" />
-                           Adicionar Etapa
+                           Adicionar Leg
                         </button>
                      </div>
 
@@ -341,7 +380,7 @@ export default function TourManagePage() {
                            >
                               <div className="mb-3 flex items-center justify-between">
                                  <h4 className="text-sm font-medium text-[#f0f6fc]">
-                                    Etapa {index + 1}
+                                    Leg {index + 1}
                                  </h4>
                                  {legs.length > 1 && (
                                     <button
@@ -407,11 +446,28 @@ export default function TourManagePage() {
                      </div>
                   </div>
 
+                  <div>
+                     <div className="mb-4 flex items-center gap-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#fbbf24]/15">
+                           <Award className="h-5 w-5 text-[#fbbf24]" />
+                        </div>
+                        <h3 className="text-sm font-medium text-[#f0f6fc]">
+                           Badges de Conquista
+                        </h3>
+                     </div>
+                     <div className="rounded-md border border-[#21262d] bg-[#0d1117] p-4">
+                        <BadgeSelector
+                           selectedBadges={selectedBadges}
+                           onSelectionChange={setSelectedBadges}
+                        />
+                     </div>
+                  </div>
+
                   <div className="flex gap-3">
                      <button
                         type="submit"
                         disabled={loading}
-                        className="flex items-center gap-2 rounded-md bg-[#8cc8ff] px-4 py-2 text-[#0d1117] transition-colors hover:bg-[#a5b4fc] disabled:opacity-50"
+                        className="flex cursor-pointer items-center gap-2 rounded-md bg-[#8cc8ff] px-4 py-2 text-[#0d1117] transition-colors hover:bg-[#a5b4fc] disabled:opacity-50"
                      >
                         <Save className="h-4 w-4" />
                         {loading
@@ -424,7 +480,7 @@ export default function TourManagePage() {
                         <button
                            type="button"
                            onClick={resetForm}
-                           className="rounded-md border border-[#21262d] bg-[#0d1117] px-4 py-2 text-[#f0f6fc] transition-colors hover:bg-[#21262d]"
+                           className="cursor-pointer rounded-md border border-[#21262d] bg-[#0d1117] px-4 py-2 text-[#f0f6fc] transition-colors hover:bg-[#21262d]"
                         >
                            Cancelar
                         </button>
@@ -489,14 +545,14 @@ export default function TourManagePage() {
                            <div className="flex gap-2">
                               <button
                                  onClick={() => handleEdit(tour)}
-                                 className="flex items-center gap-1 rounded-md bg-[#2f81f7] px-3 py-1 text-sm text-white transition-colors hover:bg-[#1f6feb]"
+                                 className="flex cursor-pointer items-center gap-1 rounded-md bg-[#2f81f7] px-3 py-1 text-sm text-white transition-colors hover:bg-[#1f6feb]"
                               >
                                  <Edit2 className="h-3 w-3" />
                                  Editar
                               </button>
                               <button
                                  onClick={() => handleDelete(tour.id)}
-                                 className="flex items-center gap-1 rounded-md bg-[#f85149] px-3 py-1 text-sm text-white transition-colors hover:bg-[#da3633]"
+                                 className="flex cursor-pointer items-center gap-1 rounded-md bg-[#f85149] px-3 py-1 text-sm text-white transition-colors hover:bg-[#da3633]"
                               >
                                  <Trash2 className="h-3 w-3" />
                                  Excluir

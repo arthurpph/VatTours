@@ -74,7 +74,7 @@ export const badgesTable = pgTable('badges', {
    id: serial('id').primaryKey(),
    name: text('name').notNull(),
    description: text('description'),
-   icon: text('icon').notNull(),
+   image: text('image').notNull(),
 });
 
 export const userBadgesTable = pgTable(
@@ -132,4 +132,17 @@ export const pirepsTable = pgTable(
          sql`length(coalesce(${t.reviewNote}, '')) <= 100`,
       ),
    ],
+);
+
+export const tourBadgesTable = pgTable(
+   'tour_badges',
+   {
+      tourId: integer('tour_id')
+         .notNull()
+         .references(() => toursTable.id, { onDelete: 'cascade' }),
+      badgeId: integer('badge_id')
+         .notNull()
+         .references(() => badgesTable.id, { onDelete: 'cascade' }),
+   },
+   (t) => [primaryKey({ columns: [t.tourId, t.badgeId] })],
 );

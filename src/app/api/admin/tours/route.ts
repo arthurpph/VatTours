@@ -13,12 +13,12 @@ import {
 } from '@/lib/validation/api-validator';
 import { createTourSchema } from '@/lib/validation/api-schemas';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
    try {
       const session = await getServerSession(authOptions);
       validateAdminPermission(session);
 
-      const formData = await request.formData();
+      const formData = await req.formData();
       const title = formData.get('title') as string;
       const description = formData.get('description') as string;
       const image = formData.get('image') as File | null;

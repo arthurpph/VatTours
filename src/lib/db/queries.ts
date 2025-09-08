@@ -5,6 +5,7 @@ import {
    legsTable,
    pirepsTable,
    toursTable,
+   tourBadgesTable,
    userBadgesTable,
    usersTable,
 } from '@/lib/db/schema';
@@ -308,6 +309,53 @@ export async function insertTour(data: {
    return insertedTour;
 }
 
+export async function insertBadge(data: {
+   name: string;
+   description?: string | null;
+   image: Buffer | null;
+}) {
+   const imageBase64 = data.image
+      ? `data:image/png;base64,${data.image.toString('base64')}`
+      : '';
+
+   const [insertedBadge] = await db
+      .insert(badgesTable)
+      .values({
+         name: data.name,
+         description: data.description ?? null,
+         image: imageBase64,
+      })
+      .returning();
+
+   return insertedBadge;
+}
+
+export async function updateBadge(
+   id: number,
+   data: {
+      name: string;
+      description?: string | null;
+      image?: Buffer | null;
+   },
+) {
+   const updateData: any = {
+      name: data.name,
+      description: data.description ?? null,
+   };
+
+   if (data.image) {
+      updateData.image = `data:image/png;base64,${data.image.toString('base64')}`;
+   }
+
+   const [updatedBadge] = await db
+      .update(badgesTable)
+      .set(updateData)
+      .where(eq(badgesTable.id, id))
+      .returning();
+
+   return updatedBadge;
+}
+
 export async function getUserProfile(userId: string) {
    const [user] = await db
       .select({
@@ -329,7 +377,7 @@ export async function getUserBadges(userId: string) {
          id: badgesTable.id,
          name: badgesTable.name,
          description: badgesTable.description,
-         icon: badgesTable.icon,
+         image: badgesTable.image,
          earnedAt: userBadgesTable.earnedAt,
       })
       .from(userBadgesTable)
@@ -360,4 +408,71 @@ export async function searchUsers(query: string) {
       .limit(10);
 
    return users;
+}
+
+export async function getAllBadges() {
+   const badges = await db.select().from(badgesTable);
+   return badges;
+}
+
+export async function getTourBadges(tourId: number) {
+   const badges = await db
+      .select({
+         id: badgesTable.id,
+         name: badgesTable.name,
+         description: badgesTable.description,
+         image: badgesTable.image,
+      })
+      .from(tourBadgesTable)
+      .innerJoin(badgesTable, eq(tourBadgesTable.badgeId, badgesTable.id))
+      .where(eq(tourBadgesTable.tourId, tourId));
+
+   return badges;
+}
+
+export async function getTotalAndCompletedLegs(
+   tourId: number,
+   userId: string,
+): Promise<{ totalLegs: number; completedLegs: number }> {
+   const [{ length: totalLegs }, { length: completedLegs }] = await Promise.all(
+      [
+         db.select().from(legsTable).where(eq(legsTable.tourId, tourId)),
+         db
+            .select()
+            .from(pirepsTable)
+            .innerJoin(legsTable, eq(pirepsTable.legId, legsTable.id))
+            .where(
+               and(
+                  eq(pirepsTable.userId, userId),
+                  eq(legsTable.tourId, tourId),
+                  eq(pirepsTable.status, 'approved'),
+               ),
+            ),
+      ],
+   );
+
+   return {
+      totalLegs,
+      completedLegs,
+   };
+}
+
+export async function insertUserBadge(tourId: number, userId: string) {
+   const tourBadges = await db
+      .select()
+      .from(tourBadgesTable)
+      .where(eq(tourBadgesTable.tourId, tourId));
+
+   if (tourBadges.length === 0) return;
+
+   await db
+      .insert(userBadgesTable)
+      .values(
+         tourBadges.map((tb) => ({
+            userId,
+            badgeId: tb.badgeId,
+            earnedAt: new Date(),
+         })),
+      )
+      .onConflictDoNothing();
 }

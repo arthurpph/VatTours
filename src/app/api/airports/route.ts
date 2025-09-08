@@ -3,9 +3,9 @@ import { NextResponse, NextRequest } from 'next/server';
 import { validateQuery, handleApiError } from '@/lib/validation/api-validator';
 import { getAirportsSchema } from '@/lib/validation/api-schemas';
 
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
    try {
-      const { searchParams } = new URL(request.url);
+      const { searchParams } = new URL(req.url);
       validateQuery(getAirportsSchema, searchParams);
 
       const airports = await getAirports();

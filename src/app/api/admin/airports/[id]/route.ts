@@ -1,11 +1,19 @@
+import { authOptions } from '@/app/api/auth/[...nextauth]/auth';
 import { db } from '@/lib/db';
 import { airportsTable, legsTable } from '@/lib/db/schema';
 import { AirportSchema } from '@/lib/validation';
+import {
+   handleApiError,
+   validateAdminPermission,
+} from '@/lib/validation/api-validator';
 import { eq, or } from 'drizzle-orm';
+import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
 export async function DELETE(req: Request) {
    try {
+      const session = await getServerSession(authOptions);
+      validateAdminPermission(session);
       const url = new URL(req.url);
       const icaoParam = url.pathname.split('/').pop();
 
@@ -55,10 +63,7 @@ export async function DELETE(req: Request) {
 
       await db.delete(airportsTable).where(eq(airportsTable.icao, icao));
       return NextResponse.json({ success: true });
-   } catch {
-      return NextResponse.json(
-         { message: 'Erro interno do servidor.' },
-         { status: 500 },
-      );
+   } catch (error) {
+      return handleApiError(error);
    }
 }
