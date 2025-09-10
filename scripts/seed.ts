@@ -26,62 +26,62 @@ async function seedBadges() {
       {
          name: 'Primeiro Voo',
          description: 'Complete seu primeiro tour no VatTours',
-         icon: '/badges/first-flight.svg',
+         image: '/badges/first-flight.svg',
       },
       {
          name: 'Explorador',
          description: 'Complete 5 tours diferentes',
-         icon: '/badges/explorer.svg',
+         image: '/badges/explorer.svg',
       },
       {
          name: 'Aventureiro',
          description: 'Complete 10 tours diferentes',
-         icon: '/badges/adventurer.svg',
+         image: '/badges/adventurer.svg',
       },
       {
          name: 'Piloto Veterano',
          description: 'Complete 25 tours diferentes',
-         icon: '/badges/veteran-pilot.svg',
+         image: '/badges/veteran-pilot.svg',
       },
       {
          name: 'Ace do Céu',
          description: 'Complete 50 tours diferentes',
-         icon: '/badges/sky-ace.svg',
+         image: '/badges/sky-ace.svg',
       },
       {
          name: 'Lenda dos Céus',
          description: 'Complete 100 tours diferentes',
-         icon: '/badges/sky-legend.svg',
+         image: '/badges/sky-legend.svg',
       },
       {
          name: 'Madrugador',
          description: 'Complete um voo antes das 6h da manhã',
-         icon: '/badges/early-bird.svg',
+         image: '/badges/early-bird.svg',
       },
       {
          name: 'Coruja Noturna',
          description: 'Complete um voo depois das 22h',
-         icon: '/badges/night-owl.svg',
+         image: '/badges/night-owl.svg',
       },
       {
          name: 'Volta ao Mundo',
          description: 'Visite todos os continentes',
-         icon: '/badges/around-world.svg',
+         image: '/badges/around-world.svg',
       },
       {
          name: 'Pontualidade',
          description: 'Complete 10 voos consecutivos no horário',
-         icon: '/badges/punctuality.svg',
+         image: '/badges/punctuality.svg',
       },
       {
          name: 'Comunicador',
          description: 'Faça contato com ATC em 20 voos',
-         icon: '/badges/communicator.svg',
+         image: '/badges/communicator.svg',
       },
       {
          name: 'Instrutor',
          description: 'Ajude 5 novos pilotos em seus primeiros voos',
-         icon: '/badges/instructor.svg',
+         image: '/badges/instructor.svg',
       },
    ];
 

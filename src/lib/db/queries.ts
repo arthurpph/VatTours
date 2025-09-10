@@ -338,7 +338,11 @@ export async function updateBadge(
       image?: Buffer | null;
    },
 ) {
-   const updateData: any = {
+   const updateData: {
+      name: string;
+      description: string | null;
+      image?: string;
+   } = {
       name: data.name,
       description: data.description ?? null,
    };
